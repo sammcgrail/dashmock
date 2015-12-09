@@ -1,38 +1,21 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
     <title>doblePRIME - Dashboard</title>
-
-    <!-- Bootstrap Core CSS -->
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="bower_components/bootstrap-treeview/dist/bootstrap-treeview.min.css" rel="stylesheet" type="text/css">
     <link href="bower_components/sb-admin-2/css/sb-admin-2.css" rel="stylesheet">
     <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="Content/dp.css" rel="stylesheet" type="text/css">
     <link href="bower_components/c3/c3.css" rel="stylesheet">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
 </head>
-
 <body>
-
     <div id="wrapper">
-
-        <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -43,7 +26,6 @@
                 </button>
                 <a class="navbar-brand" href="#"><img src="img/dp_doble_sm.png" alt="" /></a>
             </div>
-            <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
                 <li>
@@ -78,9 +60,6 @@
                 <li><a href="#">Gen XFMR 123</a></li>
                 <li class="active">Bushing</li>
             </ul>
-
-            <!-- /.navbar-top-links -->
-
             <div class="navbar-default sidebar">
                 <div class="sidebar-nav navbar-collapse">
                     <div class="dp-branding"><img src="img/xcel.png" alt="" /> Xcel Energy</div>
@@ -102,23 +81,37 @@
                     </form>
                     <div id="tree"></div>
                 </div>
-                <!-- /.sidebar-collapse -->
             </div>
-            <!-- /.navbar-static-side -->
         </nav>
-
         <div id="page-wrapper">
             <div class="row dp-content">
                 <ul class="nav nav-tabs">
-                    <li role="presentation" class="active"><a href="#">Dashboard</a></li>
-                    <li role="presentation"><a href="#">Data</a></li>
-                    <li role="presentation"><a href="#">Alerts</a></li>
-                    <li role="presentation"><a href="#">Export</a></li>
+                  <li role="presentation" class="active"><a href="#">Dashboard</a></li>
+                  <li role="presentation"><a href="#">Data</a></li>
+                  <li role="presentation"><a href="#">Alerts</a></li>
+                  <li role="presentation"><a href="#">Export</a></li>
                 </ul>
+                    <div class="col-md-4"><i class="fa fa-building-o fa-6" style="color:green"></i>These 3 will collapse </div>
+                    <div class="col-md-4">Into one column</div>
+                    <div class="col-md-4">On small screens</div>
+                  <div class="col-md-6">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">Default Buttons</div>
+                        <div class="panel-body">
+                          <h5>Example - 2 Disabled buttons, 2 Enabled.</h5>
+                          <p>
+                            <button type="button" class="btn btn-default">Default</button>
+                            <button type="button" class="btn btn-primary">Primary</button>
+                            <button type="button" class="btn btn-danger disabled">590</button>
+                            <button type="button" class="btn btn-link disabled">Link</button>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                <div id="landing_page_chart"></div>
+              </div>
             </div>
-        </div>
-        <!-- /#page-wrapper -->
-
+test no padding
     </div>
     <div id="myModal" class="modal fade" style="display:none;">
         <div class="modal-dialog">
@@ -137,12 +130,12 @@
             </div>
         </div>
     </div>
-    <!-- /#wrapper -->
-
-    <!-- jQuery -->
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
+    <script src="bower_components/d3/d3.js"></script>
+    <script src="bower_components/c3/c3.js"></script>
+    <script src="Content/landing_page_chart.js"></script>
     <script>
         var tree = [{
             text: "Sub Station", icon: "fa fa-building",
@@ -206,9 +199,7 @@
             $("#myModal").modal('show');
         }
 
-        </script>
-
-
+    </script>
 </body>
 
 </html>

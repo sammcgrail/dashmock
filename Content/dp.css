@@ -147,7 +147,7 @@ input[type="submit"] {
         color: #dddddd;
         min-height: 600px;
         margin-top: 35px;
-        top: 0; 
+        top: 0;
     }
 }
 
@@ -240,7 +240,7 @@ input[type="submit"] {
     height: 30px;
     width: 30px;
     min-height: 10px;
-    padding: 6px 7px;
+    padding: 7px 1px;
     font-weight: normal;
     -ms-border-radius: 50px;
     -moz-border-radius: 50px;
@@ -268,8 +268,8 @@ input[type="submit"] {
 .dp-content {
     background-color: #EDEAE3;
     border: 1px solid #D8D1C2;
-    margin: 5px; 
-    padding: 0px; 
+    margin: 5px;
+    padding: 0px;
     min-height: 595px;
 }
 .dp-user > a > i.fa-user {
@@ -281,7 +281,7 @@ input[type="submit"] {
 .dp-branding {
     background-color: #232323;
     margin: 0;
-    padding-top: 20px; 
+    padding-top: 20px;
     text-align: center;
 }
 #clock_date, #clock_time {
