@@ -1,0 +1,203 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>doblePRIME - Dashboard</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bower_components/bootstrap-treeview/dist/bootstrap-treeview.min.css" rel="stylesheet" type="text/css">
+    <link href="bower_components/sb-admin-2/css/sb-admin-2.css" rel="stylesheet">
+    <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="Content/dp.css" rel="stylesheet" type="text/css">
+
+    <link href="bower_components/c3/c3.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                    <a class="navbar-brand" href="#"><img src="img/dp_doble_sm.png" alt="" /></a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+                <li><a href="#"><span class="badge">4</span></a></li>
+                <li>
+                    <div id="clock_date"></div>
+                    <div id="clock_time"></div>
+                </li>
+                <li class="dropdown dp-user">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-lg fa-user"></i>John Smith <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-lock"></i> Change password</a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#"><i class="fa fa-2x fa-fw fa-gear"></i></a></li>
+                <li><a href="#" class="poweroff"><i class="fa fa-2x fa-fw fa-power-off"></i></a></li>
+            </ul>
+            <ul class="breadcrumb">
+                <li><a href="#">Fenway Substation</a></li>
+                <li><a href="#">Gen XFMR 123</a></li>
+                <li class="active">Bushing</li>
+            </ul>
+
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar">
+                <div class="sidebar-nav navbar-collapse">
+                    <div class="dp-branding"><img src="img/xcel.png" alt="" /> Xcel Energy</div>
+                    <form class="navbar-form" role="search">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search" name="q">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="tree"></div>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="row dp-content">
+                <ul class="nav nav-tabs">
+                  <li role="presentation" class="active"><a href="#">Dashboard</a></li>
+                  <li role="presentation"><a href="#">Data</a></li>
+                  <li role="presentation"><a href="#">Alerts</a></li>
+                  <li role="presentation"><a href="#">Export</a></li>
+                </ul>
+                    <div class="col-md-4"><i class="fa fa-building-o fa-6" style="color:green"></i>These 3 will collapse </div>
+                    <div class="col-md-4">Into one column</div>
+                    <div class="col-md-4">On small screens</div>
+                  <div class="col-md-6">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">Default Buttons</div>
+                        <div class="panel-body">
+                          <h5>Example - 2 Disabled buttons, 2 Enabled.</h5>
+                          <p>
+                            <button type="button" class="btn btn-default">Default</button>
+                            <button type="button" class="btn btn-primary">Primary</button>
+                            <button type="button" class="btn btn-danger disabled">590</button>
+                            <button type="button" class="btn btn-link disabled">Link</button>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                <div id="landing_page_chart"></div>
+              </div>
+            </div>
+test no padding
+
+
+
+
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
+
+    <script src="bower_components/d3/d3.js"></script>
+    <script src="bower_components/c3/c3.js"></script>
+    <script src="Content/landing_page_chart.js"></script>
+
+
+        <script>
+            var tree = [{
+                text: "Sub Station", icon: "fa fa-building",
+                nodes: [{
+                    text: "Gen XFMR 1",
+                    icon: "fa fa-fw fa-th",
+                    nodes: [{ text: "Antenna 1", icon: "fa fa-blank png" },
+                            { text: "Bushing B", icon: "fa fa-bolt" },
+                            { text: "Bushing Y", icon: "fa fa-bar-chart" },
+                            { text: "Bushing R", icon: "fa fa-area-chart" },
+                            { text: "DGA R", icon: "fa fa-cogs" }
+                    ]
+                },
+                    {
+                        text: "TX 2",
+                        icon: "fa fa-building",
+                        nodes: [{ text: "Antenna 1", icon: "fa fa-tachometer" },
+                            { text: "Bushing B", icon: "fa fa-bar-chart" },
+                            { text: "Bushing Y", icon: "fa fa-area-chart" },
+                            { text: "Bushing R", icon: "fa fa-bolt" },
+                            { text: "DGA R", icon: "fa fa-gavel" }
+                        ]
+                    },
+                    { text: "TX 3",
+                      icon: "fa fa-bolt"},
+                    { text: "TX 4",
+                      icon: "fa fa-bolt"},
+                    { text: "TX 4",
+                      icon: "fa fa-bolt"},
+                ]
+            }];
+
+            function getTree() {
+                return tree;
+            }
+
+            $('#tree').treeview({
+                data: getTree(),
+                onhoverColor: "transparent",
+                selectedBackColor: "#005DAB",
+                showBorder: "true",
+                collapseIcon: "glyphicon glyphicon-menu-down",
+                expandIcon: "glyphicon glyphicon-menu-right"
+            });
+
+            function clock() {
+                var now = new Date();
+
+                var date = now.toLocaleDateString();
+                var time = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+
+                document.getElementById('clock_date').innerHTML = date;
+                document.getElementById('clock_time').innerHTML = time;
+
+                setTimeout('clock()', 1000);
+            }
+            clock();
+
+        </script>
+
+
+</body>
+
+</html>

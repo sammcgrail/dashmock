@@ -1,0 +1,64 @@
+.login {
+    -moz-min-width: 440px;
+    -ms-min-width: 440px;
+    -o-min-width: 440px;
+    -webkit-min-width: 440px;
+    min-width: 440px;
+}
+
+.login-logo {
+    background-color: #5d5e62;
+    padding: 2px;
+}
+.login-logo > img {
+    padding-right: 10px;
+    vertical-align: -webkit-baseline-middle;
+}
+.login-bx {
+    border: 1px solid #DAD9D4;
+    width: 400px;
+    height: 300px;
+    margin: auto;
+    margin-top: 80px;
+    background-color: #EDEAE3;
+}
+.login-bx-title {
+    text-align: center; 
+    font-size: 3em;
+    margin: 10px;
+}
+.login-bx-title span.login-bx-text {
+    padding-top: 10px;
+}
+.login-bx-title span.fa-lock {
+    font-size: 1.2em;
+    color: #5d5e62;
+}
+.login-bx-content {
+    padding-left: 20px;
+    margin-top: 20px;
+}
+.login-bx-content ul  {
+    list-style: none;
+}
+.login-bx-content ul li.input  {
+    margin-bottom: 10px;
+}
+.login-bx-content ul li > input[type="submit"]  {
+    margin-top: 10px;
+    width: 100px;
+}
+.login-bx-content ul li.status_msg  {
+    margin-top: 10px;
+    color: red;
+}
+#imgSplash {
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    pointer-events: none;
+    z-index: -1;
+	height: 200px;
+}
