@@ -13,42 +13,36 @@ if ($("#landing_page_chart").length > 0) {
             axes: {
               temp: 'y',
               relsat: 'y2'
+              },
             },
-          },
-
-
-            axis:{
-                  x: {
-                    label: {
-                      text: 'Date',
-                      position: 'outer-center'
-                    },
-                      type: 'timeseries',
-                      tick: {format: "%Y-%m-%d %H"}
-                  },
-                  y: {
-                    // max: 20,
-                    // min: -60,
-                    label: {
-                      text:'Chart Mockup',
-                      position: 'outer-middle'
-                    }
-                  },
-                  y2: {
-                      show: true,
-                      // max: 20,
-                      // min: -60,
-                      label: {
-                      text: 'Chart Mockup 2',
-                      position: 'outer-middle'
-                      }
-                  }
+      axis:{
+            x: {
+              label: {
+                text: 'Date',
+                position: 'outer-center'
                 },
-            line:     {width: {ratio: 0.5}},
-            point: {show: false},
-            tooltip:  {grouped: true},
-            subchart: {show: true},
-            zoom:     {enabled: true},
-            grid:     {x: {show: true},
-                       y: {show: true}},
+                type: 'timeseries',
+                tick: {format: "%Y-%m-%d %H"}
+              },
+            y: {
+                label: {
+                text:'Chart Mockup',
+                position: 'outer-middle'
+              }
+            },
+            y2: {
+                show: true,
+                label: {
+                text: 'Chart Mockup 2',
+                position: 'outer-middle'
+              }
+            }
+          },
+      line:     {width: {ratio: 0.5}},
+      point:    {show: false},
+      tooltip:  {grouped: true},
+      subchart: {show: true},
+      zoom:     {enabled: true},
+      grid:     {x: {show: true},
+                 y: {show: true}},
 });}
