@@ -12,7 +12,7 @@
     -ms-min-height: 570px;
     -o-min-height: 570px;
     -webkit-min-height: 570px;
-    min-height: 570px;
+    min-height: 100vh
     padding: 0px;
 }
 input {
@@ -41,6 +41,10 @@ input[type="submit"] {
     background-color: #ffffff;
 }
 
+.panel {
+  min-height: 100vh
+
+}
 
 /*NAVBAR*/
 .navbar {
@@ -159,6 +163,8 @@ input[type="submit"] {
 .sidebar {
     color: #dddddd;
     background-color: #333333;
+    min-height: 100vh
+
 }
 .sidebar ul li {
     border: 0;
