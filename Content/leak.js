@@ -6,14 +6,24 @@ if ($("#landing_page_chart").length > 0) {
         xFormat: '%Y-%m-%d %H:%M:%S',
         json: {
           "date": ["2015-10-26 14:26:07", "2015-10-26 15:26:07", "2015-10-26 16:26:07", "2015-10-26 17:26:07", "2015-10-26 18:26:07"],
-          "Current1": [30, 33, 16, 34, 25],
-          "Raw Voltage1": [30, 33, 16, 34, 25],
-          "Current2": [70, 33, 26, 34, 25],
-          "Raw Voltage2": [30, 33, 16, 34, 25],
-          "Current3": [50, 33, 36, 34, 25],
-          "Raw Voltage3": [30, 33, 16, 34, 25],
-                  },
-        hide: ['Raw Voltage1', 'Raw Voltage2', 'Raw Voltage3']
+          "Capacitance1": [30, 33, 16, 34, 25],
+          "PowerFactor1": [45, 3, 26, 24, 56],
+          "SystemVoltage1": [50, 33, 16, 34, 25],
+          "LossAngle1": [30, 63, 26, 34, 25],
+
+          "Capacitance2": [70, 33, 26, 34, 25],
+          "PowerFactor2": [85, 3, 26, 24, 56],
+          "SystemVoltage2": [90, 33, 16, 34, 25],
+          "LossAngle2": [40, 33, 36, 34, 25],
+
+          "Capacitance3": [50, 33, 36, 34, 25],
+          "PowerFactor3": [65, 3, 26, 24, 56],
+          "SystemVoltage3": [70, 33, 36, 34, 25],
+          "LossAngle3": [80, 33, 16, 34, 25]
+        },
+        hide: ['SystemVoltage1', 'LossAngle1',
+              'SystemVoltage2', 'LossAngle2',
+              'SystemVoltage3', 'LossAngle3']
       },
       axis: {
         x: {
@@ -28,14 +38,14 @@ if ($("#landing_page_chart").length > 0) {
         },
         y: {
           label: {
-            text: 'Current Magnitude mA',
+            text: 'Capacitance',
             position: 'outer-middle'
           }
         },
         y2: {
           show: true,
           label: {
-            text: 'Raw Voltage',
+            text: 'True/Relative Power Factor',
             position: 'outer-middle'
           }
         }

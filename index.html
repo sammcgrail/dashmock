@@ -34,7 +34,7 @@
                 <li>
                     <div class="dp-notify">
                         <span class="fa fa-2x fa-exclamation-circle dp-notify"></span>
-                        <div class="dp-notify dp-notify-text">TX1 is overheating!</div>
+                        <div class="dp-notify dp-notify-text">TX1 ALERT!</div>
                         <!--<span class="glyphicon glyphicon-menu-right dp-notify"></span>-->
                         <a class="dp-header-caret" onclick="ShowNotification();" ><span class="caret"></span></a>
                     </div>
@@ -111,7 +111,19 @@
                         </div>
                       </div>
                     </div> -->
+                    <br>
+                    <button class='large' onclick='hide_data2();'>Hide data2</button>
+                    <button class='large' onclick='show_data2();'>Show data2</button>
+                    <br>
+                    <button class='large' onclick='hide_data3();'>Hide data3</button>
+                    <button class='large' onclick='show_data3();'>Show data3</button>
+                    <br>
+                    <button class='large' onclick='hide_all();'>Hide all</button>
+                    <button class='large' onclick='show_all();'>Show all</button>
+                    <br>
                 <div id="landing_page_chart"></div>
+                <div id="doble_prime_chart"></div>
+                <div id="lazy"></div>
                 <div class="panel-body">
                   <table id="example" class="display" width="100%"></table>
                 </div>
@@ -126,7 +138,7 @@
                     <h4 class="modal-title">Alert</h4>
                 </div>
                 <div class="modal-body">
-                    <p>TX1 is overheating due to some real smart valid reason</p>
+                    <p>TX1 Issue</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn" data-dismiss="modal">Close</button>
@@ -217,9 +229,15 @@
     <script>
 
     var dataSet = [
-      ["2015-10-26 14:26:07", "2015-10-26 15:26:07", "2015-10-26 16:26:07", "2015-10-26 17:26:07", "2015-10-26 18:26:07", "2015-10-26 19:26:07"],
-      [30, 33, 16, 23, 300, 26],
-      [35, 3, 26, 3, 40, 36]
+      ["2015-10-26 14:26:07", 34, 34],
+      ["2015-10-26 16:26:07", 45, 46],
+      ["2015-10-26 17:26:07", 47, 48],
+      ["2015-10-26 18:26:07", 49, 48],
+      ["2015-10-26 19:26:07", 27, 68],
+      ["2015-10-26 20:26:07", 37, 98],
+      ["2015-10-26 21:26:07", 47, 18],
+      ["2015-10-26 22:26:07", 57, 28],
+      ["2015-10-26 23:26:07", 67, 78]
     ];
 
     $(document).ready(function() {

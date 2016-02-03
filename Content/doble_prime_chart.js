@@ -1,6 +1,6 @@
-if ($("#landing_page_chart").length > 0) {
-  var landing_page_chart = c3.generate({
-      bindto: document.getElementById('landing_page_chart'),
+
+  var doble_prime_chart = c3.generate({
+      bindto: document.getElementById('doble_prime_chart'),
       data: {
         x: 'date',
         xFormat: '%Y-%m-%d %H:%M:%S',
@@ -47,25 +47,4 @@ if ($("#landing_page_chart").length > 0) {
       zoom:     {enabled: true},
       grid:     {x: {show: true},
                  y: {show: true}},
-});}
-
-function show_data2() {
-    landing_page_chart.show(['data2']);
-}
-function hide_data2() {
-    landing_page_chart.hide(['data2']);
-}
-function show_data3() {
-    landing_page_chart.show(['data3']);
-}
-function hide_data3() {
-    landing_page_chart.hide(['data3']);
-}
-
-
-function show_all() {
-    landing_page_chart.show(['data1', 'data2', 'data3']);
-}
-function hide_all() {
-    landing_page_chart.hide(['data1', 'data2', 'data3']);
-}
+});
