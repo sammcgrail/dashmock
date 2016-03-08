@@ -1,307 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>doblePRIME - Dashboard</title>
-    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="bower_components/bootstrap-treeview/dist/bootstrap-treeview.min.css" rel="stylesheet" type="text/css">
-    <link href="bower_components/sb-admin-2/css/sb-admin-2.css" rel="stylesheet">
-    <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="bower_components/c3/c3.css" rel="stylesheet">
-    <link href="bower_components/datatables/media/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css"/>
-    <link href="bower_components/nvd3/build/nv.d3.css" rel="stylesheet">
-    <link href="Content/dp.css" rel="stylesheet" type="text/css">
-
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title></title>
+    <script type='text/javascript' src="http://d3js.org/d3.v3.min.js"></script>
+    <script type='text/javascript' src="http://micropolar.org/micropolar-v0.2.2.js"></script>
+    <style>
+      div{
+        float: left;
+        border: #eee 1px solid;
+        margin: 5px;
+      }
+    </style>
 </head>
 <body>
-    <div id="wrapper">
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#"><img src="img/dp_doble_sm.png" alt="" /></a>
-            </div>
 
-            <ul class="nav navbar-top-links navbar-right">
-                <li>
-                    <div class="dp-notify">
-                        <span class="fa fa-2x fa-exclamation-circle dp-notify"></span>
-                        <div class="dp-notify dp-notify-text">GENERAL CHART SANDBOX</div>
-                        <!--<span class="glyphicon glyphicon-menu-right dp-notify"></span>-->
-                        <a class="dp-header-caret" onclick="ShowNotification();" ><span class="caret"></span></a>
-                    </div>
-                </li>
-                <li><a href="#"><span class="badge badge-red">4</span></a></li>
-                <li>
-                    <div id="clock_date"></div>
-                    <div id="clock_time"></div>
-                </li>
-                <li class="dropdown dp-user">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-lg fa-user"></i>Sam McGrail <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-lock"></i> Change password</a>
-                        </li>
-                    </ul>
-                </li>
-                <li><a href="#"><i class="fa fa-2x fa-fw fa-gear"></i></a></li>
-                <li><a href="#" class="poweroff"><i class="fa fa-2x fa-fw fa-power-off"></i></a></li>
-            </ul>
-            <ul class="breadcrumb">
-                <li><a href="#">Chart Sandbox</a></li>
-                <li><a href="#"> TX123</a></li>
-                <li class="active">Bushing</li>
-            </ul>
-            <div class="navbar-default sidebar">
-                <div class="sidebar-nav navbar-collapse">
-                    <div class="dp-branding"> CHART SANDBOX</div>
-                    <form class="navbar-form" role="search">
-                        <div class="input-group">
-                            <input type="text" class="form-control dp-tv-search" placeholder="Search" name="q">
-                            <div class="btn-group">
-                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="caret"></span>
-                                    <span class="sr-only">Toggle Dropdown</span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Hide Alert Rings</a></li>
-                                    <li><a href="#">Show only items with Alerts</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </form>
-                    <div id="tree"></div>
-                </div>
-            </div>
-        </nav>
-        <div id="page-wrapper">
-            <div class="row dp-content">
-                <ul class="nav nav-tabs">
-                  <li role="presentation" class="active"><a href="#">Dashboard</a></li>
-                  <li role="presentation"><a href="#">Data</a></li>
-                  <li role="presentation"><a href="#">Alerts</a></li>
-                  <li role="presentation"><a href="#">Export</a></li>
-                </ul>
-                <div id="doble_prime_chart"></div>
-                <div id="nvd3chart"></div>
-                <div id="lazy"></div>
-                <div class="panel-body">
-                  <table id="example" class="display" width="100%"></table>
-                </div>
-              </div>
-            </div>
-    </div>
-    <div id="myModal" class="modal fade" style="display:none;">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Alert</h4>
-                </div>
-                <div class="modal-body">
-                    <p>TX1 Issue</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn">Acknowledge</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="bower_components/bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
-    <script src="bower_components/d3/d3.js"></script>
-    <script src="bower_components/c3/c3.js"></script>
-    <script src="bower_components/nvd3/build/nv.d3.js"></script>
-    <script src="Content/landing_page_chart.js"></script>
-    <script src="Content/nvd3chart.js"></script>
-    <script src="bower_components/datatables/media/js/jquery.dataTables.js"></script>
-    <script src="bower_components/datatables/media/js/dataTables.bootstrap.js"></script>
-    <script>
-        var tree = [{
-            text: "Chart Sandbox", icon: "fa fa-building",
-            nodes: [{
-                text: "Lorem Ipsum XFMR 1",
-                icon: "fa fa-fw fa-th",
-                nodes: [{ text: "Antenna 1", icon: "fa fa-bolt" },
-                        { text: "Bushing B", icon: "fa fa-bolt" },
-                        { text: "Bushing Y", icon: "fa fa-bar-chart" },
-                        { text: "Bushing R", icon: "fa fa-area-chart" },
-                        { text: "DGA R", icon: "fa fa-cogs" }
-                ]
-            },
-                {
-                    text: "TX 2",
-                    icon: "fa fa-building",
-                    nodes: [{ text: "Antenna 1", icon: "fa fa-tachometer" },
-                        { text: "Bushing B", icon: "fa fa-bar-chart" },
-                        { text: "Bushing Y", icon: "fa fa-area-chart" },
-                        { text: "Bushing R", icon: "fa fa-bolt" },
-                        { text: "DGA R", icon: "fa fa-gavel" }
-                    ]
-                },
-                { text: "TX 3",
-                  icon: "fa fa-bolt"},
-                { text: "TX 4",
-                  icon: "fa fa-bolt"},
-                { text: "TX 4",
-                  icon: "fa fa-bolt"},
-            ]
-        }];
-        // cause the debugger to fire every time
-        // debugger;
+<div id="container1"></div>
 
-        function getTree() {
-            return tree;
-        }
+<script>
 
-        $('#tree').treeview({
-            data: getTree(),
-            onhoverColor: "transparent",
-            selectedBackColor: "#005DAB",
-            showBorder: "true",
-            collapseIcon: "glyphicon glyphicon-menu-down",
-            expandIcon: "glyphicon glyphicon-menu-right"
-        });
+function superformulaGenerator(params) {
+  var n = 360, step = 1, i = -1, r = 0, dt = 2 * Math.PI / n, t, x, y, points = {x: [], y: []};
+  d3.range(0, 360, 3).forEach(function(d, i){
+    t = params.m * (d * dt - Math.PI) / 4;
+    t = Math.pow(Math.abs(Math.pow(Math.abs(Math.cos(t) / params.a), params.n2) + Math.pow(Math.abs(Math.sin(t) / params.b), params.n3)), -1 / params.n1);
+    if (t > r) r = t;
+    points.x.push(Math.round(d*100)/100);
+    points.y.push(t);
+  });
+  points.y = points.y.map(function(d, i){ return Math.round(d / r*100)/100; });
+  return points;
+}
+var superformula1 = superformulaGenerator({m: 3, n1: 1, n2: 30, n3: 3, a: 1, b: 1});
+var superformula2 = superformulaGenerator({m: 10, n1: 4, n2: -10, n3: 50, a: 1, b: 1});
+var superformula3 = superformulaGenerator({m: 10, n1: 3, n2: 0.6, n3: 0, a: 1, b: 1});
 
-        function clock() {
-          var now = new Date();
+var configs = [
+    {data:[{t:d3.range(0, 360 + 6, 6), r:d3.range(0, 360 + 6, 6).map(function(deg){ return Math.abs(Math.cos(deg * Math.PI / 180));}),color:"none",strokeColor:"peru",geometry:"LinePlot",name:"Figure8"},
+    {t:d3.range(0, 360 + 6, 6), r:d3.range(0, 360 + 6, 6).map(function(deg){ return Math.abs(0.5 + 0.5 * Math.cos(deg * Math.PI / 180));}),color:"none",strokeColor:"darkviolet",geometry:"LinePlot",name:"Cardioid"},
+    {t:d3.range(0, 360 + 6, 6), r:d3.range(0, 360 + 6, 6).map(function(deg){ return Math.abs(0.25 + 0.75 * Math.cos(deg * Math.PI / 180));}),color:"none",strokeColor:"deepskyblue",geometry:"LinePlot",name:"Hypercardioid"},
+    {t:d3.range(0, 360 + 6, 6), r:d3.range(0, 360 + 6, 6).map(function(deg){ return Math.abs(0.7 + 0.3 * Math.cos(deg * Math.PI / 180));}),color:"none",strokeColor:"orangered",geometry:"LinePlot",name:"Subcardioid"},
+    {t:d3.range(0, 360 + 6, 6), r:d3.range(0, 360 + 6, 6).map(function(deg){ return Math.abs(0.37 + 0.63 * Math.cos(deg * Math.PI / 180));}),color:"none",strokeColor:"green",geometry:"LinePlot",name:"Supercardioid"}],
+        layout:{title:"Line Chart",orientation:-90,angularAxis:{ticksSuffix:"°"},radialAxis:{ticksSuffix:"dB"},needsEndSpacing:false,backgroundColor:"ghostwhite"}},
 
-          var date = now.toLocaleDateString();
-          // var time = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();    // old time without leading 0's
-          var time = now.getHours() + ':' + ((now.getMinutes() < 10) ? "0" + now.getMinutes() : now.getMinutes()) + ':' + ((now.getSeconds() < 10) ? "0" + now.getSeconds() : now.getSeconds());
+    {data: [{t: superformula1.x, r: superformula1.y, geometry: µ.DOT, name: 'time1', dotType:"triangle-down", dotSize: 35, opacity: 0.8},
+          {t: superformula2.x, r: superformula2.y, geometry: µ.DOT, name: 'time2', dotType:"cross", dotSize: 35, opacity: 0.8},
+          {t: superformula3.x, r: superformula3.y, geometry: µ.DOT, name: 'time3', dotSize: 35, opacity: 0.8}],
+          layout: {title: 'Dot Plot', margin: {top: 0, bottom: 0, left: 5, right: 10}, angularAxis: {visible: false}, radialAxis: {visible: false}}},
 
-          document.getElementById('clock_date').innerHTML = date;
-          document.getElementById('clock_time').innerHTML = time;
+    {data: [{t: ['North', 'N-E', 'East', 'S-E', 'South', 'S-W', 'West', 'N-W'], r: [40, 19, 25, 27, 60, 39, 18, 99], name: 'Layer0', geometry: 'AreaChart', groupId: 0},
+    {t: ['North', 'N-E', 'East', 'S-E', 'South', 'S-W', 'West', 'N-W'], r: [92, 30, 40, 51, 33, 88, 74, 56], name: 'Layer1', geometry: 'AreaChart', groupId: 0},
+    {t: ['North', 'N-E', 'East', 'S-E', 'South', 'S-W', 'West', 'N-W'], r: [85, 68, 61, 56, 98, 6, 53, 42], name: 'Layer2', geometry: 'AreaChart', groupId: 0},
+    {t: ['North', 'N-E', 'East', 'S-E', 'South', 'S-W', 'West', 'N-W'], r: [22, 45, 20, 53, 93, 99, 46, 97], name: 'Layer3', geometry: 'AreaChart', groupId: 0},
+    {t: ['North', 'N-E', 'East', 'S-E', 'South', 'S-W', 'West', 'N-W'], r: [85, 43, 90, 37, 48, 31, 82, 66], name: 'Layer4', geometry: 'AreaChart', groupId: 0}],
+    layout: { title: 'Polar Area Chart', width: 350, height: 350, margin: { left: 30, right: 30, top: 30, bottom: 30, pad: 0 },
+        angularAxis: { domain: null }, font: { family: 'Arial, sans-serif', size: 12, color: 'grey' },
+        direction: 'clockwise', orientation: 270, barmode: 'stack', backgroundColor: 'ghostwhite', showLegend: false }},
 
-          setTimeout('clock()', 1000);
-        }
-        clock();
+    {data: [{t: [0, 90, 180, 270], r: [10, 20, 30, 40], geometry: µ.AREA, name: 'Area'},
+            {t: [0, 90, 180, 270], r: [10, 20, 30, 40], geometry: µ.LINE, name: 'Line'},
+            {t: [0, 90, 180, 270], r: [10, 20, 30, 40], geometry: µ.BAR, name: 'Bar'},
+            {t: [0, 90, 180, 270], r: [10, 20, 30, 40], geometry: µ.DOT, name: 'Dot'}], layout: {title: "Multiple Types"}},
+];
 
-        function ShowNotification() {
-            $("#myModal").modal('show');
-        }
+configs.forEach(function(_config){
+    var config = {layout: {width: 400, height: 400}};
+    µ.util.deepExtend(config, _config);
+    console.log(JSON.stringify(µ.adapter.plotly().convert(config, true)));
+    micropolar.Axis().config(config).render(d3.select('body').append('div'));
+});
 
-    </script>
-
-
-
-
-
-
-
-    <style>
-
-    .frame {
-      fill: none;
-      stroke: #000;
-    }
-
-    .axis text {
-      font: 10px sans-serif;
-    }
-
-    .axis line,
-    .axis circle {
-      fill: none;
-      stroke: #777;
-      stroke-dasharray: 1,4;
-    }
-
-    .axis :last-of-type circle {
-      stroke: #333;
-      stroke-dasharray: none;
-    }
-
-    .line {
-      fill: none;
-      stroke: red;
-      stroke-width: 1.5px;
-    }
-
-    </style>
-
-    <script>
-
-    var data = d3.range(0, 2 * Math.PI, .01).map(function(t) {
-      return [t, Math.sin(2 * t) * Math.cos(2 * t)];
-    });
-
-
-    var width = 960,
-        height = 500,
-        radius = Math.min(width, height) / 2 - 30;
-
-    var r = d3.scale.linear()
-        .domain([0, .5])
-        .range([0, radius]);
-
-    var line = d3.svg.line.radial()
-        .radius(function(d) { return r(d[1]); })
-        .angle(function(d) { return -d[0] + Math.PI / 2; });
-
-    var svg = d3.select("body").append("svg")
-        .attr("width", width)
-        .attr("height", height)
-      .append("g")
-        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-    var gr = svg.append("g")
-        .attr("class", "r axis")
-      .selectAll("g")
-        .data(r.ticks(5).slice(1))
-      .enter().append("g");
-
-    gr.append("circle")
-        .attr("r", r);
-
-    gr.append("text")
-        .attr("y", function(d) { return -r(d) - 4; })
-        .attr("transform", "rotate(15)")
-        .style("text-anchor", "middle")
-        .text(function(d) { return d; });
-
-    var ga = svg.append("g")
-        .attr("class", "a axis")
-      .selectAll("g")
-        .data(d3.range(0, 360, 30))
-      .enter().append("g")
-        .attr("transform", function(d) { return "rotate(" + -d + ")"; });
-
-    ga.append("line")
-        .attr("x2", radius);
-
-    ga.append("text")
-        .attr("x", radius + 6)
-        .attr("dy", ".35em")
-        .style("text-anchor", function(d) { return d < 270 && d > 90 ? "end" : null; })
-        .attr("transform", function(d) { return d < 270 && d > 90 ? "rotate(180 " + (radius + 6) + ",0)" : null; })
-        .text(function(d) { return d + "°"; });
-
-    svg.append("path")
-        .datum(data)
-        .attr("class", "line")
-        .attr("d", line);
-
-    </script>
-
-
-
-
-
+</script>
 </body>
-
 </html>
