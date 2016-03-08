@@ -1,4 +1,8 @@
-﻿body {
+.c3-axis-x .tick {
+   display: none;
+}
+
+body {
     margin: 0px;
     color: #333333;
     font-family: "Segoe UI", Tahoma, Arial, Helvetica;
