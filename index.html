@@ -13,7 +13,7 @@
     <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="bower_components/c3/c3.css" rel="stylesheet">
     <link href="bower_components/datatables/media/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css"/>
-
+    <link href="bower_components/nvd3/build/nv.d3.css" rel="stylesheet">
     <link href="Content/dp.css" rel="stylesheet" type="text/css">
 
 </head>
@@ -152,6 +152,7 @@
     <script src="bower_components/bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
     <script src="bower_components/d3/d3.js"></script>
     <script src="bower_components/c3/c3.js"></script>
+    <script src="bower_components/nvd3/build/nv.d3.js"></script>
     <script src="Content/landing_page_chart.js"></script>
     <script src="bower_components/datatables/media/js/jquery.dataTables.js"></script>
     <script src="bower_components/datatables/media/js/dataTables.bootstrap.js"></script>
@@ -202,24 +203,20 @@
             expandIcon: "glyphicon glyphicon-menu-right"
         });
 
-
         function clock() {
-            var now = new Date();
+          var now = new Date();
 
-            var date = now.toLocaleDateString();
-            var time = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+          var date = now.toLocaleDateString();
+          // var time = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();    // old time without leading 0's
+          var time = now.getHours() + ':' + ((now.getMinutes() < 10) ? "0" + now.getMinutes() : now.getMinutes()) + ':' + ((now.getSeconds() < 10) ? "0" + now.getSeconds() : now.getSeconds());
 
-            document.getElementById('clock_date').innerHTML = date;
-            document.getElementById('clock_time').innerHTML = time;
+          document.getElementById('clock_date').innerHTML = date;
+          document.getElementById('clock_time').innerHTML = time;
 
-            setTimeout('clock()', 1000);
+          setTimeout('clock()', 1000);
         }
         clock();
-
-        // function checkTime(i) {
-        //   if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
-        // return i;
-
+        
         function ShowNotification() {
             $("#myModal").modal('show');
         }
