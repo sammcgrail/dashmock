@@ -59,6 +59,7 @@ var config = {
       "ticksSuffix": "°"
     },
     "labelOffset": 15,
+    "direction": "counterclockwise",
   },
 
 };
@@ -87,53 +88,26 @@ micropolar.Axis()
 			"geometry": "DotPlot", // AreaChart, BarChart, DotPlot, LinePlot (default)
 		}
   ],
-		"layout": {
-			// "title": "Micropolar Chart Doc", // (default: null)
-			// "height": 450, // (default: 450)
-			// "width": 450, // (default: 500)
-			"font": { // axes labels font
-				// "size": 15, // (default:12)
-				// "color": "gray", // (default: gray)
-				// "family": "Tahoma, sans-serif", // (default: "Tahoma, sans-serif")
-				// "outlineColor": "black" // (default: white)
-			},
-			"direction": "counterclockwise", // clockwise (default), counterclockwise
-			"orientation": 0, // 0-360 (default: 0, starts at 3 O'clock)
-			// "opacity": 0.8, // 0-1 (default: 1)
-			"legend": {
-				"reverseOrder": false // true|false (default: false)
-			},
-			"showLegend": true, // (default: true)
-			// "margin": { // in pixel (default: 40)
-			// 	"top": 60,
-			// 	"right": 60,
-			// 	"bottom": 30,
-			// 	"left": 60
-			// },
-			// "backgroundColor": "ghostwhite", // (default: none)
-			"radialAxis": {
-				"domain": [0,5], // µ.DATAEXTENT alias for null (default) | [min, max] as floats
-				"orientation": -45, // 0-360 (default: 0)
-				"visible": true, // true|false (default: true)
-				"gridLinesVisible": true, // true|false (default: true)
-				"tickOrientation": 'horizontal', // 'angular', 'horizontal' (default)
-				"ticksSuffix": "mA" // string (default: '')
-			},
-			"angularAxis": {
-				"domain": [0,360], // µ.DATAEXTENT alias for null (default) | [min, max] as floats
-				"visible": true, // true|false (default: true)
-				"gridLinesVisible": true, // true|false (default: true)
-				"labelsVisible": true, // true|false (default: true)
-				"tickOrientation": "horizontal", // radial, angular, horizontal (default)
-				"ticksSuffix": "°" // string (default: '')
-			},
-			"labelOffset": 15, // in pixel (default: 10)
-			"defaultColorRange": [ // used by geometries
-			  "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"
-			],
-			"tickLength": 30, // null (default, means full length) | value in pixel
-			"tickColor": "lightgrey" // axes, ticks and grid
-		}
+    "layout": {
+      "radialAxis": {
+        "domain": [0,20],
+        "orientation": -45,
+        "visible": true,
+        "gridLinesVisible": true,
+        "tickOrientation": 'horizontal',
+        "ticksSuffix": "mA"
+      },
+      "angularAxis": {
+        "domain": [0,360],
+        "visible": true,
+        "gridLinesVisible": true,
+        "labelsVisible": true,
+        "tickOrientation": "horizontal",
+        "ticksSuffix": "°"
+      },
+      "labelOffset": 15,
+      "direction": "counterclockwise",
+    },
 	};
 
 	micropolar.Axis() // instantiate a new axis
