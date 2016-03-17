@@ -78,9 +78,24 @@ configs.forEach(function(_config){
 
 	var config = {
 		"data": [{
-			"t": ["0", "90", "180", "270"], // theta values (x axis)
-			"r": [5, 10, 15, 20], // radial values (y axis)
-			"name": "Voltage 1", // name for the legend
+			"t": [125], // theta values (x axis)
+			"r": [5], // radial values (y axis)
+      "name": "Voltage Sum", // name for the legend
+			"visible": true,
+			"color": "purple", // color of data element
+			"opacity": 0.8,
+			"strokeColor": "purple",
+			"strokeDash": "solid", // solid, dot, dash (default)
+			"strokeSize": 2,
+      "strokeWidth": 1,
+			"visibleInLegend": true,
+      "groupId": 1, // when you want to stack geometry, set the same groupId
+			"geometry": "DotPlot", // AreaChart, BarChart, DotPlot, LinePlot (default)
+		},
+    {
+			"t": [120, 0, 240], // theta values (x axis)
+			"r": [5, 10, 15], // radial values (y axis)
+			"name": "Voltage 2", // name for the legend
 			"visible": true,
 			"color": "purple", // color of data element
 			"opacity": 0.8,
@@ -88,50 +103,10 @@ configs.forEach(function(_config){
 			"strokeDash": "solid", // solid, dot, dash (default)
 			"strokeSize": 1,
 			"visibleInLegend": true,
-			"geometry": "LinePlot", // AreaChart, BarChart, DotPlot, LinePlot (default)
-		}, {
-			"t": ["0", "90", "180", "270"],
-			"r": [10, 20, 30, 40],
-			"name": "Voltage 2",
-			"color": "purple",
-			"geometry": "LinePlot",
-			"visible": true
-		}, {
-			"t": ["0", "90", "180", "270"],
-			"r": [10, 20, 30, 40],
-			"name": "Voltage 3",
-			"color": "purple",
-			"dotType": "triangle-down", // LinePlot only, cross, diamond, square, triangle-down, triangle-up, circle (default)
-			"dotSize": 20, // in square pixels https://github.com/mbostock/d3/wiki/SVG-Shapes#symbol_size
-			"geometry": "LinePlot"
-		}, {
-			"t": ["0", "90", "180", "270"],
-			"r": [10, 20, 30, 40],
-			"name": "Current 1",
-			"color": "none",
-			"strokeColor": "blue",
-			"geometry": "LinePlot",
-      "dotVisible": false,
-			"groupId": 0 // when you want to stack geometry, set the same groupId
-		}, {
-			"t": ["0", "90", "180", "270"],
-			"r": [10, 20, 30, 40],
-			"name": "Current 2",
-			"color": "none",
-			"strokeColor": "blue",
-			"geometry": "LinePlot",
-			"dotVisible": false,
-			"groupId": 0
-		}, {
-			"t": ["0", "90", "180", "270"],
-			"r": [10, 20, 30, 40],
-			"name": "Current 3",
-			"color": "none",
-			"strokeColor": "blue",
-			"geometry": "LinePlot",
-			"dotVisible": false,
-			"groupId": 0
-		}],
+      "groupId": 1, // when you want to stack geometry, set the same groupId
+			"geometry": "DotPlot", // AreaChart, BarChart, DotPlot, LinePlot (default)
+		}
+  ],
 		"layout": {
 			// "title": "Micropolar Chart Doc", // (default: null)
 			// "height": 450, // (default: 450)
@@ -157,7 +132,7 @@ configs.forEach(function(_config){
 			// },
 			// "backgroundColor": "ghostwhite", // (default: none)
 			"radialAxis": {
-				"domain": µ.DATAEXTENT, // µ.DATAEXTENT alias for null (default) | [min, max] as floats
+				"domain": null, // µ.DATAEXTENT alias for null (default) | [min, max] as floats
 				"orientation": -45, // 0-360 (default: 0)
 				"visible": true, // true|false (default: true)
 				"gridLinesVisible": true, // true|false (default: true)
@@ -165,7 +140,7 @@ configs.forEach(function(_config){
 				"ticksSuffix": "mA" // string (default: '')
 			},
 			"angularAxis": {
-				"domain": null, // µ.DATAEXTENT alias for null (default) | [min, max] as floats
+				"domain": [0,360], // µ.DATAEXTENT alias for null (default) | [min, max] as floats
 				"visible": true, // true|false (default: true)
 				"gridLinesVisible": true, // true|false (default: true)
 				"labelsVisible": true, // true|false (default: true)
@@ -186,11 +161,6 @@ configs.forEach(function(_config){
 	  .render(d3.select('#chart-sub-polar1')); // render it
 
 </script>
-
-
-
-
-
 <script>
 	var art1 = artGenerator({m: 2, n1: 1, n2: 30, n3: 3, a: 1, b: 1});
 	var art2 = artGenerator({m: 10, n1: 4, n2: -10, n3: 50, a: 1, b: 1});
@@ -209,7 +179,7 @@ configs.forEach(function(_config){
 			  layout: {
           title: 'Sum Current Plot Experiment',
           margin: {top: 0, bottom: 0, left: 5, right: 10},
-          angularAxis: {visible: true	},
+          angularAxis: {visible: true, ticksSuffix: "°"	},
           radialAxis: {visible: true, ticksSuffix: "mA"	},
           "direction": "counterclockwise",
           "labelOffset": 13, // in pixel (default: 10)
@@ -241,3 +211,62 @@ function artGenerator(params) {
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+<!-- backup
+
+, {
+  "t": ["0", "90", "180", "270"],
+  "r": [10, 20, 30, 40],
+  "name": "Voltage 2",
+  "color": "purple",
+  "geometry": "DotPlot",
+  "dotType": "square",
+  "groupId": 1, // when you want to stack geometry, set the same groupId
+  "visible": true
+}, {
+  "t": ["0", "90", "180", "270"],
+  "r": [10, 20, 30, 24],
+  "name": "Voltage 3",
+  "color": "purple",
+  "dotType": "triangle-down", // LinePlot only, cross, diamond, square, triangle-down, triangle-up, circle (default)
+  "dotSize": 20, // in square pixels https://github.com/mbostock/d3/wiki/SVG-Shapes#symbol_size
+  "geometry": "DotPlot",
+  "groupId": 1 // when you want to stack geometry, set the same groupId
+}, {
+  "t": ["0", "90", "180", "270"],
+  "r": [10, 20, 30, 40],
+  "name": "Current 1",
+  "color": "blue",
+  "strokeColor": "blue",
+  "geometry": "DotPlot",
+  "dotVisible": true,
+  "groupId": 2 // when you want to stack geometry, set the same groupId
+}, {
+  "t": ["0", "90", "180", "270"],
+  "r": [10, 20, 30, 40],
+  "name": "Current 2",
+  "color": "blue",
+  "strokeColor": "blue",
+  "dotType": "square",
+  "geometry": "DotPlot",
+  "dotVisible": true,
+  "groupId": 2
+}, {
+  "t": ["0", "90", "180", "270"],
+  "r": [10, 10, 10, 200],
+  "name": "Current 3",
+  "color": "blue",
+  "strokeColor": "blue",
+  "geometry": "DotPlot",
+  "dotType": "triangle-down",
+  "dotVisible": true,
+  "groupId": 5
+} -->
