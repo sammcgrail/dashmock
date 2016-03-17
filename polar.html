@@ -14,12 +14,13 @@
     </style>
 </head>
 <body>
-
+  <div id="chart-sub-polar2"></div>
+  <div id="chart-sub-polar1"></div>
 <div id="container1"></div>
 
-<script>
+<!-- <script>
 
-function superformulaGenerator(params) {
+function artGenerator(params) {
   var n = 360, step = 1, i = -1, r = 0, dt = 2 * Math.PI / n, t, x, y, points = {x: [], y: []};
   d3.range(0, 360, 3).forEach(function(d, i){
     t = params.m * (d * dt - Math.PI) / 4;
@@ -31,9 +32,9 @@ function superformulaGenerator(params) {
   points.y = points.y.map(function(d, i){ return Math.round(d / r*100)/100; });
   return points;
 }
-var superformula1 = superformulaGenerator({m: 3, n1: 1, n2: 30, n3: 3, a: 1, b: 1});
-var superformula2 = superformulaGenerator({m: 10, n1: 4, n2: -10, n3: 50, a: 1, b: 1});
-var superformula3 = superformulaGenerator({m: 10, n1: 3, n2: 0.6, n3: 0, a: 1, b: 1});
+var art1 = artGenerator({m: 3, n1: 1, n2: 30, n3: 3, a: 1, b: 1});
+var art2 = artGenerator({m: 10, n1: 4, n2: -10, n3: 50, a: 1, b: 1});
+var art3 = artGenerator({m: 10, n1: 3, n2: 0.6, n3: 0, a: 1, b: 1});
 
 var configs = [
     {data:[{t:d3.range(0, 360 + 6, 6), r:d3.range(0, 360 + 6, 6).map(function(deg){ return Math.abs(Math.cos(deg * Math.PI / 180));}),color:"none",strokeColor:"peru",geometry:"LinePlot",name:"Figure8"},
@@ -43,9 +44,9 @@ var configs = [
     {t:d3.range(0, 360 + 6, 6), r:d3.range(0, 360 + 6, 6).map(function(deg){ return Math.abs(0.37 + 0.63 * Math.cos(deg * Math.PI / 180));}),color:"none",strokeColor:"green",geometry:"LinePlot",name:"Supercardioid"}],
         layout:{title:"Line Chart",orientation:-90,angularAxis:{ticksSuffix:"°"},radialAxis:{ticksSuffix:"dB"},needsEndSpacing:false,backgroundColor:"ghostwhite"}},
 
-    {data: [{t: superformula1.x, r: superformula1.y, geometry: µ.DOT, name: 'time1', dotType:"triangle-down", dotSize: 35, opacity: 0.8},
-          {t: superformula2.x, r: superformula2.y, geometry: µ.DOT, name: 'time2', dotType:"cross", dotSize: 35, opacity: 0.8},
-          {t: superformula3.x, r: superformula3.y, geometry: µ.DOT, name: 'time3', dotSize: 35, opacity: 0.8}],
+    {data: [{t: art1.x, r: art1.y, geometry: µ.DOT, name: 'time1', dotType:"triangle-down", dotSize: 35, opacity: 0.8},
+          {t: art2.x, r: art2.y, geometry: µ.DOT, name: 'time2', dotType:"cross", dotSize: 35, opacity: 0.8},
+          {t: art3.x, r: art3.y, geometry: µ.DOT, name: 'time3', dotSize: 35, opacity: 0.8}],
           layout: {title: 'Dot Plot', margin: {top: 0, bottom: 0, left: 5, right: 10}, angularAxis: {visible: false}, radialAxis: {visible: false}}},
 
     {data: [{t: ['North', 'N-E', 'East', 'S-E', 'South', 'S-W', 'West', 'N-W'], r: [40, 19, 25, 27, 60, 39, 18, 99], name: 'Layer0', geometry: 'AreaChart', groupId: 0},
@@ -70,6 +71,173 @@ configs.forEach(function(_config){
     micropolar.Axis().config(config).render(d3.select('body').append('div'));
 });
 
+</script> -->
+
+
+<script>
+
+	var config = {
+		"data": [{
+			"t": ["0", "90", "180", "270"], // theta values (x axis)
+			"r": [5, 10, 15, 20], // radial values (y axis)
+			"name": "Voltage 1", // name for the legend
+			"visible": true,
+			"color": "purple", // color of data element
+			"opacity": 0.8,
+			"strokeColor": "purple",
+			"strokeDash": "solid", // solid, dot, dash (default)
+			"strokeSize": 1,
+			"visibleInLegend": true,
+			"geometry": "LinePlot", // AreaChart, BarChart, DotPlot, LinePlot (default)
+		}, {
+			"t": ["0", "90", "180", "270"],
+			"r": [10, 20, 30, 40],
+			"name": "Voltage 2",
+			"color": "purple",
+			"geometry": "LinePlot",
+			"visible": true
+		}, {
+			"t": ["0", "90", "180", "270"],
+			"r": [10, 20, 30, 40],
+			"name": "Voltage 3",
+			"color": "purple",
+			"dotType": "triangle-down", // LinePlot only, cross, diamond, square, triangle-down, triangle-up, circle (default)
+			"dotSize": 20, // in square pixels https://github.com/mbostock/d3/wiki/SVG-Shapes#symbol_size
+			"geometry": "LinePlot"
+		}, {
+			"t": ["0", "90", "180", "270"],
+			"r": [10, 20, 30, 40],
+			"name": "Current 1",
+			"color": "none",
+			"strokeColor": "blue",
+			"geometry": "LinePlot",
+      "dotVisible": false,
+			"groupId": 0 // when you want to stack geometry, set the same groupId
+		}, {
+			"t": ["0", "90", "180", "270"],
+			"r": [10, 20, 30, 40],
+			"name": "Current 2",
+			"color": "none",
+			"strokeColor": "blue",
+			"geometry": "LinePlot",
+			"dotVisible": false,
+			"groupId": 0
+		}, {
+			"t": ["0", "90", "180", "270"],
+			"r": [10, 20, 30, 40],
+			"name": "Current 3",
+			"color": "none",
+			"strokeColor": "blue",
+			"geometry": "LinePlot",
+			"dotVisible": false,
+			"groupId": 0
+		}],
+		"layout": {
+			// "title": "Micropolar Chart Doc", // (default: null)
+			// "height": 450, // (default: 450)
+			// "width": 450, // (default: 500)
+			"font": { // axes labels font
+				// "size": 15, // (default:12)
+				// "color": "gray", // (default: gray)
+				// "family": "Tahoma, sans-serif", // (default: "Tahoma, sans-serif")
+				// "outlineColor": "black" // (default: white)
+			},
+			"direction": "counterclockwise", // clockwise (default), counterclockwise
+			"orientation": 0, // 0-360 (default: 0, starts at 3 O'clock)
+			// "opacity": 0.8, // 0-1 (default: 1)
+			"legend": {
+				"reverseOrder": false // true|false (default: false)
+			},
+			"showLegend": true, // (default: true)
+			// "margin": { // in pixel (default: 40)
+			// 	"top": 60,
+			// 	"right": 60,
+			// 	"bottom": 30,
+			// 	"left": 60
+			// },
+			// "backgroundColor": "ghostwhite", // (default: none)
+			"radialAxis": {
+				"domain": µ.DATAEXTENT, // µ.DATAEXTENT alias for null (default) | [min, max] as floats
+				"orientation": -45, // 0-360 (default: 0)
+				"visible": true, // true|false (default: true)
+				"gridLinesVisible": true, // true|false (default: true)
+				"tickOrientation": 'horizontal', // 'angular', 'horizontal' (default)
+				"ticksSuffix": "mA" // string (default: '')
+			},
+			"angularAxis": {
+				"domain": null, // µ.DATAEXTENT alias for null (default) | [min, max] as floats
+				"visible": true, // true|false (default: true)
+				"gridLinesVisible": true, // true|false (default: true)
+				"labelsVisible": true, // true|false (default: true)
+				"tickOrientation": "horizontal", // radial, angular, horizontal (default)
+				"ticksSuffix": "°" // string (default: '')
+			},
+			"labelOffset": 15, // in pixel (default: 10)
+			"defaultColorRange": [ // used by geometries
+			  "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"
+			],
+			"tickLength": 30, // null (default, means full length) | value in pixel
+			"tickColor": "lightgrey" // axes, ticks and grid
+		}
+	};
+
+	micropolar.Axis() // instantiate a new axis
+	  .config(config) // configure it
+	  .render(d3.select('#chart-sub-polar1')); // render it
+
+</script>
+
+
+
+
+
+<script>
+	var art1 = artGenerator({m: 2, n1: 1, n2: 30, n3: 3, a: 1, b: 1});
+	var art2 = artGenerator({m: 10, n1: 4, n2: -10, n3: 50, a: 1, b: 1});
+	var art3 = artGenerator({m: 10, n1: 3, n2: 0.6, n3: 0, a: 1, b: 1});
+
+	var configs = [
+		{data: [
+      {t: art1.x, r: art1.y,
+      geometry: µ.DOT,
+      name: 'Current 1',
+      dotSize: 35,
+      opacity: 0.8},
+			  {t: art2.x, r: art2.y, geometry: "DotPlot", name: 'Current 2', dotSize: 35, opacity: 0.8},
+			  {t: art3.x, r: art3.y, geometry: µ.DOT, name: 'Current 3', dotSize: 35, opacity: 0.8}],
+
+			  layout: {
+          title: 'Sum Current Plot Experiment',
+          margin: {top: 0, bottom: 0, left: 5, right: 10},
+          angularAxis: {visible: true	},
+          radialAxis: {visible: true, ticksSuffix: "mA"	},
+          "direction": "counterclockwise",
+          "labelOffset": 13, // in pixel (default: 10)
+        }},
+
+	];
+
+	configs.forEach(function(_config){
+		var config = {
+			layout: {width: 400, height: 450}
+		};
+		µ.util.deepExtend(config, _config);
+
+		micropolar.Axis().config(config).render(d3.select('#chart-sub-polar2'));
+	});
+
+function artGenerator(params) {
+  var n = 360, step = 1, i = -1, r = 0, dt = 2 * Math.PI / n, t, x, y, points = {x: [], y: []};
+  d3.range(0, 360, 3).forEach(function(d, i){
+	t = params.m * (d * dt - Math.PI) / 4;
+	t = Math.pow(Math.abs(Math.pow(Math.abs(Math.cos(t) / params.a), params.n2) + Math.pow(Math.abs(Math.sin(t) / params.b), params.n3)), -1 / params.n1);
+	if (t > r) r = t;
+	points.x.push(Math.round(d*100)/100);
+	points.y.push(t);
+  });
+  points.y = points.y.map(function(d, i){ return Math.round(d / r*100)/100; });
+  return points;
+}
 </script>
 </body>
 </html>
