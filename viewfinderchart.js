@@ -1,11 +1,10 @@
 nv.addGraph(function() {
   var chart = nv.models.lineWithFocusChart()
-  .useInteractiveGuideline(true);
-  chart.interactiveLayer.tooltip.fixedTop(100);
+  .useInteractiveGuideline(true);                // use for x axis mark guideline on mouseover
+  chart.interactiveLayer.tooltip.fixedTop(100);  // so tooltip can contain multiple traces
 
   chart.xAxis
       .tickFormat(d3.format(',f'));
-
   chart.yAxis
       .tickFormat(d3.format(',.2f'));
 
