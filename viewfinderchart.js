@@ -1,5 +1,7 @@
 nv.addGraph(function() {
-  var chart = nv.models.lineWithFocusChart();
+  var chart = nv.models.lineWithFocusChart()
+  .useInteractiveGuideline(true);
+  chart.interactiveLayer.tooltip.fixedTop(100);
 
   chart.xAxis
       .tickFormat(d3.format(',f'));
