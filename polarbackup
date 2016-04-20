@@ -21,7 +21,43 @@
 <script>
 
 	var config = {
-
+		"data": [{
+			"t": [125], // theta values (x axis)
+			"r": [4], // radial values (y axis)
+      "name": "Current Sum", // name for the legend
+			"visible": true,
+			"color": "blue", // color of data element
+			"opacity": 0.8,
+			"strokeColor": "blue",
+			"strokeDash": "solid", // solid, dot, dash (default)
+			"strokeSize": 2,
+      "strokeWidth": 1,
+			"visibleInLegend": true,
+      "groupId": 1, // when you want to stack geometry, set the same groupId
+			"geometry": "DotPlot", // AreaChart, BarChart, DotPlot, LinePlot (default)
+		}
+  ],
+    "layout": {
+      "radialAxis": {
+        "domain": [0,5],
+        "orientation": -45,
+        "visible": true,
+        "gridLinesVisible": true,
+        "tickOrientation": 'horizontal',
+        "ticksSuffix": "mA"
+      },
+      "angularAxis": {
+        "domain": [0,360],
+        "visible": true,
+        "gridLinesVisible": true,
+        "labelsVisible": true,
+        "tickOrientation": "horizontal",
+        "ticksSuffix": "°"
+      },
+      "labelOffset": 15,
+      "direction": "counterclockwise",
+    },
+	};
 
 	micropolar.Axis() // instantiate a new axis
 	  .config(config) // configure it
@@ -33,8 +69,8 @@
 var config = {
   "data": [
   {
-    "t": [],
-    "r": [],
+    "t": [120, 0, 240],
+    "r": [8, 10, 15],
     "name": "Voltage Vectors",
     "color": "purple",
     "geometry": "DotPlot",
@@ -75,10 +111,58 @@ micropolar.Axis()
 
 </script>
 
+<script>
+	var art1 = artGenerator({m: 2, n1: 1, n2: 30, n3: 3, a: 1, b: 1});
+	var art2 = artGenerator({m: 10, n1: 4, n2: -10, n3: 50, a: 1, b: 1});
+	var art3 = artGenerator({m: 10, n1: 3, n2: 0.6, n3: 0, a: 1, b: 1});
+
+	var configs = [
+		{data: [
+      {t: art1.x, r: art1.y,
+      geometry: µ.DOT,
+      name: 'Current 1',
+      dotSize: 35,
+      opacity: 0.8},
+			  {t: art2.x, r: art2.y, geometry: "DotPlot", name: 'Current 2', dotSize: 35, opacity: 0.8},
+			  {t: art3.x, r: art3.y, geometry: µ.DOT, name: 'Current 3', dotSize: 35, opacity: 0.8}],
+
+			  layout: {
+          title: 'Sum Current Plot Experiment',
+          margin: {top: 0, bottom: 0, left: 30, right: 30},
+          angularAxis: {visible: true, ticksSuffix: "°"	},
+          radialAxis: {visible: true, ticksSuffix: "mA"	},
+          "direction": "counterclockwise",
+          "labelOffset": 13, // in pixel (default: 10)
+        }},
+
+	];
+
+	configs.forEach(function(_config){
+		var config = {
+			layout: {width: 400, height: 450}
+		};
+		µ.util.deepExtend(config, _config);
+
+		micropolar.Axis().config(config).render(d3.select('#chart-sub-polar3'));
+	});
+
+function artGenerator(params) {
+  var n = 360, step = 1, i = -1, r = 0, dt = 2 * Math.PI / n, t, x, y, points = {x: [], y: []};
+  d3.range(0, 360, 3).forEach(function(d, i){
+	t = params.m * (d * dt - Math.PI) / 4;
+	t = Math.pow(Math.abs(Math.pow(Math.abs(Math.cos(t) / params.a), params.n2) + Math.pow(Math.abs(Math.sin(t) / params.b), params.n3)), -1 / params.n1);
+	if (t > r) r = t;
+	points.x.push(Math.round(d*100)/100);
+	points.y.push(t);
+  });
+  points.y = points.y.map(function(d, i){ return Math.round(d / r*100)/100; });
+  return points;
+}
+</script>
 </body>
 </html>
 
-<!-- function loadCurrentSum() {
+function loadCurrentSum() {
 	var d;
 
 	var sumcurrent = {
@@ -538,7 +622,7 @@ function loadPolarGrid() {
 // 	micropolar.Axis() // instantiate a new axis
 // 	  .config(config) // configure it
 // 		.render(d3.select('#chart-sub-polar6')); // render it - use select and not body append
-// } -->
+// }
 
 
 
