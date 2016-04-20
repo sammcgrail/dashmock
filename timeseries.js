@@ -7,7 +7,7 @@ nv.addGraph(function() {
      .tickFormat(function(d) { return d3.time.format('%b %d')(new Date(d)); });
 
  timeseries.yAxis
-     .axisLabel('Activity')
+     .axisLabel('DGA')
      .tickFormat(d3.format('d'));
 
  d3.select('#timeseries svg')
@@ -35,7 +35,7 @@ function fakeActivityByDate() {
  return [
    {
      values: lineData,
-     key: 'Activity',
+     key: 'DGA',
      color: '#ff7f0e'
    }
  ];
