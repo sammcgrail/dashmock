@@ -4,8 +4,11 @@ nv.addGraph(function() {
   chart.interactiveLayer.tooltip.fixedTop(100);  // so tooltip can contain multiple traces
 
   chart.xAxis
-      .tickFormat(d3.format(',f'));
+      .axisLabel('Timeseries')
+      .tickFormat(d3.format(',f'))
+      .tickFormat(function(d) { return d3.time.format('%b %d')(new Date(d)); });
   chart.yAxis
+      .axisLabel('Capacitance')
       .tickFormat(d3.format(',.2f'));
 
   chart.y2Axis
@@ -20,12 +23,10 @@ nv.addGraph(function() {
 
   return chart;
 });
-/**************************************
- * Simple test data generator
- */
+
 
 function testData() {
-  return stream_layers(3,128,.1).map(function(data, i) {
+  return stream_layers(3,1000,.1).map(function(data, i) {
     return {
       key: 'Bushing ' + (i + 1) ,
       values: data

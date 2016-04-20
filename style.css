@@ -5,3 +5,12 @@ body {
 #chart svg {
   height: 400px;
 }
+
+#sinandcoschart svg {
+  height: 300px;
+}
+
+
+#timeseries svg {
+  height: 300px;
+}
