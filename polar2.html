@@ -4,34 +4,16 @@
 <head>
   <meta charset="utf-8">
   <title>Examples - NVD3</title>
-  <link href="style.css" rel="stylesheet">
+  <link href="polar2style.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
 <body>
 
 <h1>d3 test</h1>
-
+<script src="stats.min.js"></script>
 <script src="d3.js"></script>
-<script>
-var svg = d3.select("body").append("svg")    //create the SVG panel
-      .attr("width", 150)
-      .attr("height", 100);
-
-var circle = svg.append("circle")  //add the circle
-      .attr("cx", 50)
-      .attr("cy", 50)
-      .attr("r",10)
-      .style("fill","blue");
-
-setInterval(function(){           //execute the following code every 3 seconds
-    circle.transition().duration(500).attr("cx", 100)                 //animate the circle
-    .transition().duration(500).delay(500).style("fill","red")
-    .transition().duration(500).delay(1000).attr("r",20)
-    .transition().duration(500).delay(1500).attr("cx", 50)
-    .transition().duration(500).delay(2000).style("fill","blue")
-    .transition().duration(500).delay(2500).attr("r",10);
-}, 3000);
-</script>
+<script src="polar2.js"></script>
+<script src="circleanim.js"></script>
 
 </body>
 </html>
