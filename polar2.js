@@ -1,5 +1,5 @@
 
-var data = d3.range(0, 2 * Math.PI, .01).map(function(t) {
+var data = d3.range(0, 2, .01).map(function(t) {
   return [t, .1];
 });
 
