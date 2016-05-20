@@ -1,0 +1,254 @@
+
+#include <my_global.h>
+#include <mysql.h>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <syslog.h>
+#include <openssl/md5.h>
+
+#define RLEN     (256)
+#define AUTH_TAG "auth_session"
+
+void  finish_with_error(MYSQL *);
+int   dp_auth_try_session(const char *, char *, int, char *, int);
+void  atest(char *, char *, int, char *, int);
+void  to_md5(unsigned char *, unsigned char *, int);
+char *dp_auth_try_credentials(char *, char *, char *, char *, int, char *, int);
+char *dp_auth_create_session_id(char *, char *, char *, int);
+char *dp_auth_get_role(char *, char *, char *, int);
+int   dp_auth_set_session_id(char *, char *, char *);
+void  dp_auth_remove_old_sessions();
+/* unsigned char *MD5(const unsigned char *d, unsigned long n, unsigned char *md); */
+/* int MD5_Init(MD5_CTX *c); */
+/* int MD5_Update(MD5_CTX *c, const void *data, unsigned long len); */
+/* int MD5_Final(unsigned char *md, MD5_CTX *c); */
+
+int main(int argc, char **argv) {
+  printf("MySQL client version: %s\n", mysql_get_client_info());
+  char role[RLEN];
+  char name[RLEN];
+  atest("52e97411cf54602f20fe5c2076c74ee9", role, RLEN, name, RLEN);
+  atest("52e97411cf54602f20fe5c2076c74eea", role, RLEN, name, RLEN);
+  atest("52e97411cf54602f20fe5c2076c74ee9", role, RLEN, name, RLEN);
+  unsigned char out[RLEN];
+  memset(out, 0, RLEN);
+  to_md5("happy", out, 33);
+  printf(out);
+  printf("\n");
+  memset(out, 0, RLEN);
+  printf("session id: %s\n", dp_auth_create_session_id("ad", "1.2.3.4", out, 33));
+  printf("role:       %s\n", dp_auth_get_role("ad", "idd2ad", out, RLEN));
+  printf("role:       %s\n", dp_auth_get_role("adx", "idd2ad", out, RLEN));
+  printf("role:       %s\n", dp_auth_get_role("to", "idd2to", out, RLEN));
+  printf("set sid:    %d\n", dp_auth_set_session_id("123", "test", "test2"));
+}
+
+void atest(char *s, char *role, int rlen, char *name, int nlen) {
+  int ret = dp_auth_try_session(s, role, rlen, name, nlen);
+  if (ret) printf("AUTH   %s %s\n", name, role);
+  else printf("NOAUTH\n");
+}
+
+int mytest(char *buf, int buflen) {
+  strcpy(buf, "test routine");
+  return 1;
+}
+
+/* try new credentials */
+char *dp_auth_try_credentials(char *uname, char *pword, char *rip, char *role, int rlen, char *sid, int slen) {
+  char *ret = (char *)0;
+  setlogmask(LOG_UPTO (LOG_ERR));
+  openlog("try_creds", LOG_PID|LOG_CONS, LOG_USER);
+  syslog(LOG_ERR, "ENTER dp_auth_try_credentials()");
+  dp_auth_remove_old_sessions(); /* remove all the old sessions before we try this */
+  syslog(LOG_ERR, uname);
+  syslog(LOG_ERR, pword);
+  //  strncpy(role, pword, rlen);
+  if (dp_auth_get_role(uname, pword, role, rlen)) {
+    syslog(LOG_ERR, role);
+    /* TEST IF ROLE IS KNOWN !!! */
+    dp_auth_create_session_id(uname, role, sid, 33);
+    dp_auth_set_session_id(sid, role, uname);
+    ret = sid;
+  } // else ret = (char *)0;
+  syslog(LOG_ERR, "EXIT dp_auth_try_credentials()");
+  closelog();
+  return ret;
+} /* end dp_auth_try_credentials() */
+
+/* try to authenticate with a session id */
+int dp_auth_try_session(const char *s, char *role, int rlen, char *name, int nlen) {
+  int ret = 0;
+  MYSQL *con = mysql_init(NULL);
+  char   query[RLEN];
+  setlogmask(LOG_UPTO (LOG_ERR));
+  openlog("try_creds", LOG_PID|LOG_CONS, LOG_USER);
+  syslog(LOG_ERR, "ENTER dp_auth_try_session()");
+  dp_auth_remove_old_sessions(); /* remove all the old sessions before we try this */
+  if (con == NULL) {
+      syslog(LOG_ERR, "%s\n", mysql_error(con));
+      syslog(LOG_ERR, "SESSION AUTH FAILED 0");
+      syslog(LOG_ERR, "EXIT dp_auth_try_session() 0");
+      closelog();
+      return ret;
+  }
+  if (mysql_real_connect(con, "localhost", "root", "rootpass", "idd", 0, NULL, 0) == NULL) {
+      finish_with_error(con);
+      syslog(LOG_ERR, "SESSION AUTH FAILED 1");
+      syslog(LOG_ERR, "EXIT dp_auth_try_session() 1");
+      closelog();
+      return ret;
+  }
+  sprintf(query, "SELECT value1, value2 FROM gui_store WHERE tag1='%s' and tag2='%s'", AUTH_TAG, s);
+  syslog(LOG_ERR, query);
+  if (mysql_query(con, query)) {
+    finish_with_error(con);
+    syslog(LOG_ERR, "SESSION AUTH FAILED 3");
+    syslog(LOG_ERR, "EXIT dp_auth_try_session() 3");
+    closelog();
+    return ret;
+  }
+
+  MYSQL_RES *result = mysql_store_result(con);
+
+  if (result == NULL) {
+    finish_with_error(con);
+    syslog(LOG_ERR, "SESSION AUTH FAILED 2");
+    syslog(LOG_ERR, "EXIT dp_auth_try_session() 2");
+    closelog();
+    return ret;
+  }
+
+  int num_fields = mysql_num_fields(result);
+  syslog(LOG_ERR, "num_fields %d", num_fields);
+
+  MYSQL_ROW row;
+
+  if ((row = mysql_fetch_row(result))) {
+    syslog(LOG_ERR, "RESULT: |%s| |%s|", row[0], row[1]);
+    if (row[0] != NULL) {
+      strncpy(role, row[0], rlen);
+      strncpy(name, row[1], nlen);
+      syslog(LOG_ERR, "SESSION AUTH OK");
+      ret = 1;
+    }
+  } else syslog(LOG_ERR, "NO ROW");
+
+  mysql_free_result(result);
+  mysql_close(con);
+  syslog(LOG_ERR, ret ? "EXIT dp_auth_try_session() OK" : "EXIT dp_auth_try_session() FAIL");
+  closelog();
+  return ret;
+} /* end dp_auth_try_session() */
+
+/* gets the role given a username and password */
+char *dp_auth_get_role(char *uname, char *passw, char *role, int rlen) {
+  syslog(LOG_ERR, "enter dp_auth_get_role() %s %s", uname, passw);
+  char  *ret = (char *)0;	/* return NULL on failure */
+  char   query[RLEN];		/* query to check creds   */
+  char   pword[RLEN];		/* md5 of password        */
+  char   buf[1024];		/* scratch buffer         */
+  MYSQL *con = mysql_init(NULL);
+  if (con == NULL) {
+    snprintf(buf, 1024, "%s\n", mysql_error(con));
+    syslog(LOG_ERR, buf);
+    return 0;
+  }
+  if (mysql_real_connect(con, "localhost", "root", "rootpass", "idd", 0, NULL, 0) == NULL) {
+    syslog(LOG_ERR, "hard exit dp_auth_get_role()");
+    finish_with_error(con);
+  }
+  sprintf(query, "SELECT role FROM gui_user_credentials WHERE name='%s' and password='%s'", uname, passw);
+  syslog(LOG_ERR, "query dp_auth_get_role() %s", query);
+  if (mysql_query(con, query)) finish_with_error(con);
+
+  MYSQL_RES *result = mysql_store_result(con);
+
+  if (result == NULL) finish_with_error(con);
+
+  int num_fields = mysql_num_fields(result);
+
+  MYSQL_ROW row;
+
+  if (row = mysql_fetch_row(result)) {
+    if (row[0] != NULL) {
+      strncpy(role, row[0], rlen);
+      ret = role;
+    }
+  }
+
+  mysql_free_result(result);
+  mysql_close(con);
+  syslog(LOG_ERR, "exit dp_auth_get_role() %s", role);
+  return ret;
+}
+
+/* logs the error and then closes the connection */
+void finish_with_error(MYSQL *con) {
+  syslog(LOG_ERR, "%s", mysql_error(con));
+  mysql_close(con);
+} /* end finish_with_error() */
+
+int dp_auth_set_session_id(char *sid, char *role, char *uname) {
+  int    ret = 0;		/* return NULL on failure */
+  char   query[RLEN];		/* query to check creds   */
+  char   pword[RLEN];		/* md5 of password        */
+  MYSQL *con = mysql_init(NULL);
+  if (con == NULL) {
+      syslog(LOG_ERR, "%s\n", mysql_error(con));
+      return 0;
+  }
+  if (mysql_real_connect(con, "localhost", "root", "rootpass", "idd", 0, NULL, 0) == NULL) {
+      finish_with_error(con);
+  }
+  sprintf(query, "INSERT INTO gui_store (tag1, tag2, value1, value2) VALUES('%s', '%s', '%s', '%s')", AUTH_TAG, sid, role, uname);
+  printf("%s\n", query);
+  if (mysql_query(con, query)) finish_with_error(con);
+  else ret = 1;
+  mysql_close(con);
+  return ret;
+} /* end dp_auth_set_session_id() */
+
+/* make an authentication session id */
+char *dp_auth_create_session_id(char *uname, char *rip, char *out, int olen) {
+  int  sidbuflen = olen * 8;	/* session id buffer length */
+  char sidbuf[sidbuflen];	/* session id buffer        */
+  long int r;			/* random number storage    */
+  time_t now = time(NULL);
+  srandom((unsigned int)now);	/* the random number seed   */
+  r = random();			/* gen the random number    */
+  snprintf(sidbuf, sidbuflen, "%s%ul%s", uname, r, rip);
+  to_md5(sidbuf, out, olen);	/* convert to MD5 hexstring */
+  return out;
+} /* end dp_auth_create_session_id() */
+
+/* remove all old auth sessions */
+void dp_auth_remove_old_sessions() {
+  syslog(LOG_ERR, "enter dp_auth_remove_old_sessions()");
+  char   query[RLEN];		/* query to check creds   */
+  MYSQL *con = mysql_init(NULL);
+  if (con == NULL) {
+    syslog(LOG_ERR, "dp_auth_remove_old_sessions() cannot init mysql: %s", mysql_error(con));
+    return;
+  }
+  if (mysql_real_connect(con, "localhost", "root", "rootpass", "idd", 0, NULL, 0) == NULL) {
+    syslog(LOG_ERR, "dp_auth_remove_old_sessions() cannot connect to mysql");
+    finish_with_error(con);
+  }
+  sprintf(query, "DELETE FROM gui_store WHERE tag1='auth_session' AND update_time < DATE_SUB(NOW(), INTERVAL 1 MINUTE)");
+  syslog(LOG_ERR, "dp_auth_remove_old_sessions() mysql query %s", query);
+  if (mysql_query(con, query)) finish_with_error(con);
+  mysql_close(con);
+  syslog(LOG_ERR, "exit dp_auth_remove_old_sessions()");
+  return;
+} /* end dp_auth_remove_old_sessions() */
+
+void to_md5(unsigned char *in, unsigned char *out, int olen) {
+  unsigned char digest[MD5_DIGEST_LENGTH];
+  MD5(in, strlen(in), (unsigned char*)&digest);
+  for (int i = 0; i < (olen / 2); i++)
+    sprintf(&out[i*2], "%02x", (unsigned int)digest[i]);
+}

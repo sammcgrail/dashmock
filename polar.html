@@ -5,29 +5,31 @@
     <title></title>
     <script type='text/javascript' src="http://d3js.org/d3.v3.min.js"></script>
     <script type='text/javascript' src="http://micropolar.org/micropolar-v0.2.2.js"></script>
-    <style>
-      div{
-        float: left;
-        border: #eee 1px solid;
-        margin: 5px;
-      }
-    </style>
+    <link href="nouislider.min.css" rel="stylesheet">
+
 </head>
 <body>
-  <div id="chart-sub-polar1"></div>
   <div id="chart-sub-polar2"></div>
-  <div id="chart-sub-polar3"></div>
-
-<script>
-
-	var config = {
 
 
-	micropolar.Axis() // instantiate a new axis
-	  .config(config) // configure it
-	  .render(d3.select('#chart-sub-polar1')); // render it
 
-</script>
+  <div id="drag-fixed"></div>
+
+  <script src="nouislider.min.js"></script>
+
+
+  <script>dragFixedSlider = document.getElementById('drag-fixed');
+
+  noUiSlider.create(dragFixedSlider, {
+  	start: [ 40, 60 ],
+  	behaviour: 'drag-fixed',
+  	connect: true,
+  	range: {
+  		'min':  20,
+  		'max':  80
+  	}
+  });
+  </script>
 
 <script>
 var config = {
