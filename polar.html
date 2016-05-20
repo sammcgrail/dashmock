@@ -6,18 +6,18 @@
     <script type='text/javascript' src="http://d3js.org/d3.v3.min.js"></script>
     <script type='text/javascript' src="http://micropolar.org/micropolar-v0.2.2.js"></script>
     <link href="nouislider.min.css" rel="stylesheet">
+    <style>
 
+    .chart {display: inline;}
+
+    </style>
 </head>
 <body>
-  <div id="chart-sub-polar2"></div>
-
-
-
+  <div class="chart" id="chart-sub-polar1"></div>
+  <div class="chart" id="chart-sub-polar2"></div>
   <div id="drag-fixed"></div>
 
   <script src="nouislider.min.js"></script>
-
-
   <script>dragFixedSlider = document.getElementById('drag-fixed');
 
   noUiSlider.create(dragFixedSlider, {
@@ -30,13 +30,51 @@
   	}
   });
   </script>
+  <script>
+  var config = {
+    "data": [
+    {
+      "t": [118, 119, 117],
+      "r": [9, 12, 15],
+      "name": "Current Sum",
+      "visible": true,
+      "color": "blue",
+      "geometry": "DotPlot",
+    }],
+    "layout": {
+      "radialAxis": {
+        "domain": [0,20],
+        "orientation": -45,
+        "visible": true,
+        "gridLinesVisible": true,
+        "tickOrientation": 'horizontal',
+        "ticksSuffix": "mA"
+      },
+      "angularAxis": {
+        "domain": [0,360],
+        "visible": true,
+        "gridLinesVisible": true,
+        "labelsVisible": true,
+        "tickOrientation": "horizontal",
+        "ticksSuffix": "°"
+      },
+      "labelOffset": 15,
+      "direction": "counterclockwise",
+    },
+
+  };
+  micropolar.Axis()
+    .config(config)
+    .render(d3.select('#chart-sub-polar1'));
+
+  </script>
 
 <script>
 var config = {
   "data": [
   {
-    "t": [],
-    "r": [],
+    "t": [120, 4, 230],
+    "r": [10, 15, 12],
     "name": "Voltage Vectors",
     "color": "purple",
     "geometry": "DotPlot",
