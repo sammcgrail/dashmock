@@ -35,8 +35,8 @@
   var config = {
     "data": [
     {
-      "t": [118, 119, 117],
-      "r": [9, 12, 15],
+      "t": [118, 119, 117, 120, 121, 124, 125, 130, 129, 108, 121, 125, 127],
+      "r": [9, 12, 15, 10, 8, 7, 8, 10, 9, 10, 11, 12, 14],
       "name": "Current Sum",
       "visible": true,
       "color": "blue",
@@ -71,17 +71,19 @@
   </script>
 
 <script>
+var t = [118, 2, 250]
+
 var config = {
   "data": [
+  // {
+  //   "t": [120, 4, 230],
+  //   "r": [10, 15, 12],
+  //   "name": "Voltage Vectors",
+  //   "color": "purple",
+  //   "geometry": "DotPlot",
+  // },
   {
-    "t": [120, 4, 230],
-    "r": [10, 15, 12],
-    "name": "Voltage Vectors",
-    "color": "purple",
-    "geometry": "DotPlot",
-  },
-  {
-    "t": [118, 2, 250],
+    "t": t,
     "r": [9, 12, 15],
     "name": "Current Vectors",
     "visible": true,
