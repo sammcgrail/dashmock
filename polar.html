@@ -23,6 +23,7 @@
 
   noUiSlider.create(dragFixedSlider, {
   	start: [  6 ],
+    step: 1,
   	range: {
   		'min':  0,
   		'max':  10
@@ -32,6 +33,8 @@
 	// 	density: 2
 	// }
   });
+
+
 
 
   dragFixedSlider.noUiSlider.on('change', function(){
