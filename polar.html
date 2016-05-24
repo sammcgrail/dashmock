@@ -13,24 +13,37 @@
     </style>
 </head>
 <body>
+  <div id="drag-fixed"></div>
   <div class="chart" id="chart-sub-polar1"></div>
   <div class="chart" id="chart-sub-polar2"></div>
-  <div id="drag-fixed"></div>
+
 
   <script src="nouislider.min.js"></script>
   <script>dragFixedSlider = document.getElementById('drag-fixed');
 
   noUiSlider.create(dragFixedSlider, {
-  	start: [ 50, 60 ],
-  	behaviour: 'drag-fixed',
-  	connect: true,
+  	start: [  6 ],
   	range: {
-  		'min':  20,
-  		'max':  80
+  		'min':  0,
+  		'max':  10
   	}
+  //   pips: { // Show a scale with the slider
+	// 	mode: 'steps',
+	// 	density: 2
+	// }
   });
 
+
+  dragFixedSlider.noUiSlider.on('change', function(){
+  	console.log("slider change fire");
+    console.log(this.get());
+  });
+
+
   </script>
+
+
+
   <script>
   var config = {
     "data": [
@@ -71,6 +84,7 @@
   </script>
 
 <script>
+var timestamp = "05-23-2015"
 var t = [118, 2, 250]
 var r = [9, 12, 15]
 
