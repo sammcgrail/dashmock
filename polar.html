@@ -16,30 +16,27 @@
   <div id="drag-fixed"></div>
   <div class="chart" id="chart-sub-polar1"></div>
   <div class="chart" id="chart-sub-polar2"></div>
-
-
+  <h3>Move slider handle - on change, fires micropolar chart refresh and passes in random phasor data</h3>
   <script src="nouislider.min.js"></script>
   <script>dragFixedSlider = document.getElementById('drag-fixed');
-
   noUiSlider.create(dragFixedSlider, {
-  	start: [  6 ],
+  	start: [ 6 ],
     step: 1,
   	range: {
   		'min':  0,
   		'max':  10
-  	}
-  //   pips: { // Show a scale with the slider
-	// 	mode: 'steps',
-	// 	density: 2
-	// }
+  	},
+    pips: { // Show a scale with the slider
+		mode: 'steps',
+		density: 7
+	}
   });
 
-
-
-
   dragFixedSlider.noUiSlider.on('change', function(){
+
   	console.log("slider change fire");
     console.log(this.get());
+
     function getRandomArbitrary(min, max) {
       return Math.random() * (max - min) + min;
     }
@@ -51,16 +48,8 @@
     var trand = [getRandomArbitrary(110, 130), getRandomArbitrary(0, 5), getRandomArbitrary(220, 250)]
     var rrand = [getRandomArbitrary(8, 12), getRandomArbitrary(8, 12), getRandomArbitrary(11, 16)]
 
-
     var config = {
       "data": [
-      // {
-      //   "t": [120, 4, 230],
-      //   "r": [10, 15, 12],
-      //   "name": "Voltage Vectors",
-      //   "color": "purple",
-      //   "geometry": "DotPlot",
-      // },
       {
         "t": trand,
         "r": rrand,
@@ -96,9 +85,6 @@
       .render(d3.select('#chart-sub-polar2'));
   });
   </script>
-
-
-
   <script>
   var config = {
     "data": [
@@ -130,72 +116,50 @@
       "labelOffset": 15,
       "direction": "counterclockwise",
     },
-
   };
   micropolar.Axis()
     .config(config)
     .render(d3.select('#chart-sub-polar1'));
-
   </script>
-
-<script>
-
-function getRandomArbitrary(min, max) {
-  return Math.random() * (max - min) + min;
-}
-
-var timestamp = "05-23-2015"
-var t = [118, 1, 240]
-var r = [9, 12, 15]
-
-var trand = [getRandomArbitrary(110, 130), getRandomArbitrary(0, 5), getRandomArbitrary(220, 250)]
-var rrand = [getRandomArbitrary(8, 12), getRandomArbitrary(8, 12), getRandomArbitrary(11, 16)]
-
-
-var config = {
-  "data": [
-  // {
-  //   "t": [120, 4, 230],
-  //   "r": [10, 15, 12],
-  //   "name": "Voltage Vectors",
-  //   "color": "purple",
-  //   "geometry": "DotPlot",
-  // },
-  {
-    "t": trand,
-    "r": rrand,
-    "name": "Current Vectors",
-    "visible": true,
-    "color": "blue",
-    "geometry": "DotPlot",
-  }],
-  "layout": {
-    "radialAxis": {
-      "domain": [0,20],
-      "orientation": -45,
+  <script>
+  var t = [118, 1, 240]
+  var r = [9, 12, 15]
+  var config = {
+    "data": [
+    {
+      "t": t,
+      "r": r,
+      "name": "Current Vectors",
       "visible": true,
-      "gridLinesVisible": true,
-      "tickOrientation": 'horizontal',
-      "ticksSuffix": "mA"
+      "color": "blue",
+      "geometry": "DotPlot",
+    }],
+    "layout": {
+      "radialAxis": {
+        "domain": [0,20],
+        "orientation": -45,
+        "visible": true,
+        "gridLinesVisible": true,
+        "tickOrientation": 'horizontal',
+        "ticksSuffix": "mA"
+      },
+      "angularAxis": {
+        "domain": [0,360],
+        "visible": true,
+        "gridLinesVisible": true,
+        "labelsVisible": true,
+        "tickOrientation": "horizontal",
+        "ticksSuffix": "°"
+      },
+      "labelOffset": 15,
+      "direction": "counterclockwise",
     },
-    "angularAxis": {
-      "domain": [0,360],
-      "visible": true,
-      "gridLinesVisible": true,
-      "labelsVisible": true,
-      "tickOrientation": "horizontal",
-      "ticksSuffix": "°"
-    },
-    "labelOffset": 15,
-    "direction": "counterclockwise",
-  },
 
-};
-micropolar.Axis()
-  .config(config)
-  .render(d3.select('#chart-sub-polar2'));
-
-</script>
+  };
+  micropolar.Axis()
+    .config(config)
+    .render(d3.select('#chart-sub-polar2'));
+  </script>
 
 </body>
 </html>
