@@ -40,7 +40,11 @@
   dragFixedSlider.noUiSlider.on('change', function(){
   	console.log("slider change fire");
     console.log(this.get());
+    micropolar.Axis()
+      .config(config)
+      .render(d3.select('#chart-sub-polar1'));
   });
+
 
 
   </script>
