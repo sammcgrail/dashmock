@@ -37,13 +37,13 @@
   }
   });
 
-  dragFixedSlider.noUiSlider.on('change', function(){
+  dragFixedSlider.noUiSlider.on('update', function(){
 
   	console.log("slider change fire");
     console.log(this.get());
 
     function getRandomArbitrary(min, max) {
-      return Math.random() * (max - min) + min;
+      return Math.floor(Math.random() * (max - min) + min);
     }
 
     var t = [118, 1, 240]
@@ -51,6 +51,7 @@
 
     var trand = [getRandomArbitrary(100, 140), getRandomArbitrary(0, 10), getRandomArbitrary(210, 250)]
     var rrand = [getRandomArbitrary(8, 12), getRandomArbitrary(8, 12), getRandomArbitrary(11, 16)]
+    var colors = ["green", "red", "blue", "purple", "yellow", "orange"]
 
     var config = {
       "data": [
@@ -59,7 +60,7 @@
         "r": rrand,
         "name": "Current Vectors",
         "visible": true,
-        "color": "purple",
+        "color": colors[getRandomArbitrary(0, (colors.length - 1))],
         "geometry": "DotPlot",
       }],
       "layout": {
