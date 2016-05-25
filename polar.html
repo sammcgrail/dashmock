@@ -13,12 +13,17 @@
     </style>
 </head>
 <body>
+
   <div id="drag-fixed"></div>
   <div class="chart" id="chart-sub-polar1"></div>
   <div class="chart" id="chart-sub-polar2"></div>
+
   <h3>Move slider handle - on change, fires micropolar chart refresh and passes in random phasor data</h3>
+
   <script src="nouislider.min.js"></script>
-  <script>dragFixedSlider = document.getElementById('drag-fixed');
+
+  <script>
+  dragFixedSlider = document.getElementById('drag-fixed');
   noUiSlider.create(dragFixedSlider, {
   	start: [ 6 ],
     step: 1,
@@ -26,10 +31,10 @@
   		'min':  0,
   		'max':  10
   	},
-    pips: { // Show a scale with the slider
-		mode: 'steps',
-		density: 7
-	}
+    pips: {
+  	mode: 'steps',
+  	density: 7
+  }
   });
 
   dragFixedSlider.noUiSlider.on('change', function(){
@@ -41,11 +46,10 @@
       return Math.random() * (max - min) + min;
     }
 
-    var timestamp = "05-23-2015"
     var t = [118, 1, 240]
     var r = [9, 12, 15]
 
-    var trand = [getRandomArbitrary(110, 130), getRandomArbitrary(0, 5), getRandomArbitrary(220, 250)]
+    var trand = [getRandomArbitrary(100, 140), getRandomArbitrary(0, 10), getRandomArbitrary(210, 250)]
     var rrand = [getRandomArbitrary(8, 12), getRandomArbitrary(8, 12), getRandomArbitrary(11, 16)]
 
     var config = {
@@ -55,7 +59,7 @@
         "r": rrand,
         "name": "Current Vectors",
         "visible": true,
-        "color": "blue",
+        "color": "purple",
         "geometry": "DotPlot",
       }],
       "layout": {
@@ -85,12 +89,13 @@
       .render(d3.select('#chart-sub-polar2'));
   });
   </script>
+
   <script>
   var config = {
     "data": [
     {
-      "t": [118, 119, 117, 120, 121, 124, 125, 130, 129, 108, 121, 125, 127],
-      "r": [9, 12, 15, 10, 8, 7, 8, 10, 9, 10, 11, 12, 14],
+      "t": [118, 119, 117, 120, 121, 124, 125, 130, 129, 108, 121, 125, 127, 108, 112, 111],
+      "r": [9, 12, 15, 10, 8, 7, 8, 10, 9, 10, 11, 12, 14, 15, 14, 12],
       "name": "Current Sum",
       "visible": true,
       "color": "blue",
@@ -121,6 +126,7 @@
     .config(config)
     .render(d3.select('#chart-sub-polar1'));
   </script>
+
   <script>
   var t = [118, 1, 240]
   var r = [9, 12, 15]
