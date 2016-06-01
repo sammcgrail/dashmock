@@ -51,7 +51,7 @@
 
     var trand = [getRandomIntBetweenRange(100, 140), getRandomIntBetweenRange(0, 10), getRandomIntBetweenRange(210, 250)]
     var rrand = [getRandomIntBetweenRange(8, 12), getRandomIntBetweenRange(8, 12), getRandomIntBetweenRange(11, 16)]
-    var colors = ["green", "red", "blue", "purple", "yellow", "orange"]
+    var colors = ["green"]
 
     var config = {
       "data": [
@@ -94,12 +94,31 @@
   <script>
   var config = {
     "data": [
+    // data for sum current cloud
     {
       "t": [118, 119, 117, 120, 121, 124, 125, 130, 129, 108, 121, 125, 127, 108, 112, 111],
       "r": [9, 12, 15, 10, 8, 7, 8, 10, 9, 10, 11, 12, 14, 15, 14, 12],
       "name": "Current Sum",
       "visible": true,
       "color": "blue",
+      "geometry": "DotPlot",
+    },
+    //data for selected point
+    {
+      "t": [139],
+      "r": [9],
+      "name": "Selected Point",
+      "visible": true,
+      "color": "green",
+      "geometry": "DotPlot",
+    },
+    //data for most recent point
+    {
+      "t": [138],
+      "r": [10],
+      "name": "Latest Value",
+      "visible": true,
+      "color": "orange",
       "geometry": "DotPlot",
     }],
     "layout": {
@@ -138,7 +157,7 @@
       "r": r,
       "name": "Current Vectors",
       "visible": true,
-      "color": "blue",
+      "color": "green",
       "geometry": "DotPlot",
     }],
     "layout": {
