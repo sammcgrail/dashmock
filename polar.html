@@ -64,8 +64,9 @@
     var sliderMax = this["options"]["range"]["max"];
     var sliderMin = this["options"]["range"]["min"];
     var sliderValue = parseInt(this.get());
-    console.log(sliderMax);
-    console.log(sliderMin);
+    console.log("Slider max: " + sliderMax);
+    console.log("Slider min: " + sliderMin);
+    console.log("Slider value: " + sliderValue);
     var tSelected = tTest[sliderValue];
     var rSelected = rTest[sliderValue];
 
@@ -190,7 +191,7 @@
     },
     //data for selected point
     {
-      "t": [tTest[6],
+      "t": [tTest[6]],
       "r": [rTest[6]],
       "name": "Selected Point",
       "visible": true,
@@ -199,7 +200,7 @@
     },
     //data for most recent point
     {
-      "t": [tTest[10],
+      "t": [tTest[10]],
       "r": [rTest[10]],
       "name": "Latest Value",
       "visible": true,
