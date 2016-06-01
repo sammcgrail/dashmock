@@ -23,6 +23,25 @@
   <script src="nouislider.min.js"></script>
 
   <script>
+
+
+  var timestamps = ["05-30-2016",
+                    "05-31-2016",
+                    "06-01-2016",
+                    "06-01-2016",
+                    "06-01-2016",
+                    "06-01-2016",
+                    "06-01-2016",
+                    "06-01-2016",
+                    "06-01-2016",
+                    "06-01-2016",
+                    "06-01-2016"
+                  ];
+  var tTest = [118, 119, 117, 120, 121, 124, 125, 130, 129, 108, 121];
+  var rTest = [9, 12, 15, 10, 8, 7, 8, 10, 9, 10, 11];
+
+
+
   dragFixedSlider = document.getElementById('drag-fixed');
   noUiSlider.create(dragFixedSlider, {
   	start: [ 6 ],
@@ -42,6 +61,19 @@
   	console.log("slider update fire");
     console.log(this.get());
 
+    var sliderMax = this["options"]["range"]["max"];
+    var sliderMin = this["options"]["range"]["min"];
+    var sliderValue = parseInt(this.get());
+    console.log(sliderMax);
+    console.log(sliderMin);
+    var tSelected = tTest[sliderValue];
+    var rSelected = rTest[sliderValue];
+
+    if (sliderValue === sliderMax) {
+      var latestColor = "green";
+    } else {
+      var latestColor = "orange";
+    }
     function getRandomIntBetweenRange(min, max) {
       return Math.floor(Math.random() * (max - min) + min);
     }
@@ -53,7 +85,7 @@
     var rrand = [getRandomIntBetweenRange(8, 12), getRandomIntBetweenRange(8, 12), getRandomIntBetweenRange(11, 16)]
     var colors = ["green"]
 
-    var config = {
+    var polarTwoConfig = {
       "data": [
       {
         "t": trand,
@@ -85,9 +117,62 @@
       },
 
     };
+    var polarOneConfig = {
+      "data": [
+      // data for sum current cloud
+      {
+        "t": tTest,
+        "r": rTest,
+        "name": "Current Sum",
+        "visible": true,
+        "color": "blue",
+        "geometry": "DotPlot",
+      },
+      //data for selected point
+      {
+        "t": [tSelected],
+        "r": [rSelected],
+        "name": "Selected Point",
+        "visible": true,
+        "color": "green",
+        "geometry": "DotPlot",
+      },
+      //data for most recent point
+      {
+        "t": [tTest[sliderMax]],
+        "r": [rTest[sliderMax]],
+        "name": "Latest Value",
+        "visible": true,
+        "color": latestColor,
+        "geometry": "DotPlot",
+      }],
+      "layout": {
+        "radialAxis": {
+          "domain": [0,20],
+          "orientation": -45,
+          "visible": true,
+          "gridLinesVisible": true,
+          "tickOrientation": 'horizontal',
+          "ticksSuffix": "mA"
+        },
+        "angularAxis": {
+          "domain": [0,360],
+          "visible": true,
+          "gridLinesVisible": true,
+          "labelsVisible": true,
+          "tickOrientation": "horizontal",
+          "ticksSuffix": "°"
+        },
+        "labelOffset": 15,
+        "direction": "counterclockwise",
+      },
+    };
     micropolar.Axis()
-      .config(config)
-      .render(d3.select('#chart-sub-polar2'));
+      .config(polarTwoConfig)
+      .render(d3.select('#chart-sub-polar2'))
+    micropolar.Axis()
+      .config(polarOneConfig)
+      .render(d3.select('#chart-sub-polar1'));
   });
   </script>
 
@@ -96,8 +181,8 @@
     "data": [
     // data for sum current cloud
     {
-      "t": [118, 119, 117, 120, 121, 124, 125, 130, 129, 108, 121, 125, 127, 108, 112, 111],
-      "r": [9, 12, 15, 10, 8, 7, 8, 10, 9, 10, 11, 12, 14, 15, 14, 12],
+      "t": tTest,
+      "r": rTest,
       "name": "Current Sum",
       "visible": true,
       "color": "blue",
@@ -105,8 +190,8 @@
     },
     //data for selected point
     {
-      "t": [139],
-      "r": [9],
+      "t": [tTest[6],
+      "r": [rTest[6]],
       "name": "Selected Point",
       "visible": true,
       "color": "green",
@@ -114,8 +199,8 @@
     },
     //data for most recent point
     {
-      "t": [138],
-      "r": [10],
+      "t": [tTest[10],
+      "r": [rTest[10]],
       "name": "Latest Value",
       "visible": true,
       "color": "orange",
