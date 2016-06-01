@@ -22,20 +22,23 @@
 
   <script src="nouislider.min.js"></script>
 
+
+
+
   <script>
 
 
-  var timestamps = ["05-30-2016",
-                    "05-31-2016",
-                    "06-01-2016",
-                    "06-01-2016",
-                    "06-01-2016",
-                    "06-01-2016",
-                    "06-01-2016",
-                    "06-01-2016",
-                    "06-01-2016",
-                    "06-01-2016",
-                    "06-01-2016"
+  var timestamps = ["05-20-2016",
+                    "05-21-2016",
+                    "05-22-2016",
+                    "05-23-2016",
+                    "05-24-2016",
+                    "05-25-2016",
+                    "05-26-2016",
+                    "05-27-2016",
+                    "05-28-2016",
+                    "05-29-2016",
+                    "05-30-2016"
                   ];
   var tTest = [118, 119, 117, 120, 121, 124, 125, 130, 129, 108, 121];
   var rTest = [9, 12, 15, 10, 8, 7, 8, 10, 9, 10, 11];
@@ -58,15 +61,14 @@
 
   dragFixedSlider.noUiSlider.on('update', function(){
 
-  	console.log("slider update fire");
-    console.log(this.get());
 
     var sliderMax = this["options"]["range"]["max"];
     var sliderMin = this["options"]["range"]["min"];
     var sliderValue = parseInt(this.get());
-    console.log("Slider max: " + sliderMax);
-    console.log("Slider min: " + sliderMin);
-    console.log("Slider value: " + sliderValue);
+
+
+
+
     var tSelected = tTest[sliderValue];
     var rSelected = rTest[sliderValue];
 
@@ -75,6 +77,16 @@
     } else {
       var latestColor = "orange";
     }
+
+
+    console.log("slider update fire");
+    console.log(this.get());
+    console.log("Slider max: " + sliderMax);
+    console.log("Slider min: " + sliderMin);
+    console.log("Slider value: " + sliderValue);
+
+
+
     function getRandomIntBetweenRange(min, max) {
       return Math.floor(Math.random() * (max - min) + min);
     }
@@ -89,11 +101,11 @@
     var polarTwoConfig = {
       "data": [
       {
-        "t": trand,
-        "r": rrand,
+        "t": [tTest[sliderValue], tTest[sliderValue] - 120, tTest[sliderValue] + 120],
+        "r": [rTest[sliderValue], rTest[sliderValue] + 1, rTest[sliderValue] + 2],
         "name": "Current Vectors",
         "visible": true,
-        "color": colors[getRandomIntBetweenRange(0, (colors.length))],
+        "color": "green",
         "geometry": "DotPlot",
       }],
       "layout": {
@@ -191,8 +203,8 @@
     },
     //data for selected point
     {
-      "t": [tTest[6]],
-      "r": [rTest[6]],
+      "t": [tTest[5]],
+      "r": [rTest[5]],
       "name": "Selected Point",
       "visible": true,
       "color": "green",
