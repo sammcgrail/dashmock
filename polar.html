@@ -15,19 +15,16 @@
 <body>
 
   <div id="drag-fixed"></div>
+  <div id="table"> </div>
   <div class="chart" id="chart-sub-polar1"></div>
   <div class="chart" id="chart-sub-polar2"></div>
 
-  <h3>Move slider handle - on change, fires micropolar chart refresh and passes in random phasor data</h3>
+  <h3>Move slider handle to select a point from sum current chart. Phasor chart updates with associated timestamp and info table for values</h3>
+
+
 
   <script src="nouislider.min.js"></script>
-
-
-
-
   <script>
-
-
   var timestamps = ["05-20-2016",
                     "05-21-2016",
                     "05-22-2016",
@@ -42,8 +39,6 @@
                   ];
   var tTest = [118, 119, 117, 120, 121, 124, 125, 130, 129, 108, 121];
   var rTest = [9, 12, 15, 10, 8, 7, 8, 10, 9, 10, 11];
-
-
 
   dragFixedSlider = document.getElementById('drag-fixed');
   noUiSlider.create(dragFixedSlider, {
@@ -61,13 +56,12 @@
 
   dragFixedSlider.noUiSlider.on('update', function(){
 
-
     var sliderMax = this["options"]["range"]["max"];
     var sliderMin = this["options"]["range"]["min"];
     var sliderValue = parseInt(this.get());
 
-
-
+    var tableContent = "Slider interval: " + sliderValue + " Timestamp: " + timestamps[sliderValue] + " t: " + tTest[sliderValue] + " r: " + rTest[sliderValue];
+    document.getElementById('table').innerHTML = tableContent
 
     var tSelected = tTest[sliderValue];
     var rSelected = rTest[sliderValue];
@@ -78,14 +72,11 @@
       var latestColor = "orange";
     }
 
-
     console.log("slider update fire");
     console.log(this.get());
     console.log("Slider max: " + sliderMax);
     console.log("Slider min: " + sliderMin);
     console.log("Slider value: " + sliderValue);
-
-
 
     function getRandomIntBetweenRange(min, max) {
       return Math.floor(Math.random() * (max - min) + min);
@@ -186,7 +177,11 @@
     micropolar.Axis()
       .config(polarOneConfig)
       .render(d3.select('#chart-sub-polar1'));
+
   });
+
+
+
   </script>
 
   <script>
@@ -203,8 +198,8 @@
     },
     //data for selected point
     {
-      "t": [tTest[5]],
-      "r": [rTest[5]],
+      "t": [tTest[6]],
+      "r": [rTest[6]],
       "name": "Selected Point",
       "visible": true,
       "color": "green",
@@ -246,8 +241,8 @@
   </script>
 
   <script>
-  var t = [118, 1, 240]
-  var r = [9, 12, 15]
+  var t = [125, 1, 240]
+  var r = [8, 12, 15]
   var config = {
     "data": [
     {
