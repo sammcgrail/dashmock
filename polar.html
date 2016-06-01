@@ -37,8 +37,8 @@
                     "05-29-2016",
                     "05-30-2016"
                   ];
-  var tTest = [118, 119, 117, 120, 121, 124, 125, 130, 129, 108, 121];
-  var rTest = [9, 12, 15, 10, 8, 7, 8, 10, 9, 10, 11];
+  var tValues = [118, 119, 117, 120, 121, 124, 125, 130, 129, 108, 121];
+  var rValues = [9, 12, 15, 10, 8, 7, 8, 10, 9, 10, 11];
 
   dragFixedSlider = document.getElementById('drag-fixed');
   noUiSlider.create(dragFixedSlider, {
@@ -60,11 +60,11 @@
     var sliderMin = this["options"]["range"]["min"];
     var sliderValue = parseInt(this.get());
 
-    var tableContent = "Slider interval: " + sliderValue + " Timestamp: " + timestamps[sliderValue] + " t: " + tTest[sliderValue] + " r: " + rTest[sliderValue];
+    var tableContent = "Slider interval: " + sliderValue + " Timestamp: " + timestamps[sliderValue] + " t: " + tValues[sliderValue] + " r: " + rValues[sliderValue];
     document.getElementById('table').innerHTML = tableContent
 
-    var tSelected = tTest[sliderValue];
-    var rSelected = rTest[sliderValue];
+    var tSelected = tValues[sliderValue];
+    var rSelected = rValues[sliderValue];
 
     if (sliderValue === sliderMax) {
       var latestColor = "green";
@@ -82,8 +82,6 @@
       return Math.floor(Math.random() * (max - min) + min);
     }
 
-    var t = [118, 1, 240]
-    var r = [9, 12, 15]
 
     var trand = [getRandomIntBetweenRange(100, 140), getRandomIntBetweenRange(0, 10), getRandomIntBetweenRange(210, 250)]
     var rrand = [getRandomIntBetweenRange(8, 12), getRandomIntBetweenRange(8, 12), getRandomIntBetweenRange(11, 16)]
@@ -92,8 +90,8 @@
     var polarTwoConfig = {
       "data": [
       {
-        "t": [tTest[sliderValue], tTest[sliderValue] - 120, tTest[sliderValue] + 120],
-        "r": [rTest[sliderValue], rTest[sliderValue] + 1, rTest[sliderValue] + 2],
+        "t": [tValues[sliderValue], tValues[sliderValue] - 120, tValues[sliderValue] + 120],
+        "r": [rValues[sliderValue], rValues[sliderValue] + 1, rValues[sliderValue] + 2],
         "name": "Current Vectors",
         "visible": true,
         "color": "green",
@@ -125,8 +123,8 @@
       "data": [
       // data for sum current cloud
       {
-        "t": tTest,
-        "r": rTest,
+        "t": tValues,
+        "r": rValues,
         "name": "Current Sum",
         "visible": true,
         "color": "blue",
@@ -143,8 +141,8 @@
       },
       //data for most recent point
       {
-        "t": [tTest[sliderMax]],
-        "r": [rTest[sliderMax]],
+        "t": [tValues[sliderMax]],
+        "r": [rValues[sliderMax]],
         "name": "Latest Value",
         "visible": true,
         "color": latestColor,
@@ -189,8 +187,8 @@
     "data": [
     // data for sum current cloud
     {
-      "t": tTest,
-      "r": rTest,
+      "t": tValues,
+      "r": rValues,
       "name": "Current Sum",
       "visible": true,
       "color": "blue",
@@ -198,8 +196,8 @@
     },
     //data for selected point
     {
-      "t": [tTest[6]],
-      "r": [rTest[6]],
+      "t": [tValues[6]],
+      "r": [rValues[6]],
       "name": "Selected Point",
       "visible": true,
       "color": "green",
@@ -207,8 +205,8 @@
     },
     //data for most recent point
     {
-      "t": [tTest[10]],
-      "r": [rTest[10]],
+      "t": [tValues[10]],
+      "r": [rValues[10]],
       "name": "Latest Value",
       "visible": true,
       "color": "orange",
