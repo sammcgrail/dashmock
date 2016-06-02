@@ -25,6 +25,7 @@
 
   <script src="nouislider.min.js"></script>
   <script>
+  // dummy data for timestamps
   var timestamps = ["05-20-2016",
                     "05-21-2016",
                     "05-22-2016",
@@ -40,6 +41,7 @@
   var tValues = [118, 119, 117, 120, 121, 124, 125, 130, 129, 108, 121];
   var rValues = [9, 12, 15, 10, 8, 7, 8, 10, 9, 10, 11];
 
+  // slider
   dragFixedSlider = document.getElementById('drag-fixed');
   noUiSlider.create(dragFixedSlider, {
   	start: [ 6 ],
@@ -54,13 +56,17 @@
   }
   });
 
+  // slider update function
   dragFixedSlider.noUiSlider.on('update', function(){
 
     var sliderMax = this["options"]["range"]["max"];
     var sliderMin = this["options"]["range"]["min"];
     var sliderValue = parseInt(this.get());
 
-    var tableContent = "Slider interval: " + sliderValue + " Timestamp: " + timestamps[sliderValue] + " t: " + tValues[sliderValue] + " r: " + rValues[sliderValue];
+    var tableContent = "Slider interval: " + sliderValue + " Timestamp: " + timestamps[sliderValue] +
+    " // IR: " + tValues[sliderValue] + " r1: " + rValues[sliderValue] +
+    " // IS: " + tValues[sliderValue] + " r2: " + rValues[sliderValue] +
+    " // IT: " + tValues[sliderValue] + " r3: " + rValues[sliderValue] ;
     document.getElementById('table').innerHTML = tableContent
 
     var tSelected = tValues[sliderValue];
@@ -82,16 +88,16 @@
       return Math.floor(Math.random() * (max - min) + min);
     }
 
-
     var trand = [getRandomIntBetweenRange(100, 140), getRandomIntBetweenRange(0, 10), getRandomIntBetweenRange(210, 250)]
     var rrand = [getRandomIntBetweenRange(8, 12), getRandomIntBetweenRange(8, 12), getRandomIntBetweenRange(11, 16)]
     var colors = ["green"]
 
+    // phasor chart
     var polarTwoConfig = {
       "data": [
       {
         "t": [tValues[sliderValue], tValues[sliderValue] - 120, tValues[sliderValue] + 120],
-        "r": [rValues[sliderValue], rValues[sliderValue] + 1, rValues[sliderValue] + 2],
+        "r": [rValues[sliderValue], rValues[sliderValue], rValues[sliderValue]],
         "name": "Current Vectors",
         "visible": true,
         "color": "green",
@@ -119,6 +125,8 @@
       },
 
     };
+
+    // sum current chart
     var polarOneConfig = {
       "data": [
       // data for sum current cloud
@@ -169,6 +177,8 @@
         "direction": "counterclockwise",
       },
     };
+
+    //rendering both here
     micropolar.Axis()
       .config(polarTwoConfig)
       .render(d3.select('#chart-sub-polar2'))
@@ -183,6 +193,7 @@
   </script>
 
   <script>
+  // setting original values - NEEDS WORK, COULD JUST PUT IN FIRST FUNCTION
   var config = {
     "data": [
     // data for sum current cloud
@@ -239,8 +250,9 @@
   </script>
 
   <script>
+  // setting original phasor values - also needs work, same as above
   var t = [125, 1, 240]
-  var r = [8, 12, 15]
+  var r = [8, 8, 8]
   var config = {
     "data": [
     {
