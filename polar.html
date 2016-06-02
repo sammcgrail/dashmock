@@ -2541,9 +2541,9 @@
     var sliderValue = parseInt(this.get());
 
     var tableContent = "Slider interval: " + sliderValue + " Timestamp: " + timestamps[sliderValue] +
-    " // IR: " + blueTValues[sliderValue] + " r1: " + blueRValues[sliderValue] +
-    " // IS: " + redTValues[sliderValue] + " r2: " + redRValues[sliderValue] +
-    " // IT: " + yellowTValues[sliderValue] + " r3: " + yellowRValues[sliderValue] ;
+    " // IB: " + blueTValues[sliderValue] + " r1: " + blueRValues[sliderValue] +
+    " // IR: " + redTValues[sliderValue] + " r2: " + redRValues[sliderValue] +
+    " // IY: " + yellowTValues[sliderValue] + " r3: " + yellowRValues[sliderValue] ;
     document.getElementById('table').innerHTML = tableContent
 
     var tSelected = tValues[sliderValue];
@@ -2575,11 +2575,27 @@
     var polarTwoConfig = {
       "data": [
       {
-        "t": [blueTValues[sliderValue], redTValues[sliderValue], yellowTValues[sliderValue]],
-        "r": [blueRValues[sliderValue], redRValues[sliderValue], yellowRValues[sliderValue]],
+        "t": [blueTValues[sliderValue]],
+        "r": [blueRValues[sliderValue]],
         "name": "Current Vectors",
         "visible": true,
-        "color": "lightgreen",
+        "color": "blue",
+        "geometry": "DotPlot",
+      },
+      {
+        "t": [redTValues[sliderValue]],
+        "r": [redRValues[sliderValue]],
+        "name": "Current Vectors",
+        "visible": true,
+        "color": "red",
+        "geometry": "DotPlot",
+      },
+      {
+        "t": [yellowTValues[sliderValue]],
+        "r": [yellowRValues[sliderValue]],
+        "name": "Current Vectors",
+        "visible": true,
+        "color": "yellow",
         "geometry": "DotPlot",
       }],
       "layout": {
