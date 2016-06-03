@@ -200,9 +200,12 @@
 
   //  rough table for values
     var tableContent = "Slider interval: " + sliderValue + " Timestamp: " + timestamps[sliderValue] +
-      " ///// I-R: " + redRValues[sliderValue] + " - pa1: " + redTValues[sliderValue] +
-      " ///// I-Y: " + yellowRValues[sliderValue] +  " - pa2: " + yellowTValues[sliderValue] +
-      " ///// I-B: " + blueRValues[sliderValue] +  " - pa3: " + blueTValues[sliderValue];
+
+      "   ///// Current Sum Mag: " + rValues[sliderValue] + " - Current Sum PA: " + tValues[sliderValue] +
+
+      "   ///// I-R mag: " + redRValues[sliderValue] + " - PA1: " + redTValues[sliderValue] +
+      "   ///// I-Y mag: " + yellowRValues[sliderValue] +  " - PA2: " + yellowTValues[sliderValue] +
+      "   ///// I-B mag: " + blueRValues[sliderValue] +  " - PA3: " + blueTValues[sliderValue];
 
     document.getElementById('table').innerHTML = tableContent
 
