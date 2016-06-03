@@ -5,28 +5,115 @@
     <title></title>
     <script type='text/javascript' src="http://d3js.org/d3.v3.min.js"></script>
     <script type='text/javascript' src="http://micropolar.org/micropolar-v0.2.2.js"></script>
+    <script type='text/javascript' src="https://code.jquery.com/jquery-2.1.4.js"></script>
     <link href="nouislider.min.css" rel="stylesheet">
     <style>
-
     .chart {display: inline;}
-
     </style>
 </head>
 <body>
-
   <div id="drag-fixed"></div>
-
   <div class="chart" id="chart-sub-polar1"></div>
   <div class="chart" id="chart-sub-polar2"></div>
   <div id="table"> </div>
   <h3>Move slider handle to select a point from sum current chart. Phasor chart updates with associated timestamp and info table for values</h3>
-
-
-
   <script src="nouislider.min.js"></script>
   <script>
-
   // real sample data from VM
+
+  var phasorjson =   {
+      "2016-05-01 00:00:00": [{
+          "name": "I-Blue",
+          "r": [
+              0.00017599
+          ],
+          "t": [
+              155.67
+          ],
+          "type": "1"
+      }, {
+          "name": "I-Red",
+          "r": [
+              0.00051614
+          ],
+          "t": [
+              100.22
+          ],
+          "type": "1"
+      }, {
+          "name": "I-Yellow",
+          "r": [
+              0.00035003
+          ],
+          "t": [
+              0
+          ],
+          "type": "1"
+      }],
+      "2016-05-01 00:30:00": [{
+          "name": "I-Blue",
+          "r": [
+              0.00019617
+          ],
+          "t": [
+              350.67
+          ],
+          "type": "1"
+      }, {
+          "name": "I-Red",
+          "r": [
+              0.000238
+          ],
+          "t": [
+              10.683
+          ],
+          "type": "1"
+      }, {
+          "name": "I-Yellow",
+          "r": [
+              0.00013861
+          ],
+          "t": [
+              0
+          ],
+          "type": "1"
+      }],
+      "2016-05-01 01:00:00": [{
+          "name": "I-Blue",
+          "r": [
+              0.0001675
+          ],
+          "t": [
+              248.87
+          ],
+          "type": "1"
+      }, {
+          "name": "I-Red",
+          "r": [
+              7.7608e-05
+          ],
+          "t": [
+              88.543
+          ],
+          "type": "1"
+      }, {
+          "name": "I-Yellow",
+          "r": [
+              0.00011169
+          ],
+          "t": [
+              0
+          ],
+          "type": "1"
+      }],
+  }
+  console.log(phasorjson["2016-05-01 00:00:00"])
+
+  $.each(phasorjson, function(key, value) {
+    console.log(key, value);
+    console.log(key)
+  });
+
   var timestamps = [
   "2016-05-05 00:00:00", "2016-05-05 00:30:00", "2016-05-05 01:00:00", "2016-05-05 01:30:00", "2016-05-05 02:00:00", "2016-05-05 02:30:00", "2016-05-05 03:00:00", "2016-05-05 03:30:00", "2016-05-05 04:00:00", "2016-05-05 04:30:00", "2016-05-05 05:00:00",
   "2016-05-05 05:30:00", "2016-05-05 06:00:00", "2016-05-05 06:30:00", "2016-05-05 07:00:00", "2016-05-05 07:30:00", "2016-05-05 08:00:00", "2016-05-05 08:30:00", "2016-05-05 09:00:00", "2016-05-05 09:30:00", "2016-05-05 10:00:00", "2016-05-05 10:30:00",
