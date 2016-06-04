@@ -338,24 +338,6 @@
   "2016-05-29 04:00:00", "2016-05-29 07:30:00", "2016-05-29 11:00:00", "2016-05-29 14:00:00", "2016-05-29 17:30:00", "2016-05-29 21:00:00", "2016-05-30 00:30:00", "2016-05-30 04:00:00", "2016-05-30 07:30:00", "2016-05-30 11:00:00", "2016-05-30 15:00:00",
   "2016-05-30 18:30:00", "2016-05-30 22:00:00", "2016-05-31 02:00:00", "2016-05-31 05:30:00", "2016-05-31 09:30:00", "2016-05-31 13:30:00", "2016-05-31 17:30:00", "2016-05-31 21:30:00", "2016-06-01 01:30:00", "2016-06-01 05:30:00", "2016-06-01 09:30:00",
   "2016-06-01 13:30:00", "2016-06-01 18:00:00", "2016-06-01 22:00:00", "2016-06-02 02:30:00", "2016-06-02 07:00:00", "2016-06-02 12:00:00", "2016-06-02 17:00:00" ] }
-    var sumCurrentData = sumCurrentJSON['data'][0];
-  var sumCurrentDates = sumCurrentData['date'];
-  var sumCurrentRValues = sumCurrentData['r'];
-  var sumCurrentTValues = sumCurrentData['t'];
-
-  var phasorData = phasorJSON['data'];
-  var phasorBlueData = phasorData[0];
-  var phasorBlueTData = phasorBlueData["t"];
-  var phasorBlueRData = phasorBlueData["r"];
-  var phasorRedData = phasorData[1];
-  var phasorRedTData = phasorRedData["t"];
-  var phasorRedRData = phasorRedData["r"];
-  var phasorYellowData = phasorData[2];
-  var phasorYellowTData = phasorYellowData["t"];
-  var phasorYellowRData = phasorYellowData["r"];
-  var sliderLength = sumCurrentDates.length - 1;
-  console.log(phasorYellowRData);
-
 
 
   // real sample data from VM
@@ -506,6 +488,37 @@
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
 
+
+
+  var sumCurrentData = sumCurrentJSON['data'][0];
+  var sumCurrentDates = sumCurrentData['date'];
+  var sumCurrentRValues = sumCurrentData['r'];
+  var sumCurrentTValues = sumCurrentData['t'];
+
+  var phasorData = phasorJSON['data'];
+  var phasorBlueData = phasorData[0];
+  var phasorBlueTData = phasorBlueData["t"];
+  var phasorBlueRData = phasorBlueData["r"];
+  var phasorRedData = phasorData[1];
+  var phasorRedTData = phasorRedData["t"];
+  var phasorRedRData = phasorRedData["r"];
+  var phasorYellowData = phasorData[2];
+  var phasorYellowTData = phasorYellowData["t"];
+  var phasorYellowRData = phasorYellowData["r"];
+  var sliderLength = sumCurrentDates.length - 1;
+
+
+  console.log(sumCurrentRValues);
+  console.log(getMaxOfArray(sumCurrentRValues))
+  console.log(getMaxOfArray(sumCurrentRValues) + .1 )
+
+
+  function getMaxOfArray(numArray) {
+    return Math.max.apply(null, numArray);
+  }
+  radialUpperLimitWithBuffer = ( getMaxOfArray(sumCurrentRValues) + .1 )
+
+
   // slider
   dragFixedSlider = document.getElementById('drag-fixed');
   noUiSlider.create(dragFixedSlider, {
@@ -587,7 +600,7 @@
       }],
       "layout": {
         "radialAxis": {
-          "domain": [60,70],
+          "domain": [60,66],
           "orientation": -45,
           "visible": true,
           "gridLinesVisible": true,
@@ -640,7 +653,7 @@
       }],
       "layout": {
         "radialAxis": {
-          "domain": [0,1],
+          "domain": [0,radialUpperLimitWithBuffer],
           "orientation": -45,
           "visible": true,
           "gridLinesVisible": true,
