@@ -9,6 +9,9 @@
     <link href="nouislider.min.css" rel="stylesheet">
     <style>
     .chart {display: inline;}
+    body {
+      background: #FDF5E7;
+    }
     </style>
 </head>
 <body>
@@ -19,100 +22,54 @@
   <h3>Move slider handle to select a point from sum current chart. Phasor chart updates with associated timestamp and info table for values</h3>
   <script src="nouislider.min.js"></script>
   <script>
+
+  // day data from methods
+  var sumCurrentJSON = { "data" : [ { "date" : [ "2016-05-02 00:00:00", "2016-05-02 00:30:00", "2016-05-02 01:00:00", "2016-05-02 01:30:00", "2016-05-02 02:00:00", "2016-05-02 02:30:00", "2016-05-02 03:00:00", "2016-05-02 03:30:00", "2016-05-02 04:00:00",
+  "2016-05-02 04:30:00", "2016-05-02 05:00:00", "2016-05-02 05:30:00", "2016-05-02 06:00:00", "2016-05-02 06:30:00", "2016-05-02 07:00:00", "2016-05-02 07:30:00", "2016-05-02 08:00:00", "2016-05-02 08:30:00", "2016-05-02 09:00:00", "2016-05-02 09:30:00",
+  "2016-05-02 10:00:00", "2016-05-02 10:30:00", "2016-05-02 11:00:00", "2016-05-02 11:30:00", "2016-05-02 12:00:00", "2016-05-02 12:30:00", "2016-05-02 13:00:00", "2016-05-02 13:30:00", "2016-05-02 14:00:00", "2016-05-02 14:30:00", "2016-05-02 15:00:00",
+  "2016-05-02 15:30:00", "2016-05-02 16:00:00", "2016-05-02 16:30:00", "2016-05-02 17:00:00", "2016-05-02 17:30:00", "2016-05-02 18:00:00", "2016-05-02 18:30:00", "2016-05-02 19:00:00", "2016-05-02 19:30:00", "2016-05-02 20:00:00", "2016-05-02 20:30:00",
+  "2016-05-02 21:00:00", "2016-05-02 21:30:00", "2016-05-02 22:00:00", "2016-05-02 22:30:00", "2016-05-02 23:00:00", "2016-05-02 23:30:00" ], "name" : "Sum Currents", "r" : [ 0.75724, 0.76338, 0.76477, 0.76874, 0.77104, 0.77891, 0.78136, 0.78407, 0.78554,
+  0.79378, 0.79403, 0.79173, 0.78614, 0.79526, 0.84121, 0.84763, 0.84369, 0.88172, 0.88735, 0.90574, 0.90493, 0.90754, 0.89762, 0.91412, 0.91343, 0.90759, 0.90225, 0.8966, 0.90166, 0.90724, 0.89214, 0.88926, 0.89467, 0.90199, 0.91653, 0.91151, 0.92636,
+  0.92866, 0.9227, 0.91114, 0.90806, 0.92088, 0.93858, 0.92689, 0.91435, 0.89521, 0.9006, 0.91527 ], "t" : [ 9.385, 10.32, 10.101, 9.3866, 9.7304, 9.2528, 8.3991, 8.0882, 7.6236, 7.5876, 7.4775, 6.6225, 5.4075, 5.001, 3.8733, 4.5764, 5.5695, 1.9103, 1.9403,
+  2.2018, 1.9526, 2.0755, 1.3842, 0.72043, 1.1527, 359.8, 0.56662, 1.0124, 1.1095, 1.0485, 1.7811, 1.8314, 1.5764, 0.41049, 359.61, 359.31, 358.31, 358.19, 358.9, 359.61, 357.3, 359.04, 358.48, 359.08, 0.038246, 0.42995, 0.43296, 359.8 ] } ] }
+
+  var phasorJSON = {
+   "data" : [ { "name" : "I-Blue", "r" : [ 60.376, 60.309, 60.438, 60.43, 60.51, 60.425, 60.503, 60.43, 60.542, 60.724, 60.515, 60.739, 60.497, 60.838, 61.929, 62.065, 62.043, 61.91, 61.749, 61.63, 61.746, 61.877, 61.762, 61.862, 62.184, 62.021, 62.236,
+  62.351, 62.432, 62.267, 62.562, 62.415, 62.186, 62.116, 62.163, 62.305, 62.318, 62.37, 61.729, 61.593, 60.846, 61.324, 61.524, 61.665, 61.29, 61.3, 61.351, 61.432 ], "t" : [ 239.89, 239.9, 239.9, 239.88, 239.91, 239.91, 239.88, 239.89, 239.89, 239.88,
+  239.9, 239.85, 239.84, 239.83, 239.85, 239.9, 239.89, 239.8, 239.81, 239.82, 239.83, 239.82, 239.86, 239.85, 239.82, 239.81, 239.8, 239.81, 239.81, 239.84, 239.83, 239.83, 239.84, 239.79, 239.81, 239.79, 239.77, 239.79, 239.75, 239.76, 239.76, 239.77,
+  239.76, 239.76, 239.76, 239.77, 239.78, 239.76 ], "type" : "1" }, { "name" : "I-Red", "r" : [ 60.439, 60.387, 60.515, 60.479, 60.592, 60.51, 60.546, 60.48, 60.577, 60.747, 60.542, 60.719, 60.437, 60.774, 61.844, 62.037, 62.03, 61.705, 61.538, 61.444,
+  61.57, 61.71, 61.602, 61.673, 61.974, 61.773, 61.986, 62.139, 62.214, 62.077, 62.389, 62.225, 62.015, 61.886, 61.916, 62.05, 61.999, 62.075, 61.403, 61.324, 60.512, 61.036, 61.22, 61.384, 61.028, 61.054, 61.12, 61.155 ], "t" : [ 119.98, 119.97, 119.97,
+  119.96, 119.98, 119.99, 119.97, 119.98, 119.97, 119.96, 119.95, 119.94, 119.93, 119.93, 119.91, 119.93, 119.94, 119.81, 119.8, 119.81, 119.83, 119.85, 119.85, 119.83, 119.81, 119.8, 119.79, 119.82, 119.81, 119.82, 119.85, 119.82, 119.84, 119.83, 119.81,
+  119.83, 119.77, 119.79, 119.76, 119.82, 119.78, 119.8, 119.79, 119.81, 119.81, 119.82, 119.83, 119.8 ], "type" : "1" }, { "name" : "I-Yellow", "r" : [ 61.244, 61.169, 61.293, 61.284, 61.373, 61.306, 61.375, 61.314, 61.402, 61.598, 61.356, 61.601, 61.331,
+  61.686, 62.781, 62.917, 62.916, 62.701, 62.526, 62.432, 62.57, 62.724, 62.569, 62.662, 62.985, 62.797, 63.003, 63.152, 63.22, 63.059, 63.387, 63.202, 62.995, 62.937, 62.96, 63.131, 63.085, 63.157, 62.493, 62.424, 61.608, 62.129, 62.339, 62.5, 62.125,
+  62.119, 62.183, 62.245 ], "t" : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], "type" : "1" } ],
+  "date" : [ "2016-05-02 00:00:00", "2016-05-02 00:30:00", "2016-05-02 01:00:00", "2016-05-02 01:30:00", "2016-05-02 02:00:00", "2016-05-02 02:30:00", "2016-05-02 03:00:00", "2016-05-02 03:30:00", "2016-05-02 04:00:00", "2016-05-02 04:30:00", "2016-05-02 05:00:00",
+  "2016-05-02 05:30:00", "2016-05-02 06:00:00", "2016-05-02 06:30:00", "2016-05-02 07:00:00", "2016-05-02 07:30:00", "2016-05-02 08:00:00", "2016-05-02 08:30:00", "2016-05-02 09:00:00", "2016-05-02 09:30:00", "2016-05-02 10:00:00", "2016-05-02 10:30:00",
+  "2016-05-02 11:00:00", "2016-05-02 11:30:00", "2016-05-02 12:00:00", "2016-05-02 12:30:00", "2016-05-02 13:00:00", "2016-05-02 13:30:00", "2016-05-02 14:00:00", "2016-05-02 14:30:00", "2016-05-02 15:00:00", "2016-05-02 15:30:00", "2016-05-02 16:00:00",
+  "2016-05-02 16:30:00", "2016-05-02 17:00:00", "2016-05-02 17:30:00", "2016-05-02 18:00:00", "2016-05-02 18:30:00", "2016-05-02 19:00:00", "2016-05-02 19:30:00", "2016-05-02 20:00:00", "2016-05-02 20:30:00", "2016-05-02 21:00:00", "2016-05-02 21:30:00",
+  "2016-05-02 22:00:00", "2016-05-02 22:30:00", "2016-05-02 23:00:00", "2016-05-02 23:30:00" ] }
+
+  var sumCurrentData = sumCurrentJSON['data'][0];
+  var sumCurrentDates = sumCurrentData['date'];
+  var sumCurrentRValues = sumCurrentData['r'];
+  var sumCurrentTValues = sumCurrentData['t'];
+
+  var phasorData = phasorJSON['data'];
+  var phasorBlueData = phasorData[0];
+  var phasorBlueTData = phasorBlueData["t"];
+  var phasorBlueRData = phasorBlueData["r"];
+  var phasorRedData = phasorData[1];
+  var phasorRedTData = phasorRedData["t"];
+  var phasorRedRData = phasorRedData["r"];
+  var phasorYellowData = phasorData[2];
+  var phasorYellowTData = phasorYellowData["t"];
+  var phasorYellowRData = phasorYellowData["r"];
+  var sliderLength = sumCurrentDates.length - 1;
+  console.log(phasorYellowRData);
+
+
+
   // real sample data from VM
-
-  var phasorjson =   {
-      "2016-05-01 00:00:00": [{
-          "name": "I-Blue",
-          "r": [
-              0.00017599
-          ],
-          "t": [
-              155.67
-          ],
-          "type": "1"
-      }, {
-          "name": "I-Red",
-          "r": [
-              0.00051614
-          ],
-          "t": [
-              100.22
-          ],
-          "type": "1"
-      }, {
-          "name": "I-Yellow",
-          "r": [
-              0.00035003
-          ],
-          "t": [
-              0
-          ],
-          "type": "1"
-      }],
-      "2016-05-01 00:30:00": [{
-          "name": "I-Blue",
-          "r": [
-              0.00019617
-          ],
-          "t": [
-              350.67
-          ],
-          "type": "1"
-      }, {
-          "name": "I-Red",
-          "r": [
-              0.000238
-          ],
-          "t": [
-              10.683
-          ],
-          "type": "1"
-      }, {
-          "name": "I-Yellow",
-          "r": [
-              0.00013861
-          ],
-          "t": [
-              0
-          ],
-          "type": "1"
-      }],
-      "2016-05-01 01:00:00": [{
-          "name": "I-Blue",
-          "r": [
-              0.0001675
-          ],
-          "t": [
-              248.87
-          ],
-          "type": "1"
-      }, {
-          "name": "I-Red",
-          "r": [
-              7.7608e-05
-          ],
-          "t": [
-              88.543
-          ],
-          "type": "1"
-      }, {
-          "name": "I-Yellow",
-          "r": [
-              0.00011169
-          ],
-          "t": [
-              0
-          ],
-          "type": "1"
-      }],
-  }
-  console.log(phasorjson["2016-05-01 00:00:00"])
-
-  $.each(phasorjson, function(key, value) {
-    console.log(key, value);
-    console.log(key)
-  });
 
   var timestamps = [
   "2016-05-05 00:00:00", "2016-05-05 00:30:00", "2016-05-05 01:00:00", "2016-05-05 01:30:00", "2016-05-05 02:00:00", "2016-05-05 02:30:00", "2016-05-05 03:00:00", "2016-05-05 03:30:00", "2016-05-05 04:00:00", "2016-05-05 04:30:00", "2016-05-05 05:00:00",
@@ -263,11 +220,11 @@
   // slider
   dragFixedSlider = document.getElementById('drag-fixed');
   noUiSlider.create(dragFixedSlider, {
-  	start: [ 40 ],
+  	start: [ 10 ],
     step: 1,
   	range: {
   		'min':  0,
-  		'max':  ( timestamps.length - 1 )
+  		'max':  ( sliderLength )
   	},
     pips: {
   	mode: 'range',
@@ -283,20 +240,20 @@
     var sliderValue = parseInt(this.get());
 
     //  rough table for values
-    var tableContent = "Slider interval: " + sliderValue + " Timestamp: " + timestamps[sliderValue] +
+    var tableContent = "Slider interval: " + sliderValue + " Timestamp: " + sumCurrentDates[sliderValue] +
 
-      "   ///// Current Sum Mag: " + rValues[sliderValue] + " - Current Sum PA: " + tValues[sliderValue] +
+      "   ///// Current Sum Mag: " + sumCurrentRValues[sliderValue] + " - Current Sum PA: " + sumCurrentTValues[sliderValue] +
 
-      "   ///// I-R mag: " + redRValues[sliderValue] + " - PA1: " + redTValues[sliderValue] +
-      "   ///// I-Y mag: " + yellowRValues[sliderValue] +  " - PA2: " + yellowTValues[sliderValue] +
-      "   ///// I-B mag: " + blueRValues[sliderValue] +  " - PA3: " + blueTValues[sliderValue];
+      "   ///// I-R mag: " + phasorRedRData[sliderValue] + " - PA1: " + phasorRedTData[sliderValue] +
+      "   ///// I-Y mag: " + phasorYellowRData[sliderValue] +  " - PA2: " + phasorYellowTData[sliderValue] +
+      "   ///// I-B mag: " + phasorBlueRData[sliderValue] +  " - PA3: " + phasorBlueTData[sliderValue];
 
     document.getElementById('table').innerHTML = tableContent
 
 
     //debug and testing for latest val
-    var tSelected = tValues[sliderValue];
-    var rSelected = rValues[sliderValue];
+    var tSelected = sumCurrentTValues[sliderValue];
+    var rSelected = sumCurrentRValues[sliderValue];
 
     if (sliderValue === sliderMax) {
       var latestColor = "lightgreen";
@@ -316,24 +273,24 @@
     var polarTwoConfig = {
       "data": [
       {
-        "t": [redTValues[sliderValue]],
-        "r": [redRValues[sliderValue]],
+        "t": [phasorRedTData[sliderValue]],
+        "r": [phasorRedRData[sliderValue]],
         "name": "I-R",
         "visible": true,
         "color": "red",
         "geometry": "DotPlot",
       },
       {
-        "t": [yellowTValues[sliderValue]],
-        "r": [yellowRValues[sliderValue]],
+        "t": [phasorYellowTData[sliderValue]],
+        "r": [phasorYellowRData[sliderValue]],
         "name": "I-Y",
         "visible": true,
         "color": "yellow",
         "geometry": "DotPlot",
       },
       {
-        "t": [blueTValues[sliderValue]],
-        "r": [blueRValues[sliderValue]],
+        "t": [phasorBlueTData[sliderValue]],
+        "r": [phasorBlueRData[sliderValue]],
         "name": "I-B",
         "visible": true,
         "color": "blue",
@@ -367,8 +324,8 @@
       "data": [
       // data for sum current cloud
       {
-        "t": tValues,
-        "r": rValues,
+        "t": sumCurrentTValues,
+        "r": sumCurrentRValues,
         "name": "Current Sum",
         "visible": true,
         "color": "blue",
@@ -385,8 +342,8 @@
       },
       //data for most recent point
       {
-        "t": [tValues[sliderMax]],
-        "r": [rValues[sliderMax]],
+        "t": [sumCurrentTValues[sliderMax]],
+        "r": [sumCurrentRValues[sliderMax]],
         "name": "Latest Value",
         "visible": true,
         "color": latestColor,
