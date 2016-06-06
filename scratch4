@@ -1,0 +1,269 @@
+/*
+*   This file includes all routines related to Substation
+*	This is POC
+*/
+
+/****************************************************************************
+    load Substation data
+****************************************************************************/
+function loadBushingPolar(id, dt1, dt2) {
+	loadCurrentSum(id, dt1, dt2);
+	loadCurrentPhasors(id, dt1, dt2);
+}
+
+function loadCurrentSum(id, dt1, dt2) {
+
+    // FIX THIS
+    // old ajax call to get data example here
+    // // $.ajax({
+    // // 	method: "POST",
+    // // 	async: false,
+    // // 	url: "dp.py/jsonRpcRequest",
+    // // 	data: {
+    // // 		"jsonParam": JSON.stringify(sumcurrent)
+    // // 	}
+    // // })
+    // // .done( function(dt) {
+    // // 	d = JSON.parse(dt);
+    // // 	$.each(d.result.data, function(i, v) {
+    // // 		v["geometry"] = "DotPlot";
+    // // 	})
+    // // })
+    // // .fail( function(err) {
+    // // 	message("Error", "Failed to get getTableData data for the Polar Chart", MESSAGE_TYPE.Error);
+    // // });
+    // Bushing rpf ajax sample
+    // var ip = {
+    //     entityId: id,
+    //     startTime: dt1,
+    //     endTime: dt2,
+    //     format: "chart",
+    // };
+    //
+    // ip["table"] = DATA_VIEW.BushingSetCurrent;
+    //     number: null
+    // ajaxCall({
+    //     method: DATA_METHOD.TableData,
+    //     input: ip,
+    //     ctrlInput: {
+    //         selector: "#chart-tcm",
+    //         y2: "Bushing 3"
+    //     }
+    // });
+
+    var date1 = dt1.split(' ')[0].split('/').join("-");
+    var date2 = dt2.split(' ')[0].split('/').join("-");
+    var urlString = "/b/json/gettabledata?format=polar&table=Sum%20Currents%&entityId="+ id + "&startTime=" + date1 + "&endTime=" + date2;
+    console.log(id + " " + dt1 + " " + dt2);
+    var sumCurrentAjax = $.ajax({
+        method: "POST",
+        async: false,
+        url: urlString
+    });
+    // var ip = {
+    //     entityId: id,
+    //     startTime: dt1,
+    //     endTime: dt2,
+    //     format: "polar"
+    // };
+    // ip["table"] = DATA_VIEW.SumCurrents;
+    // debugger
+    // var sumCurrentAjax = ajaxCall({
+    //     method:DATA_METHOD.TableData,
+    //     input: ip
+    // });
+
+    var sumCurrentData = sumCurrentAjax['responseJSON']['data'][0];
+    console.log(urlString)
+    console.log(sumCurrentData)
+    // console.log(ip)
+
+
+
+
+    var sumCurrentTValues = sumCurrentData["t"];
+    var sumCurrentRValues = sumCurrentData["r"];
+    // sum current chart
+    var polarOneConfig = {
+      "data": [
+      // data for sum current cloud
+      {
+        "t": sumCurrentTValues,
+        "r": sumCurrentRValues,
+        "name": "Current Sum",
+        "visible": true,
+        "color": "blue",
+        "geometry": "DotPlot",
+      }
+    //   //data for selected point
+    //   {
+    //     "t": [tSelected],
+    //     "r": [rSelected],
+    //     "name": "Selected Point",
+    //     "visible": true,
+    //     "color": "lightgreen",
+    //     "geometry": "DotPlot",
+    //   },
+    //   //data for most recent point
+    //   {
+    //     "t": [sumCurrentTValues[sliderMax]],
+    //     "r": [sumCurrentRValues[sliderMax]],
+    //     "name": "Latest Value",
+    //     "visible": true,
+    //     "color": latestColor,
+    //     "geometry": "DotPlot",
+    //   }
+        ],
+      "layout": {
+        "radialAxis": {
+          "domain": [0,1.2],
+          "orientation": -45,
+          "visible": true,
+          "gridLinesVisible": true,
+          "tickOrientation": 'horizontal',
+          "ticksSuffix": "mA"
+        },
+        "angularAxis": {
+          "domain": [0,360],
+          "visible": true,
+          "gridLinesVisible": true,
+          "labelsVisible": true,
+          "tickOrientation": "horizontal",
+          "ticksSuffix": "°"
+        },
+        "labelOffset": 15,
+        "direction": "counterclockwise",
+      },
+    };
+    micropolar.Axis()
+    .config(polarOneConfig)
+    .render(d3.select('#chart-sub-polar1'));
+}
+
+function loadCurrentPhasors(id, dt1, dt2) {
+
+    // FIX THIS
+    // old ajax call to get data example here
+    // $.ajax({
+    // 	method: "POST",
+    // 	async: false,
+    // 	url: "dp.py/jsonRpcRequest",
+    // 	data: {
+    // 		"jsonParam": JSON.stringify(latestPhasors)
+    // 	}
+    // })
+    // .done( function(dt) {
+    // 	d = JSON.parse(dt);
+    // 	$.each(d.result.data, function(i, v) {
+    // 		v["geometry"] = "DotPlot";
+    // 	})
+    // })
+    // .fail( function(err) {
+    // 	message("Error", "Failed to get getBushingSetPhasors data for the Polar Chart", MESSAGE_TYPE.Error);
+    // });
+    // AJAX HERE
+
+    // // TEMPLATE FROM BUSHING RPF :
+    // var ip = {
+    //     entityId: id,
+    //     startTime: dt1,
+    //     endTime: dt2,
+    //     format: "chart",
+    //     number: null
+    // };
+    //
+    // ip["table"] = DATA_VIEW.BushingSetCurrent;
+	// ajaxCall({
+	// 	method: DATA_METHOD.TableData,
+	// 	input: ip,
+	// 	ctrlInput: {
+    //  			selector: "#chart-tcm",
+    //     	y2: "Bushing 3"
+    //  		}
+	// });
+    var date1 = dt1.split(' ')[0].split('/').join("-");
+    var date2 = dt2.split(' ')[0].split('/').join("-");
+    var urlString = "/b/json/getbushingsetphasors?format=polar&table=Sum%20Currents%&entityId="+ id + "&startTime=" + date1 + "&endTime=" + date2 + "&format=sequential";
+    var phasorAjax = $.ajax({
+        method: "POST",
+        async: false,
+        url: urlString,
+    });
+    var phasorData = phasorAjax['responseJSON']['data'];
+    var phasorBlueData = phasorData[0];
+    var phasorBlueTData = phasorBlueData["t"];
+    var phasorBlueRData = phasorBlueData["r"];
+    var phasorRedData = phasorData[1];
+    var phasorRedTData = phasorRedData["t"];
+    var phasorRedRData = phasorRedData["r"];
+    var phasorYellowData = phasorData[2];
+    var phasorYellowTData = phasorYellowData["t"];
+    var phasorYellowRData = phasorYellowData["r"];
+    var sliderValue = 0;
+
+    var polarTwoConfig = {
+      "data": [
+      {
+        "t": [phasorRedTData[sliderValue]],
+        "r": [phasorRedRData[sliderValue]],
+        "name": "I-R",
+        "visible": true,
+        "color": "red",
+        "geometry": "DotPlot",
+      },
+      {
+        "t": [phasorYellowTData[sliderValue]],
+        "r": [phasorYellowRData[sliderValue]],
+        "name": "I-Y",
+        "visible": true,
+        "color": "yellow",
+        "geometry": "DotPlot",
+      },
+      {
+        "t": [phasorBlueTData[sliderValue]],
+        "r": [phasorBlueRData[sliderValue]],
+        "name": "I-B",
+        "visible": true,
+        "color": "blue",
+        "geometry": "DotPlot",
+      }],
+      "layout": {
+        "radialAxis": {
+          "domain": [60,66],
+          "orientation": -45,
+          "visible": true,
+          "gridLinesVisible": true,
+          "tickOrientation": 'horizontal',
+          "ticksSuffix": "mA"
+        },
+        "angularAxis": {
+          "domain": [0,360],
+          "visible": true,
+          "gridLinesVisible": true,
+          "labelsVisible": true,
+          "tickOrientation": "horizontal",
+          "ticksSuffix": "°"
+        },
+        "labelOffset": 15,
+        "direction": "counterclockwise",
+      },
+
+    };
+	micropolar.Axis()
+	  .config(polarTwoConfig)
+	  .render(d3.select('#chart-sub-polar2'));
+
+}
+$('a.btn').click(function() {
+        var id = localStorage.getItem('dp-tv-id');
+            var dt1 = $("#dt1").val();
+            var dt2 = $("#dt2").val();
+            var urlString = "/b/json?format=polar&table=Sum%20Currents%";
+            console.log(id + " " + dt1 + " " + dt2);
+            // var test = $.ajax({
+            //     method: "POST",
+            //     async: false,
+            //     url: urlString
+            // });
+            loadBushingPolar(id, dt1, dt2);
+});
