@@ -1,0 +1,103 @@
+new polar scratch from sun jun 5 1030
+
+// var ip = {
+//     entityId: id,
+//     startTime: dt1,
+//     endTime: dt2,
+//     format: "polar"
+// };
+// ip["table"] = DATA_VIEW.SumCurrents;
+// debugger
+// var sumCurrentAjax = ajaxCall({
+//     method:DATA_METHOD.TableData,
+//     input: ip
+// });
+// sliderLength = sumCurrentAjax['responseJSON']['data'][0]['date'].length - 1;
+// debugger
+// renderSlider(sliderLength);
+
+
+    // FIX THIS
+    // old ajax call to get data example here
+    // $.ajax({
+    // 	method: "POST",
+    // 	async: false,
+    // 	url: "dp.py/jsonRpcRequest",
+    // 	data: {
+    // 		"jsonParam": JSON.stringify(latestPhasors)
+    // 	}
+    // })
+    // .done( function(dt) {
+    // 	d = JSON.parse(dt);
+    // 	$.each(d.result.data, function(i, v) {
+    // 		v["geometry"] = "DotPlot";
+    // 	})
+    // })
+    // .fail( function(err) {
+    // 	message("Error", "Failed to get getBushingSetPhasors data for the Polar Chart", MESSAGE_TYPE.Error);
+    // });
+    // AJAX HERE
+
+    // // TEMPLATE FROM BUSHING RPF :
+    // var ip = {
+    //     entityId: id,
+    //     startTime: dt1,
+    //     endTime: dt2,
+    //     format: "chart",
+    //     number: null
+    // };
+    //
+    // ip["table"] = DATA_VIEW.BushingSetCurrent;
+	// ajaxCall({
+	// 	method: DATA_METHOD.TableData,
+	// 	input: ip,
+	// 	ctrlInput: {
+    //  			selector: "#chart-tcm",
+    //     	y2: "Bushing 3"
+    //  		}
+	// });
+
+  // var test = $.ajax({
+//     method: "POST",
+//     async: false,
+//     url: urlString
+// });
+
+
+    // FIX THIS
+    // old ajax call to get data example here
+    // // $.ajax({
+    // // 	method: "POST",
+    // // 	async: false,
+    // // 	url: "dp.py/jsonRpcRequest",
+    // // 	data: {
+    // // 		"jsonParam": JSON.stringify(sumcurrent)
+    // // 	}
+    // // })
+    // // .done( function(dt) {
+    // // 	d = JSON.parse(dt);
+    // // 	$.each(d.result.data, function(i, v) {
+    // // 		v["geometry"] = "DotPlot";
+    // // 	})
+    // // })
+    // // .fail( function(err) {
+    // // 	message("Error", "Failed to get getTableData data for the Polar Chart", MESSAGE_TYPE.Error);
+    // // });
+    // Bushing rpf ajax sample
+    // var ip = {
+    //     entityId: id,
+    //     startTime: dt1,
+    //     endTime: dt2,
+    //     format: "chart",
+    // };
+    //
+    // ip["table"] = DATA_VIEW.BushingSetCurrent;
+    //     number: null
+    // ajaxCall({
+    //     method: DATA_METHOD.TableData,
+    //     input: ip,
+    //     ctrlInput: {
+    //         selector: "#chart-tcm",
+    //         y2: "Bushing 3"
+    //     }
+    // });

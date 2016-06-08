@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>doblePRIME</title>
+
+    <!-- third party and doble libs -->
+    <link href="/style/bootstrap.min.css" rel="stylesheet">
+    <link href="/style/bootstrap-treeview.min.css" rel="stylesheet" type="text/css">
+    <link href="/style/sb-admin-2.css" rel="stylesheet">
+    <link href="/style/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/style/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="/style/nouislider.min.css" rel="stylesheet" type="text/css" />
+    <link href="/style/c3.css" rel="stylesheet" type="text/css" />
+    <link href="/style/jquery.datetimepicker.css" rel="stylesheet" type="text/css" />
+
+    <!-- custom libs -->
+    <!-- <link href="/style/scrollbar.css" rel="stylesheet"/> -->
+    <link href="/style/dp.css" rel="stylesheet" type="text/css">
+    <link href="/fonts/doble-fonticons.css" rel="stylesheet" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="dp.py">
+                    <div class="doble-fonticons-logobkg dp-logosmall"></div>
+                </a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <!--
+				Alerts drop down
+			-->
+            <ul id="ul-alerts-dd" class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <div id="alertMsg" class="dp-notify dp-notify-text"></div>
+                        <span id="alertCount"></span>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="message-dropdown dropdown-menu" data-bind="foreach: dp.VM.Alerts">
+                        <li class="message-preview">
+                            <div class="dp-alert-dd">
+                                <div class="media">
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <span data-bind="attr: {'class': cssLevel}"></span>
+                                        </div>
+                                        <div class="col-md-11">
+                                            <div class="row">
+                                                <div class="col-md-12 dp-black">
+                                                    <span data-bind="text: alertEntity"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-10">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    <span class="small text-muted" data-bind="text: alertTime"></span>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <button type="button" class="btn btn-default btn-sm" onclick="ShowAlertTab();">
+                                                        <span class="glyphicon " aria-hidden="true"></span>&hellip;
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 dp-black">
+                                                    <span data-bind="text: alertMessage"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider" data-bind="if: $index + 1 < dp.VM.Alerts().length"></li>
+                    </ul>
+                </li>
+                <li>
+                    <div id="clock_date"></div>
+                    <div id="clock_time"></div>
+                    <div id="txt"></div>
+                </li>
+
+                <li class="dropdown dp-user">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i id="i-user-icon" class="fa fa-lg fa-user"></i><span id="spn-username"></span></a>
+                    <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-lg fa-user"></i>Sam <b class="caret"></b></a> -->
+                    <!-- <ul class="dropdown-menu">
+                        <li>
+                            <a href="#" onclick="userPref();"><i class="fa fa-fw fa-user"></i> Preferences</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-lock"></i> Change password</a>
+                        </li>
+                    </ul> -->
+                </li>
+
+                <li><a href="dp.py/config"><i class="fa fa-2x fa-fw fa-gear"></i></a></li>
+                <li><a href="dp.py/logoff" class="poweroff"><i class="fa fa-2x fa-fw fa-power-off"></i></a></li>
+            </ul>
+            <ul id="bc" class="breadcrumb">
+            </ul>
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input id="txt-search" type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                <!-- <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button> -->
+                								<button id="btn-search" class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                <button type="button" class="btn btn-default dropdown-toggle dp-tvsearch-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a onclick="$('#tree').treeview('expandAll', { levels: 2, silent: true });">Expand All</a></li>
+                                    <li><a onclick="$('#tree').treeview('collapseAll', { silent: true });">Collapse All</a></li>
+                                    <!-- <li class="dp-checked"><a id="li-alert-items" href="#"><i class="fa"></i>Show only items with Alerts</a></li> -->
+                                    <li class="dp-checked"><a id="li-multi-select" href="#"><i class="fa"></i>Multi-select ON</a></li>
+                                </ul>
+                                </span>
+                            </div>
+                        </li>
+                        <li>
+                            <div id="tree" class="assetTree"></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="row dp-content">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#db">Dashboard</a></li>
+                    <li><a data-toggle="tab" href="#data">Data</a></li>
+                    <li><a data-toggle="tab" href="#analytics">Analytics</a></li>
+                    <li><a data-toggle="tab" href="#alerts">Alerts</a></li>
+                    <li><a data-toggle="tab" href="#export">Export</a></li>
+                </ul>
+                <div class="tab-content">
+                    <!--*****************************************************
+						TAB - Dashboard
+					******************************************************-->
+                    <div id="db" class="tab-pane fade in active">
+                        <div id="div-db" data-bind="foreach: assetSummary">
+							<div class="accordion panel-group" data-bind="attr: {'ref': entityId}">
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+											<a class="accordion-toggle" data-toggle="collapse"
+												data-bind="attr: {'href': '#accd' + entityId}, click: showAssetDetails">
+												<i class="indicator glyphicon glyphicon-menu-right"></i>
+							                </a>
+											<span data-bind="attr: {'class': icon}"></span>
+                                            <!-- TODO: remove the title = entityId -->
+                                            <span data-bind="text: title, attr:{'title': entityId}" class="asset-name"></span>
+							                <span class="badge badge-status pull-right" data-bind="text: alerts.status"></span>
+							                <span class="badge badge-info pull-right" data-bind="text: alerts.info"></span>
+							                <span class="badge badge-warning pull-right" data-bind="text: alerts.warning"></span>
+							                <span class="badge badge-action pull-right" data-bind="text: alerts.action"></span>
+							            </h4>
+                                    </div>
+                                    <div class="panel-collapse collapse" data-bind="attr: {'id': 'accd' + entityId}">
+                                        <div class="panel-body details-region">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--*****************************************************
+						TAB - Data
+					******************************************************-->
+                    <div id="data" class="tab-pane fade">
+                        <!--*****************************************************
+							Data- Criteria selection
+						******************************************************-->
+                        <div id="div-criteria" class="row">
+                            <div class="pull-left dp-period">
+                                <div class="form-group">
+                                    <div class="input-group date">
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-calendar"></span>
+                                        </span>
+                                        <input id="dt1" type='text' class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pull-left dp-period">
+                                <div class="form-group">
+                                    <div class="input-group date">
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-calendar"></span>
+                                        </span>
+                                        <input id="dt2" type='text' class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pull-left">
+                                <div class="form-group">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-default">
+                                            <input id="showCharts" type="checkbox" class="dp-checkbox">
+                                            <label></label>Display Charts
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+							<div class="pull-left" id="divShowPolar" display="none">
+								<div class="btn-group" data-toggle="buttons">
+									<label class="btn btn-default active">
+										<input name="chartType" value="chart" type="radio">Charts
+									</label>
+									<label class="btn btn-default">
+										<input name="chartType" value="polar" type="radio" checked="checked">Polar
+									</label>
+								</div>
+                            </div>
+
+                            <div class="pull-left">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <a class="btn" href="#" onclick="updateDataTab();"><i class="fa fa-refresh"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--*****************************************************
+							Data- default
+						******************************************************-->
+                        <div id="divNone" style="display:none;">
+                        </div>
+
+                        <!--*****************************************************
+							Data- Generic
+						******************************************************-->
+                        <div id="divGenericData" style="display:none;">
+                            <div class="row dp-chart-tile">
+                                <div id="div-gen-chart" class="col-md-12" style="display:none;">
+                                    <div class="chart-title"><span id="gen-chart-title"></span>
+                                        <i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#div-gen-chart')"></i>
+                                    </div>
+                                    <div class="chart-content">
+                                        <div id="chart-gen"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <table id="dt-gen" class="display" width="100%%"></table>
+                        </div>
+
+                        <!--*****************************************************
+							Data- Temperature
+						******************************************************-->
+                        <div id="divTemperature" style="display:none;">
+                            <div class="row dp-chart-tile">
+                                <div id="div-temp-chart" class="col-md-12" style="display:none;">
+                                    <div class="chart-title">Temperature
+                                        <i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#div-temp-chart')"></i>
+                                    </div>
+                                    <div class="chart-content">
+                                        <div id="chart-temp"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <table id="dt-temp" class="display" width="100%%"></table>
+                        </div>
+
+                        <!--*****************************************************
+							Data- Moisture
+						******************************************************-->
+                        <div id="divMoisture" style="display:none;">
+                            <div class="row dp-chart-tile">
+                                <div id="div-dga-moist-chart" class="col-md-12" style="display:none;">
+                                    <div class="chart-title">Moisture
+                                        <i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#div-dga-moist-chart')"></i>
+                                    </div>
+                                    <div class="chart-content">
+                                        <div id="chart-dga-moist"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <table id="dt-dga-moist" class="display" width="100%%"></table>
+                        </div>
+
+                        <!--*****************************************************
+							Data- Gas and Moisture
+						******************************************************-->
+                        <div id="divGasAndMoisture" style="display:none;">
+                            <div class="row dp-chart-tile">
+                                <div id="div-gm-gas-chart" class="col-md-6">
+                                    <div class="chart-title">Gas
+                                        <i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#div-gm-gas-chart')"></i>
+                                    </div>
+                                    <div class="chart-content">
+                                        <div id="chart-gm-gas"></div>
+                                    </div>
+                                </div>
+                                <div id="div-gm-moist-chart" class="col-md-6">
+                                    <div class="chart-title">Moisture
+                                        <i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#div-gm-moist-chart')"></i>
+                                    </div>
+                                    <div class="chart-content">
+                                        <div id="chart-gm-moist"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bottom-gap-30"></div>
+                            <div class="row dp-chart-tile">
+                                <div id="div-gm-gas-grid" class="col-md-6">
+                                    <table id="dt-gm-gas" class="display" width="100%%"></table>
+                                </div>
+                                <div id="div-gm-moist-grid" class="col-md-6">
+                                    <table id="dt-gm-moist" class="display" width="100%%"></table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--*****************************************************
+							Data- Gas
+						******************************************************-->
+                        <div id="divGas" style="display:none;">
+                            <div class="row dp-chart-tile">
+                                <div id="div-gas-chart" class="col-md-12" style="display:none;">
+                                    <div class="chart-title">Gas
+                                        <i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#div-gas-chart')"></i>
+                                    </div>
+                                    <div class="chart-content">
+                                        <div id="chart-gas"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <table id="dt-gas" class="display" width="100%%"></table>
+                        </div>
+
+                        <!--*****************************************************
+							Data- PD
+						******************************************************-->
+                        <div id="divPd" style="display:none;">
+                            <div class="row dp-chart-tile">
+                                <div id="div-pd-chart" class="col-md-12" style="display:none;">
+                                    <div class="chart-title">Partial Discharge Data
+                                        <i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#div-pd-chart')"></i>
+                                    </div>
+                                    <div class="chart-content">
+                                        <div id="chart-pd"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <table id="dt-pd" class="display" width="100%%">
+                                <thead>
+                                    <tr>
+                                        <th width="160px" class="bkg-app"></th>
+                                        <th colspan="6" class="tap1">PAPR (dB)</th>
+                                        <th colspan="6" class="tap2">IPwr (dBm)</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Time</th>
+                                        <th>Global</th>
+                                        <th>Band 1</th>
+                                        <th>Band 2</th>
+                                        <th>Band 3</th>
+                                        <th>Band 4</th>
+                                        <th>Band 5</th>
+                                        <th>Global</th>
+                                        <th>Band 1</th>
+                                        <th>Band 2</th>
+                                        <th>Band 3</th>
+                                        <th>Band 4</th>
+                                        <th>Band 5</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+
+                        <!--*****************************************************
+							Data- BushingRpf
+						******************************************************-->
+                        <div id="divBushingRpf" style="display:none;">
+                            <!--
+								Items to display:
+								1. Chart1: TAP CURRENT MAGNITUDE
+								2. Chart2: PHASE ANGLE NORMALIZED TO ZERO
+								3. Chart3: POWER FACTOR %% TAP 1 - OUTAGES OMITTED
+								4. Chart4: POWER FACTOR %% TAP 3 - OUTAGES OMITTED
+								5. Chart5: CAPACITANCE TAP 1 - OUTAGES OMITTED
+								6. Chart6: CAPACITANCE TAP 3 - OUTAGES OMITTED
+								7. Table1: PF values
+								8. Table2: Measurements
+							-->
+                            <div id="div-bushingRpf-charts" style="display:none;">
+                                <div class="row dp-chart-tile">
+                                    <div id="div-tcm" class="col-lg-12">
+                                        <div class="chart-title">Tap Current Magnitude
+                                            <i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#div-tcm')"></i>
+                                        </div>
+                                        <div class="chart-content">
+                                            <div id="chart-tcm"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row dp-chart-tile">
+                                    <div id="div-pa" class="col-lg-12">
+                                        <div class="chart-title">Phase Angle Normalized to Zero
+                                            <i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#div-pa')"></i>
+                                        </div>
+                                        <div class="chart-content">
+                                            <div id="chart-pa"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row dp-chart-tile">
+                                    <div id="div-pf1" class="col-lg-12">
+                                        <div class="chart-title">Power Factor %% -Tap 1
+                                            <i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#div-pf1')"></i>
+                                        </div>
+                                        <div class="chart-content">
+                                            <div id="chart-pf1"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row dp-chart-tile">
+                                    <div id="div-pf2" class="col-lg-12">
+                                        <div class="chart-title">Power Factor %% -Tap 2
+                                            <i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#div-pf2')"></i>
+                                        </div>
+                                        <div class="chart-content">
+                                            <div id="chart-pf2"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row dp-chart-tile">
+                                    <div id="div-pf3" class="col-lg-12">
+                                        <div class="chart-title">Power Factor %% -Tap 3
+                                            <i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#div-pf3')"></i>
+                                        </div>
+                                        <div class="chart-content">
+                                            <div id="chart-pf3"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row dp-chart-tile">
+                                    <div id="div-cap1" class="col-lg-12">
+                                        <div class="chart-title">Capacitance -Tap 1
+                                            <i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#div-cap1')"></i>
+                                        </div>
+                                        <div class="chart-content">
+                                            <div id="chart-cap1"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row dp-chart-tile">
+                                    <div id="div-cap2" class="col-lg-12">
+                                        <div class="chart-title">Capacitance -Tap 2
+                                            <i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#div-cap2')"></i>
+                                        </div>
+                                        <div class="chart-content">
+                                            <div id="chart-cap2"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row dp-chart-tile">
+                                    <div id="div-cap3" class="col-lg-12">
+                                        <div class="chart-title">Capacitance -Tap 3
+                                            <i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#div-cap3')"></i>
+                                        </div>
+                                        <div class="chart-content">
+                                            <div id="chart-cap3"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+							<div id="div-bushingRpf-polar" style="display:none;">
+								<div class="row dp-chart-tile">
+									<div id="div-sub-polar1" class="col-md-6">
+										<div class="chart-title"><span id="gen-chart-title">Current Sum</span>
+											<i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#div-sub-polar1')"></i>
+										</div>
+										<div class="chart-content">
+											<div id="chart-sub-polar1"></div>
+										</div>
+									</div>
+									<div id="div-sub-polar2" class="col-md-6">
+										<div class="chart-title"><span id="gen-chart-title">Current Phasors</span>
+											<i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#div-sub-polar2')"></i>
+										</div>
+										<div class="chart-content">
+											<div id="chart-sub-polar2"></div>
+										</div>
+									</div>
+								</div>
+                <div id="drag-fixed" class="col-lg-12"></div><br><br>
+								<div class="row dp-chart-tile">
+									<div class="col-md-4">
+										<table id="grid-polar1" class="display" width="100%%"></table>
+									</div>
+									<div class="col-md-4">
+										<table id="grid-polar2" class="display" width="100%%"></table>
+									</div>
+									<div class="col-md-4">
+										<table id="grid-polar3" class="display" width="100%%"></table>
+									</div>
+								</div>
+								<!-- <div class="row dp-chart-tile">
+									<div id="div-sub-polar3" class="col-md-6">
+										<div class="chart-title"><span id="gen-chart-title">Sum of Voltages</span>
+											<i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#div-sub-polar3')"></i>
+										</div>
+										<div class="chart-content">
+											<div id="chart-sub-polar3"></div>
+										</div>
+									</div>
+
+								</div>
+								<div class="row dp-chart-tile">
+									<button class="btn" onclick="JsonRpc()">JSON-RPC Test</button>
+									<div id="JsonRpc"></div>
+									<div id="jsonRpc" style="height: 10px;"></div>
+								</div> -->
+							</div>
+
+                            <table id="dt-pf" class="display" width="100%%">
+                                <thead>
+                                    <tr>
+                                        <th class="bkg-app"></th>
+                                        <th colspan="2" class="tap1">TAP 1</th>
+                                        <th colspan="2" class="tap2">TAP 2</th>
+                                        <th colspan="2" class="tap3">TAP 3</th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th>Cap. pF</th>
+                                        <th>Relative pF</th>
+                                        <th>Cap. pF</th>
+                                        <th>Relative pF</th>
+                                        <th>Cap. pF</th>
+                                        <th>Relative pF</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <table id="dt-meas" class="display" width="100%%">
+                                <thead>
+                                    <tr>
+                                        <th width="160px" class="bkg-app"></th>
+                                        <th class="bkg-app"></th>
+                                        <th class="bkg-app"></th>
+                                        <th colspan="2" class="tap1">TAP 1</th>
+                                        <th colspan="2" class="tap2">TAP 2</th>
+                                        <th colspan="2" class="tap3">TAP 3</th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+
+                        <!--*****************************************************
+							Data- BushingTpf
+						******************************************************-->
+                        <!-- Items to display
+						Row 1. True Power Factor: Tap1,2,3
+						Row 2. Capacitance: Tap1,2,3
+						Row 3. Performance, Leakage Current, Loss Angle
+						-->
+                        <div id="divBushingTpf" style="display:none;">
+                            <div id="div-bushingTpf-charts" style="display:none;">
+                                <div class="row dp-chart-tile">
+                                    <div id="divTpf-pf1" class="col-md-12">
+                                        <div class="chart-title">True Power Factor -TAP 1
+                                            <i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#divTpf-pf1')"></i>
+                                        </div>
+                                        <div class="chart-content">
+                                            <div id="chartTpf-pf1"></div>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="row dp-chart-tile">
+                                    <div id="divTpf-pf2" class="col-md-12">
+                                        <div class="chart-title">True Power Factor -TAP 2
+                                            <i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#divTpf-pf2')"></i>
+                                        </div>
+                                        <div class="chart-content">
+                                            <div id="chartTpf-pf2"></div>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="row dp-chart-tile">
+                                    <div id="divTpf-pf3" class="col-md-12">
+                                        <div class="chart-title">True Power Factor -TAP 3
+                                            <i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#divTpf-pf3')"></i>
+                                        </div>
+                                        <div class="chart-content">
+                                            <div id="chartTpf-pf3"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row dp-chart-tile">
+                                    <div id="divTpf-cap1" class="col-md-12">
+                                        <div class="chart-title">Capacitance -TAP 1
+                                            <i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#divTpf-cap1')"></i>
+                                        </div>
+                                        <div class="chart-content">
+                                            <div id="chartTpf-cap1"></div>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="row dp-chart-tile">
+                                    <div id="divTpf-cap2" class="col-md-12">
+                                        <div class="chart-title">Capacitance -TAP 2
+                                            <i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#divTpf-cap2')"></i>
+                                        </div>
+                                        <div class="chart-content">
+                                            <div id="chartTpf-cap2"></div>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="row dp-chart-tile">
+                                    <div id="divTpf-cap3" class="col-md-12">
+                                        <div class="chart-title">Capacitance -TAP 3
+                                            <i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#divTpf-cap3')"></i>
+                                        </div>
+                                        <div class="chart-content">
+                                            <div id="chartTpf-cap3"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row dp-chart-tile">
+                                    <div id="divTpf-perf" class="col-md-12">
+                                        <div class="chart-title">Bushing Performance
+                                            <i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#divTpf-perf')"></i>
+                                        </div>
+                                        <div class="chart-content">
+                                            <div id="chartTpf-perf"></div>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="row dp-chart-tile">
+                                    <div id="divTpf-curr" class="col-md-12">
+                                        <div class="chart-title">Leakage Current
+                                            <i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#divTpf-curr')"></i>
+                                        </div>
+                                        <div class="chart-content">
+                                            <div id="chartTpf-curr"></div>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="row dp-chart-tile">
+                                    <div id="divTpf-la" class="col-md-12">
+                                        <div class="chart-title">Loss Angle
+                                            <i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#divTpf-la')"></i>
+                                        </div>
+                                        <div class="chart-content">
+                                            <div id="chartTpf-la"></div>
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div id="div-bushingTpf-polar" style="display:none;">
+                  								<div class="row dp-chart-tile">
+                  									<div id="div-sub-polar3" class="col-md-6">
+                  										<div class="chart-title"><span id="gen-chart-title">Current Sum</span>
+                  											<i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#div-sub-polar3')"></i>
+                  										</div>
+                  										<div class="chart-content">
+                  											<div id="chart-sub-polar3"></div>
+                  										</div>
+                  									</div>
+                  									<div id="div-sub-polar4" class="col-md-6">
+                  										<div class="chart-title"><span id="gen-chart-title">Current Phasors</span>
+                  											<i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#div-sub-polar4')"></i>
+                  										</div>
+                  										<div class="chart-content">
+                  											<div id="chart-sub-polar4"></div>
+                  										</div>
+                  									</div>
+                  								</div>
+                                                <div id="drag-fixed-tpf" class="col-lg-12"></div><br><br><br>
+                                                <div class="row dp-chart-tile">
+                  									<div id="div-sub-polar5" class="col-md-6">
+                  										<div class="chart-title"><span id="gen-chart-title">Voltage Sum</span>
+                  											<i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#div-sub-polar5')"></i>
+                  										</div>
+                  										<div class="chart-content">
+                  											<div id="chart-sub-polar5"></div>
+                  										</div>
+                  									</div>
+                  									<div id="div-sub-polar6" class="col-md-6">
+                  										<div class="chart-title"><span id="gen-chart-title">Dynamic Datatable Placeholder</span>
+                  											<i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#div-sub-polar6')"></i>
+                  										</div>
+                  										<div class="chart-content">
+                  											<div id="chart-sub-polar6"></div>
+                  										</div>
+                  									</div>
+                  								</div>
+                  								<div class="row dp-chart-tile">
+                  									<div class="col-md-4">
+                  										<table id="grid-polar4" class="display" width="100%%"></table>
+                  									</div>
+                  									<div class="col-md-4">
+                  										<table id="grid-polar5" class="display" width="100%%"></table>
+                  									</div>
+                  									<div class="col-md-4">
+                  										<table id="grid-polar6" class="display" width="100%%"></table>
+                  									</div>
+                  								</div>
+                                            </div>
+							<!-- <div id="div-bushingTpf-charts" style="display:none;"></div> -->
+
+                            <table id="dtTpf-pf" class="display" width="100%%">
+                                <thead>
+                                    <tr>
+                                        <th class="bkg-app"></th>
+                                        <th colspan="2" class="tap1">TAP 1</th>
+                                        <th colspan="2" class="tap2">TAP 2</th>
+                                        <th colspan="2" class="tap3">TAP 3</th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th>Cap. pF</th>
+                                        <th>True pF</th>
+                                        <th>Cap. pF</th>
+                                        <th>True pF</th>
+                                        <th>Cap. pF</th>
+                                        <th>True pF</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <table id="dtTpf-meas" class="display" width="100%%">
+                                <thead>
+                                    <tr>
+                                        <th width="160px" class="bkg-app"></th>
+                                        <th class="bkg-app"></th>
+                                        <th class="bkg-app"></th>
+                                        <th colspan="2" class="tap1">TAP 1</th>
+                                        <th colspan="2" class="tap2">TAP 2</th>
+                                        <th colspan="2" class="tap3">TAP 3</th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!--*****************************************************
+						TAB - Alerts
+					******************************************************-->
+                    <div id="alerts" class="tab-pane fade">
+                        <div class="row">
+                            <div class="col-md-2 dp-period">
+                                <div class="form-group">
+                                    <div class="input-group date">
+                                        <span class="input-group-addon">
+	                                        <span class="fa fa-calendar"></span>
+                                        </span>
+                                        <input id="dtAlert1" type='text' class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 dp-period">
+                                <div class="form-group">
+                                    <div class="input-group date">
+                                        <span class="input-group-addon">
+	                                        <span class="fa fa-calendar"></span>
+                                        </span>
+                                        <input id="dtAlert2" type='text' class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="btn-group" data-toggle="buttons">
+                                    <label class="btn btn-default active">
+                                        <input name="alertAck" value="1" type="radio" checked="checked">UNACK
+                                    </label>
+                                    <label class="btn btn-default">
+                                        <input name="alertAck" value="2" type="radio">ACK
+                                    </label>
+                                    <label class="btn btn-default">
+                                        <input name="alertAck" value="3" type="radio">Both
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <a id="btnAlertRun" class="btn" href="#"><i class="fa fa-refresh fa-fw"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <table id="dt-alerts" class="display" width="100%%"></table>
+                        </div>
+
+                        <div id="popover-ack-content" class="hide">
+                            <form class="form-inline" role="form">
+                                <div class="form-group">
+                                    <label class="control-label">Place type in the resolution</label>
+                                    <input type="text" name="resolution" placeholder="Enter a comment" class="form-control" required></input>
+                                    <button type="button" class="btn dp-ack-grid">Acknowledge</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!--*****************************************************
+						TAB - Analytics
+					******************************************************-->
+                    <div id="analytics" class="tab-pane fade">
+                        <!--*****************************************************
+							Analytics- Criteria selection
+						******************************************************-->
+                        <div id="div-criteria" class="row">
+                            <div class="col-md-3 dp-period">
+                                <div class="form-group">
+                                    <div class="input-group date">
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-calendar"></span>
+                                        </span>
+                                        <input id="analytics-dt1" type='text' class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 dp-period">
+                                <div class="form-group">
+                                    <div class="input-group date">
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-calendar"></span>
+                                        </span>
+                                        <input id="analytics-dt2" type='text' class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+	                            <div class="btn-group dp-chart-options">
+	                                <button type="button" class="btn">
+	                                    <i class="fa fa-sliders"></i> Chart Options
+	                                </button>
+	                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                                    <span class="caret"></span>
+	                                    <span class="sr-only">Toggle Dropdown</span>
+	                                </button>
+	                                <ul class="dropdown-menu">
+                                        <li id="analy-chart-option-legend"><i class="dp-checked fa fa-check"></i><i class="fa fa-list"></i> Legend</li>
+	                                    <li id="analy-chart-option-subchart"><i class="dp-checked fa fa-check"></i><i class="fa fa-area-chart"></i> Sub Chart</li>
+	                                </ul>
+                            	</div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <a class="btn" href="#" onclick="updateAnalyticsTab();"><i class="fa fa-refresh"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+							<!-- <div class="col-md-3">
+	                            <div class="btn-group dp-saved-reports">
+	                                <button type="button" class="btn">
+	                                    <i class="fa fa-floppy-o"></i> Save Chart...
+	                                </button>
+	                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                                    <span class="caret"></span>
+	                                    <span class="sr-only">Toggle Dropdown</span>
+	                                </button>
+	                                <ul class="dropdown-menu">
+	                                    <li><i class="fa fa-bar-chart"></i> Report 1<i class="fa fa-minus-circle dp-red pull-right"></i></li>
+	                                    <li><i class="fa fa-bar-chart"></i> Report 2<i class="fa fa-minus-circle dp-red pull-right"></i></li>
+	                                    <li><i class="fa fa-bar-chart"></i> Report 3<i class="fa fa-minus-circle dp-red pull-right"></i></li>
+	                                    <li><i class="fa fa-bar-chart"></i> Report 4<i class="fa fa-minus-circle dp-red pull-right"></i></li>
+	                                    <li><i class="fa fa-bar-chart"></i> Report 5<i class="fa fa-minus-circle dp-red pull-right"></i></li>
+	                                </ul>
+                            	</div>
+
+							</div> -->
+							<!-- <div class="col-md-3">
+								<div id="divMultiSelectHelp">
+									<i class="fa fa-2x fa-info-circle"></i>
+									<span>To select Multiple channels, please turn on "Multi-Select" from the the drop-down menu above the Asset treeview</span>
+								</div>
+							</div> -->
+                        </div>
+
+                        <div class="row dp-chart-tile">
+                            <div id="div-anly-chart" class="col-md-12">
+                                <div class="chart-title"><span id="gen-chart-title">Composite Chart</span>
+                                    <i class="chart-window btn naked fa fa-expand pull-right" onclick="max('#div-anly-chart')"></i>
+                                </div>
+                                <div class="chart-content">
+                                    <div id="chart-anly"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--*****************************************************
+						TAB - Export
+					******************************************************-->
+                    <div id="export" class="tab-pane fade">
+                        <h4>Export doblePRIME Data</h4>
+                        <div class="row">
+                            <div class="col-md-5 dp-period">
+                                <div class="form-group">
+                                    <div class="input-group date">
+                                        <span class="input-group-addon">
+	                                        <span class="fa fa-calendar"></span>
+                                        </span>
+                                        <input id="exp-dt1" type='text' class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 dp-period">
+                                <div class="form-group">
+                                    <div class="input-group date">
+                                        <span class="input-group-addon">
+	                                        <span class="fa fa-calendar"></span>
+                                        </span>
+                                        <input id="exp-dt2" type='text' class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <div class="input-group" title="Click the button to start a new report job">
+                                        <a id="btnExpAdd" class="btn" href="#"><i class="fa fa-plus"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bottom-gap-30"></div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        Refresh report job status: <a id="btnExpRun" class="btn" href="#"><i class="fa fa-refresh"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <table id="dt-exp" class="display dp-export-grid" width="100%%">
+                                <thead>
+                                    <tr>
+                                        <th>Created</th>
+                                        <th>Start</th>
+                                        <th>End</th>
+                                        <th>Export File</th>
+                                        <th>Size</th>
+                                        <th>Status</th>
+                                        <th>Message</th>
+                                        <th>Remove</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-wrapper -->
+        <!-- TEMPORARY COPYRIGHT LOCATION - NEEDS TO BE UNDER NAV TREE -->
+        <div style='position: relative; bottom: 0; left: 0; margin-top: 0px; background-color: #222222; color: white;'>
+        </div>
+        %s
+        <!-- END TEMPORARY COPYRIGHT LOCATION - NEEDS TO BE UNDER NAV TREE -->
+    </div>
+    <div id="dp-overlay"></div>
+    <div id="div-common-placeholder"></div>
+    <!-- /#wrapper -->
+
+    <!-- third party js -->
+    <script src="/js/jquery-2.1.4.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap-treeview.min.js"></script>
+    <script src="/js/jquery.dataTables.js"></script>
+    <script src="/js/c3.js"></script>
+    <script src="/js/d3.js"></script>
+    <script src="/js/d3.v3.min.js"></script>
+    <script src="/js/micropolar-v0.2.2.js"></script>
+    <script src="/js/dataTables.bootstrap.js"></script>
+    <script src="/js/jquery.datetimepicker.js"></script>
+    <script src="/js/nouislider.min.js"></script>
+    <script src="/js/bootstrap-breadcrumb.js"></script>
+    <script src="/js/knockout-3.4.0.js"></script>
+    <script src="/js/dp.clock.js"></script>
+    <!-- custom js !!! DO NOT CHANGE ORDER !!! -->
+    <script src="/js/dp.common.js"></script>
+    <script src="/js/dp.js"></script>
+    <!-- Data tab -->
+    <script src="/js/dp.moist.js"></script>		<!-- Moisture -->
+    <script src="/js/dp.gas.js"></script>       <!-- Gas -->
+    <script src="/js/dp.gm.js"></script>		<!-- Gas and Moisture -->
+    <script src="/js/dp.bushingRpf.js"></script> <!-- Bushing Rpf-->
+    <script src="/js/dp.bushingTpf.js"></script> <!-- Bushing Tpf-->
+    <script src="/js/dp.pd.js"></script>		<!-- Partial Discharge -->
+    <script src="/js/dp.temp.js"></script>		<!-- Temperature -->
+    <script src="/js/dp.gd.js"></script>		<!-- Generic Data -->
+  	<script src="/js/dp.polar.js"></script>		<!-- polar charts -->
+    <script src="/js/dp.alerts.js"></script>	<!-- Alerts tab -->
+	  <script src="/js/dp.dashboard.js"></script>	<!-- dashboard tab -->
+    <script src="/js/dp.analytics.js"></script>	<!-- analytics tab-->
+  	<script src="/js/dp.export.js"></script>	<!-- export tab -->
+</body>
+</html>
