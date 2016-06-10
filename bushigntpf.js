@@ -45,17 +45,47 @@ function loadBushingTpf() {
 function loadBushingTpfPolar(id, dt1, dt2) {
     tpfSlider = document.getElementById('drag-fixed-tpf');
     sumCurrentData = loadCurrentSum(id, dt1, dt2);
-    phasorData = loadCurrentPhasors(id, dt1, dt2);
-    sumVoltageData = loadVoltageSum(id, dt2, dt2);
-    renderVoltageSum(sumVoltageData, 0);
-    renderCurrentSum(sumCurrentData, 0);
-    renderPhasor(phasorData, 0);
-    dragFixedSlider.noUiSlider.destroy();
-    tpfSlider.noUiSlider.destroy();
-    renderSlider(sumCurrentData['date'].length - 1);
-	// these functions are in dp.polar.js
-	// loadCurrentSum(id, dt1, dt2);
-	// loadCurrentPhasors(id, dt1, dt2);
+    phasorJSON = loadCurrentPhasors(id, dt1, dt2);
+    phasorData = phasorJSON['data'];
+    phasorStats = phasorJSON['statistics'];
+    if (phasorStats != null) {
+        phasorJSON = loadCurrentPhasors(id, dt1, dt2);
+        phasorData = phasorJSON['data'];
+        phasorStats = phasorJSON['statistics'];
+        sumVoltageData = loadVoltageSum(id, dt1, dt2);
+        renderCurrentSum(sumCurrentData, 0);
+        renderPhasor(phasorData, 0);
+        renderVoltageSum(sumVoltageData, 0);
+        clearSliders();
+        clearNoDataMessageTpf();
+        renderSlider(sumCurrentData['date'].length - 1);
+    } else {
+      showNoDataMessageTpf();
+    }
+}
+
+function showNoDataMessageTpf() {
+  console.log("Cleanup this no data message format");
+  var noDataMessageDiv = document.getElementById("chart-sub-polar3");
+  noDataMessageDiv.innerHTML = "No Data In Range";
+  var noDataMessageDiv = document.getElementById("chart-sub-polar4");
+  noDataMessageDiv.innerHTML = "No Data In Range";
+  var noDataMessageDiv = document.getElementById("chart-sub-polar5");
+  noDataMessageDiv.innerHTML = "No Data In Range";
+  var noDataMessageDiv = document.getElementById("chart-sub-polar6");
+  noDataMessageDiv.innerHTML = "No Data In Range";
+}
+
+function clearNoDataMessageTpf() {
+  console.log("Cleanup this no data removal message format");
+  var noDataMessageDiv = document.getElementById("chart-sub-polar3");
+  noDataMessageDiv.innerHTML = "";
+  var noDataMessageDiv = document.getElementById("chart-sub-polar4");
+  noDataMessageDiv.innerHTML = "";
+  var noDataMessageDiv = document.getElementById("chart-sub-polar5");
+  noDataMessageDiv.innerHTML = "";
+  var noDataMessageDiv = document.getElementById("chart-sub-polar6");
+  noDataMessageDiv.innerHTML = "";
 }
 
 function loadBushingTpfGrids(id, dt1, dt2) {

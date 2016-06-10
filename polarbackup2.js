@@ -432,21 +432,21 @@ function updateRpfSliderStatus() {
 
 function setPhasorRange(phasorStats, type) {
     var rMax = phasorStats['r_max'];
-    var rMin = phasorStats['r_min'];
+    // var rMin = phasorStats['r_min'];
     if (type == "tpf") {
-        var buffer = 20;
-        var rangeArray = [ (rMin - buffer), (rMax + buffer)];
+        var buffer = 40;
+        var rangeArray = [ 0, (rMax + buffer)]; // min value 0 for origin at 0
     } else {
-        var buffer = 0.1;
-        var rangeArray = [ (rMin - buffer), (rMax + buffer)];
+        var buffer = 20;
+        var rangeArray = [ 0, (rMax + buffer)]; // min value 0 for origin at 0
     }
     return rangeArray
 }
 
 function setSumRange (sumData) {
     var rMax = sumData['r_max'];
-    var rMin = sumData['r_min'];
-    var rangeArray = [ (rMin - 0.1), (rMax + 0.1)];
+    // var rMin = sumData['r_min'];
+    var rangeArray = [ 0, (rMax + 0.1)];   // min value 0 for origin at 0
     return rangeArray;
 }
 

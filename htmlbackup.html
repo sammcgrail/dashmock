@@ -522,6 +522,8 @@
 									</div>
 								</div>
                 <div id="drag-fixed" class="col-lg-12"></div><br><br>
+                <table id="dt-RpfPolarStatus" class="display" width="100%%"></table>
+
 								<div class="row dp-chart-tile">
 									<div class="col-md-4">
 										<table id="grid-polar1" class="display" width="100%%"></table>
@@ -863,48 +865,51 @@
 							Analytics- Criteria selection
 						******************************************************-->
                         <div id="div-criteria" class="row">
-                            <div class="col-md-3 dp-period">
-                                <div class="form-group">
-                                    <div class="input-group date">
-                                        <span class="input-group-addon">
-                                            <span class="fa fa-calendar"></span>
-                                        </span>
-                                        <input id="analytics-dt1" type='text' class="form-control" />
+                            <div class="col-sm-12 col-md-8 col-lg-6">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="input-group date">
+                                                <span class="input-group-addon">
+                                                    <span class="fa fa-calendar"></span>
+                                                </span>
+                                                <input id="analytics-dt1" type='text' class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="input-group date">
+                                                <span class="input-group-addon">
+                                                    <span class="fa fa-calendar"></span>
+                                                </span>
+                                                <input id="analytics-dt2" type='text' class="form-control" />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3 dp-period">
-                                <div class="form-group">
-                                    <div class="input-group date">
-                                        <span class="input-group-addon">
-                                            <span class="fa fa-calendar"></span>
-                                        </span>
-                                        <input id="analytics-dt2" type='text' class="form-control" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-	                            <div class="btn-group dp-chart-options">
-	                                <button type="button" class="btn">
-	                                    <i class="fa fa-sliders"></i> Chart Options
-	                                </button>
-	                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                    <span class="caret"></span>
-	                                    <span class="sr-only">Toggle Dropdown</span>
-	                                </button>
-	                                <ul class="dropdown-menu">
+                            <div class="col-sm-12 col-md-4 col-lg-6">
+                                <div class="btn-group dp-chart-options" style="position:relative;float:left;margin-right:10px;">
+                                    <button type="button" class="btn">
+                                        <i class="fa fa-sliders"></i> Chart Options
+                                    </button>
+                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
                                         <li id="analy-chart-option-legend"><i class="dp-checked fa fa-check"></i><i class="fa fa-list"></i> Legend</li>
-	                                    <li id="analy-chart-option-subchart"><i class="dp-checked fa fa-check"></i><i class="fa fa-area-chart"></i> Sub Chart</li>
-	                                </ul>
-                            	</div>
-                            </div>
-                            <div class="col-md-1">
+                                        <li id="analy-chart-option-subchart"><i class="dp-checked fa fa-check"></i><i class="fa fa-area-chart"></i> Sub Chart</li>
+                                    </ul>
+                                </div>
                                 <div class="form-group">
                                     <div class="input-group">
                                         <a class="btn" href="#" onclick="updateAnalyticsTab();"><i class="fa fa-refresh"></i></a>
                                     </div>
                                 </div>
                             </div>
+
 
 							<!-- <div class="col-md-3">
 	                            <div class="btn-group dp-saved-reports">
