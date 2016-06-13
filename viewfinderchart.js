@@ -26,7 +26,7 @@ nv.addGraph(function() {
 
 
 function testData() {
-  return stream_layers(3,10000,.1).map(function(data, i) {
+  return stream_layers(3,1000,.1).map(function(data, i) {
     return {
       key: 'Bushing ' + (i + 1) ,
       values: data
