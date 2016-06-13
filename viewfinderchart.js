@@ -6,7 +6,7 @@ nv.addGraph(function() {
   chart.xAxis
       .axisLabel('Timeseries')
       .tickFormat(d3.format(',f'))
-      .tickFormat(function(d) { return d3.time.format('%b %d')(new Date(d)); });
+      // .tickFormat(d3.format(',f'));
   chart.yAxis
       .axisLabel('Capacitance')
       .tickFormat(d3.format(',.2f'));
