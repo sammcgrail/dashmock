@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Examples - NVD3</title>
+  <meta name="sm">
+  <link href="style.css" rel="stylesheet">
+  <link href="nv.d3.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <!-- Scripts -->
+  <script src="d3.js"></script>
+  <script src="nv.d3.js"></script>
+  <script src="stream_layers.js"></script>
+  <script src="viewfinderchart.js"></script>
+  <!-- <script src="sinandcos.js"></script>
+  <script src="timeseries.js"></script> -->
+
+<body>
+    <style>
+        text {
+            font: 12px sans-serif;
+        }
+        svg {
+            display: block;
+        }
+        html, body, #chart1, svg {
+            margin: 0px;
+            padding: 0px;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class='with-3d-shadow with-transitions'>
+
+<div id="chart1" >
+    <svg> </svg>
+</div>
+
+<script>
+
+
+    var testdata = stream_layers(7,10+Math.random()*100,.1).map(function(data, i) {
+        return {
+            key: 'Stream' + i,
+            values: data.map(function(a){a.y = a.y * (i <= 1 ? -1 : 1); return a})
+        };
+    });
+    // testdata[0].type = "area";
+    // testdata[0].yAxis = 1;
+    // testdata[1].type = "area";
+    // testdata[1].yAxis = 1;
+    testdata[2].type = "line";
+    testdata[2].yAxis = 1;
+    testdata[3].type = "line";
+    testdata[3].yAxis = 2;
+    // testdata[4].type = "bar";
+    // testdata[4].yAxis = 2;
+    // testdata[5].type = "bar";
+    // testdata[5].yAxis = 2;
+    // testdata[6].type = "bar";
+    // testdata[6].yAxis = 2;
+    nv.addGraph(function() {
+        var chart = nv.models.multiChart()
+            .margin({top: 30, right: 60, bottom: 50, left: 70})
+            .color(d3.scale.category10().range());
+        chart.xAxis.tickFormat(d3.format(',f'));
+        chart.yAxis1.tickFormat(d3.format(',.1f'));
+        chart.yAxis2.tickFormat(d3.format(',.1f'));
+        d3.select('#chart1 svg')
+            .datum(testdata)
+            .transition().duration(500).call(chart);
+        return chart;
+    });
+
+
+    nv.addGraph(function() {
+      var chart = nv.models.lineWithFocusChart()
+      .useInteractiveGuideline(true);                // use for x axis mark guideline on mouseover
+      chart.interactiveLayer.tooltip.fixedTop(100);  // so tooltip can contain multiple traces
+
+      chart.xAxis
+          .axisLabel('Timeseries')
+          .tickFormat(d3.format(',f'))
+          // .tickFormat(d3.format(',f'));
+      chart.yAxis
+          .axisLabel('Capacitance')
+          .tickFormat(d3.format(',.2f'));
+
+
+      chart.y2Axis
+          .tickFormat(d3.format(',.2f'));
+
+      d3.select('#chart svg')
+          .datum(testData())
+          .transition().duration(500)
+          .call(chart);
+
+      nv.utils.windowResize(chart.update);
+
+      return chart;
+    });
+
+</script>
+</body>
+</html>

@@ -11,6 +11,7 @@ nv.addGraph(function() {
       .axisLabel('Capacitance')
       .tickFormat(d3.format(',.2f'));
 
+
   chart.y2Axis
       .tickFormat(d3.format(',.2f'));
 
