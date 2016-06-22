@@ -102,6 +102,16 @@
       return chart;
     });
 
+
+    function testData() {
+      return stream_layers(3,1000,.1).map(function(data, i) {
+        return {
+          key: 'Bushing ' + (i + 1) ,
+          values: data
+        };
+      });
+    }
+
 </script>
 </body>
 </html>
