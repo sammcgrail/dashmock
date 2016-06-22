@@ -57,6 +57,8 @@
         chart.xAxis.tickFormat(d3.format(',f'));
         chart.y1Axis.tickFormat(d3.format(',.1f'));
         chart.y2Axis.tickFormat(d3.format(',.1f'));
+        chart.y3Axis.tickFormat(d3.format(',.1f'));
+        chart.y4Axis.tickFormat(d3.format(',.1f'));
         d3.select('#chart1 svg')
             .datum(testdata)
             .transition().duration(500).call(chart);
