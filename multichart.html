@@ -12,7 +12,6 @@
   <script src="d3.js"></script>
   <script src="nv.d3.js"></script>
   <script src="stream_layers.js"></script>
-  <script src="viewfinderchart.js"></script>
   <!-- <script src="sinandcos.js"></script>
   <script src="timeseries.js"></script> -->
 
@@ -39,8 +38,6 @@
 </div>
 
 <script>
-
-
     var testdata = stream_layers(7,10+Math.random()*100,.1).map(function(data, i) {
         return {
             key: 'Stream' + i,
@@ -75,42 +72,6 @@
     });
 
 
-    nv.addGraph(function() {
-      var chart = nv.models.lineWithFocusChart()
-      .useInteractiveGuideline(true);                // use for x axis mark guideline on mouseover
-      chart.interactiveLayer.tooltip.fixedTop(100);  // so tooltip can contain multiple traces
-
-      chart.xAxis
-          .axisLabel('Timeseries')
-          .tickFormat(d3.format(',f'))
-          // .tickFormat(d3.format(',f'));
-      chart.yAxis
-          .axisLabel('Capacitance')
-          .tickFormat(d3.format(',.2f'));
-
-
-      chart.y2Axis
-          .tickFormat(d3.format(',.2f'));
-
-      d3.select('#chart svg')
-          .datum(testData())
-          .transition().duration(500)
-          .call(chart);
-
-      nv.utils.windowResize(chart.update);
-
-      return chart;
-    });
-
-
-    function testData() {
-      return stream_layers(3,1000,.1).map(function(data, i) {
-        return {
-          key: 'Bushing ' + (i + 1) ,
-          values: data
-        };
-      });
-    }
 
 </script>
 </body>
