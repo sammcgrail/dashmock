@@ -86,8 +86,8 @@ nv.models.multiChartWithFocus = function() {
   var showTooltip = function(e, offsetElement) {
     var left = e.pos[0] + ( offsetElement.offsetLeft || 0 ),
         top = e.pos[1] + ( offsetElement.offsetTop || 0),
-        x = xAxis.tickFormat()(lines1.x()(e.point, e.pointIndex)),
-        y = ((e.series.yAxis == 2) ? yAxis2 : yAxis1).tickFormat()(lines1.y()(e.point, e.pointIndex)),
+        x = xAxis.tickFormat()(lines.x()(e.point, e.pointIndex)),
+        y = ((e.series.y1Axis == 2) ? y2Axis : y1Axis).tickFormat()(lines.y()(e.point, e.pointIndex)),
         content = tooltip(e.series.key, x, y, e, chart);
 
     nv.models.tooltip([left, top], content, undefined, undefined, offsetElement.offsetParent);
@@ -115,7 +115,10 @@ nv.models.multiChartWithFocus = function() {
       var container = d3.select(this),
           that = this;
 
-      chart.update = function() { container.transition().call(chart); };
+      chart.update = function() {
+        // d3.selectAll("svg > *").remove();
+        container.transition().call(chart);
+      };
       chart.container = this;
 
       var availableWidth = (width  || parseInt(container.style('width')) || 960)
@@ -124,7 +127,10 @@ nv.models.multiChartWithFocus = function() {
                              - margin.top - margin.bottom - height2,
           availableHeight2 = height2 - margin2.top - margin2.bottom;
 
-      chart.update = function() { container.transition().duration(transitionDuration).call(chart); };
+      chart.update = function() {
+        d3.selectAll("svg > *").remove();
+        container.transition().duration(transitionDuration).call(chart);
+      };
       chart.container = this;
 
       state
@@ -224,7 +230,7 @@ nv.models.multiChartWithFocus = function() {
         g.select('.nv-legendWrap')
             .datum(data.map(function(series) {
               series.originalKey = series.originalKey === undefined ? series.key : series.originalKey;
-              series.key = series.originalKey + (series.bar ? ' (left axis)' : ' (right axis)');
+              series.key = series.originalKey + (series.yAxis == 2 ? ' (left axis)' : ' (right axis)');
               return series;
             }))
           .call(legend);
@@ -260,7 +266,7 @@ nv.models.multiChartWithFocus = function() {
           .datum(dataRLines.length ? dataRLines : [{values:[]}]);
 
       var lines2Wrap = g.select('.nv-context .nv-linesWrap')
-          .datum(!dataLines[0].disabled ? dataLines : [{values:[]}]);
+          .datum(dataLines.length ? dataLines : [{values:[]}]);
 
       g.select('.nv-context')
           .attr('transform', 'translate(0,' + ( availableHeight1 + margin.bottom + margin2.top) + ')')
@@ -433,10 +439,13 @@ nv.models.multiChartWithFocus = function() {
                 })
             );
 
-        var focusLinesWrap = g.select('.nv-focus .nv-linesWrap')
-            .datum(dataLines[0].disabled ? [{values:[]}] :
-              dataLines
-                .map(function(d,i) {
+          if (dataLines.length > 0) {
+            var tempTest1 = dataLines;
+          } else {
+            var tempTest1 = [{values:[]}];
+          }
+
+        var focusLinesWrap = g.select('.nv-focus .nv-linesWrap').datum(tempTest1.map(function(d,i) {
                   return {
                     key: d.key,
                     values: d.values.filter(function(d,i) {
