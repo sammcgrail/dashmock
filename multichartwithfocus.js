@@ -44,7 +44,7 @@ nv.models.multiChartWithFocus = function() {
         , yDomain2
         , noData = "No Data Available."
         , dispatch = d3.dispatch('tooltipShow', 'tooltipHide', 'brush', 'stateChange', 'changeState')
-        , transitionDuration = 0
+        , transitionDuration = 500
         , state = nv.utils.state()
         , defaultState = null
         ;
