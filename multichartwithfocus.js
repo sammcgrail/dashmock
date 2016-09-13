@@ -41,7 +41,7 @@ nv.models.multiChartWithFocus = function() {
         , yDomain1
         , yDomain2
         , noData = "No Data Available."
-        , dispatch = d3.dispatch('tooltipShow', 'tooltipHide', 'brush', 'stateChange', 'changeState')
+        , dispatch = d3.dispatch('brush', 'stateChange', 'changeState')
         , transitionDuration = 500
         , state = nv.utils.state()
         , defaultState = null
@@ -216,6 +216,7 @@ nv.models.multiChartWithFocus = function() {
       focusEnter.append('g').attr('class', 'nv-y2 nv-axis');
       focusEnter.append('g').attr('class', 'nv-barsWrap');
       focusEnter.append('g').attr('class', 'nv-linesWrap');
+      focusEnter.append('g').attr('class', 'nv-interactive');
 
       var contextEnter = gEnter.append('g').attr('class', 'nv-context');
       contextEnter.append('g').attr('class', 'nv-x nv-axis');
@@ -366,6 +367,7 @@ nv.models.multiChartWithFocus = function() {
 
       interactiveLayer.dispatch.on('elementMousemove', function(e) {
           lines.clearHighlights();
+          rlines.clearHighlights();
           var singlePoint, pointIndex, pointXLocation, allData = [];
           data
               .filter(function(series, i) {
@@ -381,8 +383,10 @@ nv.models.multiChartWithFocus = function() {
                   pointIndex = nv.interactiveBisect(currentValues, e.pointXValue, lines.x());
                   var point = currentValues[pointIndex];
                   var pointYValue = chart.y()(point, pointIndex);
+                  // debugger
                   if (pointYValue != null) {
                       lines.highlightPoint(i, pointIndex, true);
+                      rlines.highlightPoint(i, pointIndex, true);
                   }
                   if (point === undefined) return;
                   if (singlePoint === undefined) singlePoint = point;
@@ -399,8 +403,9 @@ nv.models.multiChartWithFocus = function() {
               var domainExtent = Math.abs(chart.yScale().domain()[0] - chart.yScale().domain()[1]);
               var threshold = 0.03 * domainExtent;
               var indexToHighlight = nv.nearestValueIndex(allData.map(function(d){return d.value}),yValue,threshold);
-              if (indexToHighlight !== null)
-                  allData[indexToHighlight].highlight = true;
+              // console.log(indexToHighlight);
+              // if (indexToHighlight !== null)
+              //     allData[indexToHighlight].highlight = true;
           }
 
           var xValue = xAxis.tickFormat()(chart.x()(singlePoint,pointIndex));
@@ -408,7 +413,7 @@ nv.models.multiChartWithFocus = function() {
               .position({left: e.mouseX + margin.left, top: e.mouseY + margin.top})
               .chartContainer(that.parentNode)
               .valueFormatter(function(d,i) {
-                  return d == null ? "N/A" : yAxis.tickFormat()(d);
+                  return d == null ? "N/A" : y1Axis.tickFormat()(d);
               })
               .data({
                   value: xValue,

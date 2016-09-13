@@ -36,7 +36,7 @@
 </div>
 
 <script>
-    var testdata = stream_layers(2,10+Math.random()*100,.1).map(function(data, i) {
+    var testdata = stream_layers(4,10+Math.random()*1000,.1).map(function(data, i) {
         return {
             key: 'Bushing ' + (i + 1),
             values: data.map(function(a){a.y = a.y * (i <= 1 ? -1 : 1); return a})
@@ -48,10 +48,16 @@
     testdata[1].type = "line";
     testdata[1].yAxis = 2;
     testdata[1].color = "orange";
+    testdata[2].type = "line";
+    testdata[2].yAxis = 2;
+    testdata[2].color = "pink";
+    testdata[3].type = "line";
+    testdata[3].yAxis = 1;
+    testdata[3].color = "red";
 
     nv.addGraph(function() {
         var chart = nv.models.multiChartWithFocus()
-            .useInteractiveGuideline(true)  
+            .useInteractiveGuideline(true)
             .margin({top: 30, right: 60, bottom: 50, left: 70})
             .color(d3.scale.category10().range())
             ;
