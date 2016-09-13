@@ -36,7 +36,7 @@
 </div>
 
 <script>
-    var testdata = stream_layers(6,301,.4).map(function(data, i) {
+    var testdata = stream_layers(6,301,.1).map(function(data, i) {
         return {
             key: 'Bushing ' + (i + 1),
             values: data.map(function(a){a.y = a.y * (i <= 1 ? -1 : 1); return a})
