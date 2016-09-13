@@ -36,24 +36,35 @@
 </div>
 
 <script>
-    var testdata = stream_layers(4,10+Math.random()*1000,.1).map(function(data, i) {
+    var testdata = stream_layers(6,100+Math.random()*300,.5).map(function(data, i) {
         return {
             key: 'Bushing ' + (i + 1),
             values: data.map(function(a){a.y = a.y * (i <= 1 ? -1 : 1); return a})
         };
     });
     testdata[0].type = "line";
-    testdata[0].yAxis = 1;
+    testdata[0].yAxis = 2;
     testdata[0].color = "lightblue";
+
     testdata[1].type = "line";
     testdata[1].yAxis = 2;
     testdata[1].color = "orange";
+
     testdata[2].type = "line";
     testdata[2].yAxis = 2;
     testdata[2].color = "pink";
+
     testdata[3].type = "line";
     testdata[3].yAxis = 1;
     testdata[3].color = "red";
+
+    testdata[4].type = "line";
+    testdata[4].yAxis = 1;
+    testdata[4].color = "blue";
+
+    testdata[5].type = "line";
+    testdata[5].yAxis = 1;
+    testdata[5].color = "green";
 
     nv.addGraph(function() {
         var chart = nv.models.multiChartWithFocus()
