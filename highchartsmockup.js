@@ -16,7 +16,7 @@ $(function () {
         }],
         yAxis: [{ // Primary yAxis
             labels: {
-                format: '{value} C',
+                format: '{value} °C',
                 style: {
                     color: Highcharts.getOptions().colors[2]
                 }
@@ -86,7 +86,7 @@ $(function () {
             name: 'Capacitance',
             type: 'line',
             yAxis: 1,
-            data: [1, 2, 3, 4, 5, 6, 7, 8],
+            data: randArrayMaker(50,5,80),
             tooltip: {
                 valueSuffix: ' pF'
             }
@@ -95,7 +95,7 @@ $(function () {
             name: 'Voltage',
             type: 'line',
             yAxis: 2,
-            data: [2, 4, 6, 20, 10, 5, 6, 12],
+            data: randArrayMaker(50,20,120),
             marker: {
                 enabled: false
             },
@@ -107,10 +107,21 @@ $(function () {
         }, {
             name: 'Temperature',
             type: 'spline',
-            data: [10, 8, 7, 6, 21, 4, 6],
+            data: randArrayMaker(50,1,20),
             tooltip: {
                 valueSuffix: ' °C'
             }
         }]
     });
 });
+
+
+function randArrayMaker(length,volatility,constant) {
+  data = []
+  for ( i = 0; i < length; i++ ) {
+       var randNum = 0;
+       var randNum = (Math.random() * volatility) + constant;
+        data.push(randNum)
+  }
+  return data
+}
