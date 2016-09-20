@@ -3,11 +3,11 @@ $(function () {
         chart: {
             zoomType: 'xy'
         },
-        title: {
-            text: 'High Stock Prime Mockup'
-        },
+        // title: {
+        //     text: 'High Stock Prime Mockup'
+        // },
         subtitle: {
-            text: 'Random Data'
+            text: 'Prime Random Test Data'
         },
         xAxis: [{
             categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -16,7 +16,7 @@ $(function () {
         }],
         yAxis: [{ // Primary yAxis
             labels: {
-                format: '{value}°C',
+                format: '{value} C',
                 style: {
                     color: Highcharts.getOptions().colors[2]
                 }
@@ -74,12 +74,13 @@ $(function () {
         },
         legend: {
             layout: 'vertical',
+            enabled: true,
             align: 'left',
             x: 80,
             verticalAlign: 'top',
             y: 55,
             floating: true,
-            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+            backgroundColor: '#FFFFFF'
         },
         series: [{
             name: 'Capacitance',
