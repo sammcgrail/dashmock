@@ -71,7 +71,7 @@ $(function () {
           });
 
           $('<div class="chart">')
-              .appendTo('#container')
+              .appendTo('#container3')
               .highcharts({
                   chart: {
                       marginLeft: 40, // Keep all charts left aligned
