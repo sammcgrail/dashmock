@@ -358,7 +358,6 @@ $(function () {
         }]
     });
 });
-console.log(dateArray(50));
 
 function randArrayMaker(length,volatility,constant) {
   data = []
