@@ -22,10 +22,10 @@
     return this;
   }
 })();
-var dates = dateArray(50)
-var data1 = newDataArray(dateArray(50), randArrayMaker(50,5,80))
-var data2 = newDataArray(dateArray(50), randArrayMaker(50,5,123))
-var data3 = newDataArray(dateArray(50), randArrayMaker(50,5,20))
+var dates = dateArray(10000)
+var data1 = newDataArray(dateArray(10000), randArrayMaker(10000,5,80))
+var data2 = newDataArray(dateArray(10000), randArrayMaker(10000,5,123))
+var data3 = newDataArray(dateArray(10000), randArrayMaker(10000,5,20))
 $(function () {
     $('#container').highcharts('StockChart',  {
         chart: {
