@@ -37,7 +37,7 @@ $(function () {
         //     text: 'High Stock Prime Mockup'
         // },
         subtitle: {
-            text: 'Prime Random Test Data'
+            text: '10k points per trace - across 16 years'
         },
         xAxis: [{
             // categories: dates,
