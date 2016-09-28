@@ -18,12 +18,12 @@ $( document ).ready(function() {
               'data3': 'x3',
           },
           columns: [
-              randArrayMaker('x1',5000,10,10),
-              randArrayMaker('x2',5000,10,10),
-              randArrayMaker('x3',5000,10,10),
-              randArrayMaker('data1',5000,10,10),
-              randArrayMaker('data2',5000,10,10),
-              randArrayMaker('data3',5000,10,10),
+              randArrayMaker('x1',10000,10,10),
+              randArrayMaker('x2',10000,10,10),
+              randArrayMaker('x3',10000,10,10),
+              randArrayMaker('data1',10000,10,10),
+              randArrayMaker('data2',10000,10,10),
+              randArrayMaker('data3',10000,10,10),
           ]
       },
       subchart: {
