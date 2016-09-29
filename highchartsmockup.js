@@ -47,6 +47,11 @@ $( document ).ready(function() {
           },
           plotOptions: { //multiseries nav
             series: {
+              states: {
+                  hover: {
+                      enabled: false
+                  }
+              },
               showInNavigator: true
             }
           },
