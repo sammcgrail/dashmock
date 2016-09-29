@@ -24,13 +24,13 @@
 })();
 
 $( document ).ready(function() {
-  var dates = dateArray(50);
-  var dates1 = dateArray(50);
-  var dates2 = dateArray(50);
-  var dates3 = dateArray(50);
+  var dates = dateArray(5000);
+  var dates1 = dateArray(5000);
+  var dates2 = dateArray(5000);
+  var dates3 = dateArray(5000);
   var data1 = newDataArray(dates1, randArrayMaker(5000,5,80));
-  var data2 = newDataArray(dates2, randArrayMaker(5000,200,123));
-  var data3 = newDataArray(dates3, randArrayMaker(5000,100,20));
+  var data2 = newDataArray(dates2, randArrayMaker(5000,20,123));
+  var data3 = newDataArray(dates3, randArrayMaker(5000,10,20));
 
   $(function () {
       $('#container').highcharts('StockChart',  {
