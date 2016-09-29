@@ -88,6 +88,8 @@ $( document ).ready(function() {
               text: '10k points per trace - across 16 years'
           },
           xAxis: [{
+              minorTickInterval: 'auto', // GRIDLINES
+              
               // categories: dates,
               // startOnTick: false, // only when navigator enabled
               // endOnTick: false, // only when navigator enabled
@@ -216,7 +218,6 @@ $( document ).ready(function() {
               marker: {
                   enabled: false
               },
-              dashStyle: 'shortdot',
               tooltip: {
                   valueSuffix: ' kV'
               }
