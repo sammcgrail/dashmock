@@ -24,55 +24,13 @@
 })();
 
 $( document ).ready(function() {
-  var dates = dateArray(10000);
-  var dates1 = dateArray(10000);
-  var dates2 = dateArray(10000);
-  var dates3 = dateArray(10000);
-  var data1 = newDataArray(dates1, randArrayMaker(10000,5,80));
-  var data2 = newDataArray(dates2, randArrayMaker(10000,5,123));
-  var data3 = newDataArray(dates3, randArrayMaker(10000,5,20));
-  //
-  // var c3x1 = dates1.slice();
-  // c3x1.unshift('x1');
-  // var c3x2 = dates2.slice();
-  // c3x2.unshift('x2');
-  // var c3x3 = dates3.slice();
-  // c3x3.unshift('x3');
-  //
-  //
-  // var c3y1 = data1.slice();
-  // c3y1.unshift('data1');
-  // var c3y2 = data2.slice();
-  // c3y2.unshift('data2');
-  // var c3y3 = data3.slice();
-  // c3y3.unshift('data3');
-  //
-  //
-  //
-  // var chart = c3.generate({
-  //     data: {
-  //         xs: {
-  //             'data1': 'x1',
-  //             'data2': 'x2',
-  //             'data3': 'x3'
-  //         },
-  //         columns: [
-  //             c3x1,
-  //             c3x2,
-  //             c3x3,
-  //             c3y1,
-  //             c3y2,
-  //             c3y3
-  //         ]
-  //     },
-  //   axis: {
-  //     x: {
-  //       type: 'timeseries'
-  //     }
-  //   }
-  // });
-
-
+  var dates = dateArray(50);
+  var dates1 = dateArray(50);
+  var dates2 = dateArray(50);
+  var dates3 = dateArray(50);
+  var data1 = newDataArray(dates1, randArrayMaker(5000,5,80));
+  var data2 = newDataArray(dates2, randArrayMaker(5000,200,123));
+  var data3 = newDataArray(dates3, randArrayMaker(5000,100,20));
 
   $(function () {
       $('#container').highcharts('StockChart',  {
@@ -87,9 +45,14 @@ $( document ).ready(function() {
           subtitle: {
               text: '10k points per trace - across 16 years'
           },
+          plotOptions: { //multiseries nav
+            series: {
+              showInNavigator: true
+            }
+          },
           xAxis: [{
-              minorTickInterval: 'auto', // GRIDLINES
-              
+              // minorTickInterval: 'auto', // GRIDLINES
+
               // categories: dates,
               // startOnTick: false, // only when navigator enabled
               // endOnTick: false, // only when navigator enabled
@@ -168,25 +131,42 @@ $( document ).ready(function() {
           navigator: {
               height: 60,
               enabled: true,
-        //       xAxis: {
-        //           categories: dates,
-        //           plotOptions: {
-        //             line : {
-        //               dataLabels : {
-        //                 enabled : true,
-        //                 formatter: function() {
-        //                   var first = this.series.data[0],
-        //                       last  = this.series.data[this.series.data.length - 1];
-        //                   if ((this.point.category === first.category && this.point.y === first.y) ||
-        //                       (this.point.category === last.category  && this.point.y === last.y)) {
-        //                     return this.point.y;
-        //                   }
-        //                   return "";
-        //                 }
-        //               },
-        //             },
-        // }
-        //       }
+               xAxis: {
+                   // minorTickInterval: 'auto', // GRIDLINES
+
+                   // categories: dates,
+                   // startOnTick: false, // only when navigator enabled
+                   // endOnTick: false, // only when navigator enabled
+                   // minPadding: 0,
+                   // maxPadding: 0,
+                   // ordinal: true,
+                   // title: {
+                   //     text: null
+                   // },
+                   // labels: {
+                   //     overflow: 'justify'
+                   // },
+                   // showLastLabel: true,
+                   ordinal: true //multiseries nav - smoothing thing
+                   // labels: {
+                   //     formatter: function () {
+                   //       debugger
+                   //         return this.value + ' units';
+                   //     }
+                   // }
+                   //  // in Highstock only supported type
+               },
+               plotOptions: {
+                  series: {
+                    type: "line"
+                  },
+                  line: {
+                    dataGrouping: {
+                      smoothed: false
+                    }
+                  }
+               }
+
           },
           rangeselector: {
               height: 40
@@ -206,6 +186,7 @@ $( document ).ready(function() {
               type: 'line',
               yAxis: 1,
               data: data1,
+              // showInNavigator: true,
               tooltip: {
                   valueSuffix: ' pF'
               }
@@ -215,6 +196,7 @@ $( document ).ready(function() {
               type: 'line',
               yAxis: 2,
               data: data2,
+              // showInNavigator: true,
               marker: {
                   enabled: false
               },
@@ -226,6 +208,7 @@ $( document ).ready(function() {
               name: 'Temperature',
               type: 'line',
               data: data3,
+              // showInNavigator: true,
               tooltip: {
                   valueSuffix: ' °C'
               }
