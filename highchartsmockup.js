@@ -133,6 +133,9 @@ $( document ).ready(function() {
           rangeSelector: {
               enabled: false
           },
+          scrollbar: {
+              liveRedraw: false  //set to false to improve performance
+          },
           navigator: {
               height: 60,
               enabled: true,
