@@ -25,7 +25,7 @@
 
 var color1 = "#434348";
 var color2 = "#7cb5ec";
-var color3 = "#90ed7d";
+var color3 = "#E3A869";
 
 $( document ).ready(function() {
   var dates = dateArray(5000);
@@ -33,7 +33,8 @@ $( document ).ready(function() {
   var dates2 = dateArray(5000);
   var dates3 = dateArray(5000);
   var data1 = newDataArray(dates1, randArrayMaker(5000,5,80));
-  data1[1000][1] = 500
+  data1[1000][1] = 3000;
+  data1[1004][1] = 3050;
   var data2 = newDataArray(dates2, randArrayMaker(5000,20,123));
   var data3 = newDataArray(dates3, randArrayMaker(5000,10,20));
 
