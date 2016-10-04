@@ -271,7 +271,8 @@ $( document ).ready(function() {
         isInternal: true,
         color: color2,
         data : data2,
-        showInLegend:false
+        showInLegend:false,
+        lineWidth: 1
       });
 
       window.chart.addSeries({
@@ -282,7 +283,8 @@ $( document ).ready(function() {
         isInternal: true,
         color: color3,
         data : data3,
-        showInLegend:false
+        showInLegend:false,
+        lineWidth: 1
       });
 
       window.chart.addSeries({
@@ -293,7 +295,8 @@ $( document ).ready(function() {
         isInternal: true,
         color: color1,
         data : data1,
-        showInLegend:false
+        showInLegend:false,
+        lineWidth: 1
       });
 
 
