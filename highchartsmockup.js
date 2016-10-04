@@ -139,21 +139,21 @@ $( document ).ready(function() {
           { // Primary yAxis
             // ordinal: false,
             top: '110%',
-            height: '15%',
-            right: '7%',
+            height: 60,
+            right: '-7%',
           	id: 'ynav1',
             visible: false
           }
           ,
           { // Secondary yAxis
             top: '110%',
-            height: '15%',
+            height: 60,
           	id: 'ynav2',
-            right: '12%',
+            right: '-12%',
             visible: false
           }, { // Tertiary yAxis
             top: '110%',
-            height: '15%',
+            height: 60,
             id: 'ynav3',
             visible: false
           }
