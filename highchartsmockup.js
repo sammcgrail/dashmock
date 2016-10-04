@@ -91,13 +91,13 @@ $( document ).ready(function() {
               labels: {
                   format: '{value} °C',
                   style: {
-                      color: Highcharts.getOptions().colors[2]
+                      color: color3
                   }
               },
               title: {
                   text: 'Temperature',
                   style: {
-                      color: Highcharts.getOptions().colors[2]
+                      color: color3
                   }
               },
               opposite: false
@@ -108,13 +108,13 @@ $( document ).ready(function() {
               title: {
                   text: 'Capacitance',
                   style: {
-                      color: Highcharts.getOptions().colors[0]
+                      color: color1
                   }
               },
               labels: {
                   format: '{value} pF',
                   style: {
-                      color: Highcharts.getOptions().colors[0]
+                      color: color1
                   }
               }
 
@@ -124,13 +124,13 @@ $( document ).ready(function() {
               title: {
                   text: 'Voltage',
                   style: {
-                      color: Highcharts.getOptions().colors[1]
+                      color: color2
                   }
               },
               labels: {
                   format: '{value} kV',
                   style: {
-                      color: Highcharts.getOptions().colors[1]
+                      color: color2
                   }
               },
               opposite: true
