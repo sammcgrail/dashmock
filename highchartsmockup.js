@@ -23,21 +23,27 @@
   }
 })();
 
+var color1 = "#434348";
+var color2 = "#7cb5ec";
+var color3 = "#90ed7d";
+
 $( document ).ready(function() {
   var dates = dateArray(5000);
   var dates1 = dateArray(5000);
   var dates2 = dateArray(5000);
   var dates3 = dateArray(5000);
   var data1 = newDataArray(dates1, randArrayMaker(5000,5,80));
+  data1[1000][1] = 500
   var data2 = newDataArray(dates2, randArrayMaker(5000,20,123));
   var data3 = newDataArray(dates3, randArrayMaker(5000,10,20));
 
   $(function () {
-      $('#container').highcharts('StockChart',  {
+      window.chart = new Highcharts.StockChart(  {
           chart: {
             panning: true,
             pinchType: 'x',
-            inverted: false
+            inverted: false,
+            renderTo : 'container'
           },
           // title: {
           //     text: 'High Stock Prime Mockup'
@@ -52,7 +58,7 @@ $( document ).ready(function() {
                       enabled: false
                   }
               },
-              showInNavigator: true
+              // showInNavigator: true
             }
           },
           xAxis: [{
@@ -63,7 +69,7 @@ $( document ).ready(function() {
               // endOnTick: false, // only when navigator enabled
               // minPadding: 0,
               // maxPadding: 0,
-              // ordinal: true,
+              ordinal: false,
               // title: {
               //     text: null
               // },
@@ -81,6 +87,7 @@ $( document ).ready(function() {
               //  // in Highstock only supported type
           }],
           yAxis: [{ // Primary yAxis
+              ordinal: false,
               labels: {
                   format: '{value} °C',
                   style: {
@@ -93,9 +100,10 @@ $( document ).ready(function() {
                       color: Highcharts.getOptions().colors[2]
                   }
               },
-              opposite: true
+              opposite: false
 
           }, { // Secondary yAxis
+              ordinal: false,
               gridLineWidth: 0,
               title: {
                   text: 'Capacitance',
@@ -111,6 +119,7 @@ $( document ).ready(function() {
               }
 
           }, { // Tertiary yAxis
+              ordinal: false,
               gridLineWidth: 0,
               title: {
                   text: 'Voltage',
@@ -125,7 +134,29 @@ $( document ).ready(function() {
                   }
               },
               opposite: true
-          }],
+          },
+          { // Primary yAxis
+            // ordinal: false,
+            top: '110%',
+            height: '15%',
+            right: '7%',
+          	id: 'ynav1',
+            visible: false
+          }
+          ,
+          { // Secondary yAxis
+            top: '110%',
+            height: '15%',
+          	id: 'ynav2',
+            right: '12%',
+            visible: false
+          }, { // Tertiary yAxis
+            top: '110%',
+            height: '15%',
+            id: 'ynav3',
+            visible: false
+          }
+        ],
           tooltip: {
               shared: true,
               valueDecimals: 2
@@ -155,7 +186,7 @@ $( document ).ready(function() {
                    //     overflow: 'justify'
                    // },
                    // showLastLabel: true,
-                   ordinal: true //multiseries nav - smoothing thing
+                   ordinal: false //multiseries nav - smoothing thing
                    // labels: {
                    //     formatter: function () {
                    //       debugger
@@ -164,17 +195,19 @@ $( document ).ready(function() {
                    // }
                    //  // in Highstock only supported type
                },
-               plotOptions: {
-                  series: {
-                    type: "line"
-                  },
-                  line: {
-                    dataGrouping: {
-                      smoothed: false
-                    }
-                  }
-               }
+               yAxis: [{ // Primary yAxis
+                   ordinal: false,
+                   opposite: true
+               }],
 
+              series: {
+                visible: false
+              },
+              line: {
+                dataGrouping: {
+                  // smoothed: false
+                }
+              }
           },
           rangeselector: {
               height: 40
@@ -195,6 +228,7 @@ $( document ).ready(function() {
               yAxis: 1,
               data: data1,
               // showInNavigator: true,
+              color: color1,
               tooltip: {
                   valueSuffix: ' pF'
               }
@@ -204,6 +238,7 @@ $( document ).ready(function() {
               type: 'line',
               yAxis: 2,
               data: data2,
+              color: color2,
               // showInNavigator: true,
               marker: {
                   enabled: false
@@ -216,12 +251,58 @@ $( document ).ready(function() {
               name: 'Temperature',
               type: 'line',
               data: data3,
+              color: color3,
+              yaxis: 0,
               // showInNavigator: true,
               tooltip: {
                   valueSuffix: ' °C'
               }
           }]
       });
+
+
+
+      window.chart.addSeries({
+        xAxis: 1,
+        yAxis: 'ynav2',
+        type: "line",
+        enableMouseTracking: false,
+        isInternal: true,
+        color: color2,
+        data : data2,
+        showInLegend:false
+      });
+
+      window.chart.addSeries({
+        xAxis: 1,
+        yAxis: 'ynav3',
+        type: "line",
+        enableMouseTracking: false,
+        isInternal: true,
+        color: color3,
+        data : data3,
+        showInLegend:false
+      });
+
+      window.chart.addSeries({
+        xAxis: 1,
+        yAxis: 'ynav1',
+        type: "line",
+        enableMouseTracking: false,
+        isInternal: true,
+        color: color1,
+        data : data1,
+        showInLegend:false
+      });
+
+
+
+
+
+
+
+
+
       $('#container2').highcharts( {
           chart: {
             panning: true,
@@ -400,6 +481,43 @@ $( document ).ready(function() {
   });
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function randArrayMaker(length,volatility,constant) {
   data = []
   for ( i = 0; i < length; i++ ) {
@@ -417,7 +535,7 @@ function randomDate(start, end) {
 function dateArray(length) {
   var dateArray = [];
   for ( i = 0; i < length; i++ ) {
-    dateArray.push((randomDate(new Date(2000, 0, 1), new Date())))
+    dateArray.push((randomDate(new Date(2016, 0, 1), new Date())))
   }
   dateArray.sortBy(function(o){ return o.date  });
   return dateArray
