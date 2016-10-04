@@ -536,7 +536,7 @@ function randomDate(start, end) {
 function dateArray(length) {
   var dateArray = [];
   for ( i = 0; i < length; i++ ) {
-    dateArray.push((randomDate(new Date(2016, 0, 1), new Date())))
+    dateArray.push((randomDate(new Date(2000, 0, 1), new Date())))
   }
   dateArray.sortBy(function(o){ return o.date  });
   return dateArray
