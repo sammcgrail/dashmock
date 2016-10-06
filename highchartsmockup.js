@@ -226,7 +226,6 @@ $( document ).ready(function() {
           series: [{
               name: 'Capacitance',
               type: 'line',
-              lineWidth: 1,
               yAxis: 1,
               data: data1,
               // showInNavigator: true,
