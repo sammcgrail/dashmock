@@ -25,12 +25,12 @@
 
 
 
-var colour1 = "#434348";
-var colour2 = "#7cb5ec";
-var colour3 = "#E3A869";
-var colour4 = "#24CBE5";
-var colour5 = "#DDDF00";
-var colour6 = "#ED561B";
+var color1 = "#434348";
+var color2 = "#7cb5ec";
+var color3 = "#E3A869";
+var color4 = "#24CBE5";
+var color5 = "#DDDF00";
+var color6 = "#ED561B";
 
 $( document ).ready(function() {
   var oneMonthDates = oneMonth.data.Date;
@@ -110,13 +110,13 @@ $( document ).ready(function() {
               labels: {
                   format: '{value} °C',
                   style: {
-                      colour: colour3
+                      color: color3
                   }
               },
               title: {
                   text: 'Temperature',
                   style: {
-                      colour: colour3
+                      color: color3
                   }
               },
               opposite: false
@@ -127,13 +127,13 @@ $( document ).ready(function() {
               title: {
                   text: 'Capacitance',
                   style: {
-                      colour: colour1
+                      color: color1
                   }
               },
               labels: {
                   format: '{value} pF',
                   style: {
-                      colour: colour1
+                      color: color1
                   }
               }
 
@@ -143,13 +143,13 @@ $( document ).ready(function() {
               title: {
                   text: 'Voltage',
                   style: {
-                      colour: colour2
+                      color: color2
                   }
               },
               labels: {
                   format: '{value} kV',
                   style: {
-                      colour: colour2
+                      color: color2
                   }
               },
               opposite: true
@@ -239,7 +239,7 @@ $( document ).ready(function() {
               verticalAlign: 'top',
               y: 55,
               floating: true,
-              backgroundcolour: '#FFFFFF'
+              backgroundColor: '#FFFFFF'
           },
           series: [{
               name: 'Capacitance',
@@ -247,7 +247,7 @@ $( document ).ready(function() {
               yAxis: 1,
               data: data1,
               // showInNavigator: true,
-              colour: colour1,
+              color: color1,
               tooltip: {
                   valueSuffix: ' pF'
               }
@@ -257,7 +257,7 @@ $( document ).ready(function() {
               type: 'line',
               yAxis: 2,
               data: data2,
-              colour: colour2,
+              color: color2,
               // showInNavigator: true,
               marker: {
                   enabled: false
@@ -270,7 +270,7 @@ $( document ).ready(function() {
               name: 'Temperature',
               type: 'line',
               data: data3,
-              colour: colour3,
+              color: color3,
               yaxis: 0,
               // showInNavigator: true,
               tooltip: {
@@ -287,7 +287,7 @@ $( document ).ready(function() {
         type: "line",
         enableMouseTracking: false,
         isInternal: true,
-        colour: colour2,
+        color: color2,
         data : data2,
         showInLegend:false,
         lineWidth: 1
@@ -299,7 +299,7 @@ $( document ).ready(function() {
         type: "line",
         enableMouseTracking: false,
         isInternal: true,
-        colour: colour3,
+        color: color3,
         data : data3,
         showInLegend:false,
         lineWidth: 1
@@ -311,7 +311,7 @@ $( document ).ready(function() {
         type: "line",
         enableMouseTracking: false,
         isInternal: true,
-        colour: colour1,
+        color: color1,
         data : data1,
         showInLegend:false,
         lineWidth: 1
@@ -378,13 +378,13 @@ $( document ).ready(function() {
               labels: {
                   format: '{value} dBm',
                   style: {
-                      colour: colour4
+                      color: color4
                   }
               },
               title: {
                   text: 'Global IPWR (dBm)',
                   style: {
-                      colour: colour4
+                      color: color4
                   }
               },
               opposite: false
@@ -395,13 +395,13 @@ $( document ).ready(function() {
               title: {
                   text: 'Global PAPR (dB)',
                   style: {
-                      colour: colour1
+                      color: color1
                   }
               },
               labels: {
                   format: '{value} dB',
                   style: {
-                      colour: colour1
+                      color: color1
                   }
               }
 
@@ -484,14 +484,14 @@ $( document ).ready(function() {
               verticalAlign: 'top',
               y: 55,
               floating: true,
-              backgroundcolour: '#FFFFFF'
+              backgroundColor: '#FFFFFF'
           },
           series: [ {
               name: 'Global PAPR (dB)',
               type: 'line',
               yAxis: 1,
               data: oneMonthData2,
-              colour: colour1,
+              color: color1,
               // showInNavigator: true,
               marker: {
                   enabled: false
@@ -504,7 +504,7 @@ $( document ).ready(function() {
               name: 'Global IPWR (dBm)',
               type: 'line',
               data: oneMonthData1,
-              colour: colour4,
+              color: color4,
               yaxis: 0,
               // showInNavigator: true,
               tooltip: {
@@ -521,7 +521,7 @@ $( document ).ready(function() {
         type: "line",
         enableMouseTracking: false,
         isInternal: true,
-        colour: colour1,
+        color: color1,
         data : oneMonthData2,
         showInLegend:false,
         lineWidth: 1
@@ -533,7 +533,7 @@ $( document ).ready(function() {
         type: "line",
         enableMouseTracking: false,
         isInternal: true,
-        colour: colour4,
+        color: color4,
         data : oneMonthData1,
         showInLegend:false,
         lineWidth: 1
@@ -593,13 +593,13 @@ $( document ).ready(function() {
               labels: {
                   format: '{value} dBm',
                   style: {
-                      colour: colour5
+                      color: color5
                   }
               },
               title: {
                   text: 'Global IPWR (dBm)',
                   style: {
-                      colour: colour5
+                      color: color5
                   }
               },
               opposite: false
@@ -610,13 +610,13 @@ $( document ).ready(function() {
               title: {
                   text: 'Global PAPR (dB)',
                   style: {
-                      colour: colour6
+                      color: color6
                   }
               },
               labels: {
                   format: '{value} dB',
                   style: {
-                      colour: colour6
+                      color: color6
                   }
               }
 
@@ -699,14 +699,14 @@ $( document ).ready(function() {
               verticalAlign: 'top',
               y: 55,
               floating: true,
-              backgroundcolour: '#FFFFFF'
+              backgroundColor: '#FFFFFF'
           },
           series: [ {
               name: 'Global PAPR (dB)',
               type: 'line',
               yAxis: 1,
               data: threeMonthData2,
-              colour: colour6,
+              color: color6,
               // showInNavigator: true,
               marker: {
                   enabled: false
@@ -719,7 +719,7 @@ $( document ).ready(function() {
               name: 'Global IPWR (dBm)',
               type: 'line',
               data: threeMonthData1,
-              colour: colour5,
+              color: color5,
               yaxis: 0,
               // showInNavigator: true,
               tooltip: {
@@ -736,7 +736,7 @@ $( document ).ready(function() {
         type: "line",
         enableMouseTracking: false,
         isInternal: true,
-        colour: colour6,
+        color: color6,
         data : threeMonthData2,
         showInLegend:false,
         lineWidth: 1
@@ -748,7 +748,7 @@ $( document ).ready(function() {
         type: "line",
         enableMouseTracking: false,
         isInternal: true,
-        colour: colour5,
+        color: color5,
         data : threeMonthData1,
         showInLegend:false,
         lineWidth: 1
