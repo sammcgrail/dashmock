@@ -23,11 +23,29 @@
   }
 })();
 
-var color1 = "#434348";
-var color2 = "#7cb5ec";
-var color3 = "#E3A869";
+
+
+var colour1 = "#434348";
+var colour2 = "#7cb5ec";
+var colour3 = "#E3A869";
+var colour4 = "#24CBE5";
+var colour5 = "#DDDF00";
+var colour6 = "#ED561B";
 
 $( document ).ready(function() {
+  var oneMonthDates = oneMonth.data.Date;
+  var oneMonthIp = Array.from(oneMonth.data['Global IPWR (dBm)']);
+  var oneMonthPa = Array.from(oneMonth.data['Global PAPR (dB)']);
+  var oneMonthData1 = newDataArray2(oneMonthDates, oneMonthIp);
+  var oneMonthData2 = newDataArray2(oneMonthDates, oneMonthPa);
+
+  var threeMonthDates = threeMonth.data.Date;
+  var threeMonthIp = Array.from(threeMonth.data['Global IPWR (dBm)']);
+  var threeMonthPa = Array.from(threeMonth.data['Global PAPR (dB)']);
+  var threeMonthData1 = newDataArray2(threeMonthDates, threeMonthIp);
+  var threeMonthData2 = newDataArray2(threeMonthDates, threeMonthPa);
+
+
   var dates = dateArray(5000);
   var dates1 = dateArray(5000);
   var dates2 = dateArray(5000);
@@ -92,13 +110,13 @@ $( document ).ready(function() {
               labels: {
                   format: '{value} °C',
                   style: {
-                      color: color3
+                      colour: colour3
                   }
               },
               title: {
                   text: 'Temperature',
                   style: {
-                      color: color3
+                      colour: colour3
                   }
               },
               opposite: false
@@ -109,13 +127,13 @@ $( document ).ready(function() {
               title: {
                   text: 'Capacitance',
                   style: {
-                      color: color1
+                      colour: colour1
                   }
               },
               labels: {
                   format: '{value} pF',
                   style: {
-                      color: color1
+                      colour: colour1
                   }
               }
 
@@ -125,13 +143,13 @@ $( document ).ready(function() {
               title: {
                   text: 'Voltage',
                   style: {
-                      color: color2
+                      colour: colour2
                   }
               },
               labels: {
                   format: '{value} kV',
                   style: {
-                      color: color2
+                      colour: colour2
                   }
               },
               opposite: true
@@ -221,7 +239,7 @@ $( document ).ready(function() {
               verticalAlign: 'top',
               y: 55,
               floating: true,
-              backgroundColor: '#FFFFFF'
+              backgroundcolour: '#FFFFFF'
           },
           series: [{
               name: 'Capacitance',
@@ -229,7 +247,7 @@ $( document ).ready(function() {
               yAxis: 1,
               data: data1,
               // showInNavigator: true,
-              color: color1,
+              colour: colour1,
               tooltip: {
                   valueSuffix: ' pF'
               }
@@ -239,7 +257,7 @@ $( document ).ready(function() {
               type: 'line',
               yAxis: 2,
               data: data2,
-              color: color2,
+              colour: colour2,
               // showInNavigator: true,
               marker: {
                   enabled: false
@@ -252,7 +270,7 @@ $( document ).ready(function() {
               name: 'Temperature',
               type: 'line',
               data: data3,
-              color: color3,
+              colour: colour3,
               yaxis: 0,
               // showInNavigator: true,
               tooltip: {
@@ -269,7 +287,7 @@ $( document ).ready(function() {
         type: "line",
         enableMouseTracking: false,
         isInternal: true,
-        color: color2,
+        colour: colour2,
         data : data2,
         showInLegend:false,
         lineWidth: 1
@@ -281,7 +299,7 @@ $( document ).ready(function() {
         type: "line",
         enableMouseTracking: false,
         isInternal: true,
-        color: color3,
+        colour: colour3,
         data : data3,
         showInLegend:false,
         lineWidth: 1
@@ -293,7 +311,7 @@ $( document ).ready(function() {
         type: "line",
         enableMouseTracking: false,
         isInternal: true,
-        color: color1,
+        colour: colour1,
         data : data1,
         showInLegend:false,
         lineWidth: 1
@@ -307,25 +325,38 @@ $( document ).ready(function() {
 
 
 
-      $('#container2').highcharts( {
+      window.chart2 = new Highcharts.StockChart(  {
           chart: {
             panning: true,
             pinchType: 'x',
-            inverted: false
+            inverted: false,
+            renderTo : 'container2'
           },
           // title: {
           //     text: 'High Stock Prime Mockup'
           // },
           subtitle: {
-              text: 'Prime Random Test Data'
+              text: 'One Month of Data'
+          },
+          plotOptions: { //multiseries nav
+            series: {
+              states: {
+                  hover: {
+                      enabled: false
+                  }
+              },
+              // showInNavigator: true
+            }
           },
           xAxis: [{
+              // minorTickInterval: 'auto', // GRIDLINES
+
               // categories: dates,
               // startOnTick: false, // only when navigator enabled
               // endOnTick: false, // only when navigator enabled
               // minPadding: 0,
               // maxPadding: 0,
-              // ordinal: true,
+              ordinal: false,
               // title: {
               //     text: null
               // },
@@ -333,8 +364,7 @@ $( document ).ready(function() {
               //     overflow: 'justify'
               // },
               // showLastLabel: true,
-              type: 'datetime',
-              crosshair: true
+              type: 'datetime'
               // labels: {
               //     formatter: function () {
               //       debugger
@@ -344,51 +374,53 @@ $( document ).ready(function() {
               //  // in Highstock only supported type
           }],
           yAxis: [{ // Primary yAxis
+              ordinal: false,
               labels: {
-                  format: '{value} °C',
+                  format: '{value} dBm',
                   style: {
-                      color: Highcharts.getOptions().colors[2]
+                      colour: colour4
                   }
               },
               title: {
-                  text: 'Temperature',
+                  text: 'Global IPWR (dBm)',
                   style: {
-                      color: Highcharts.getOptions().colors[2]
+                      colour: colour4
                   }
               },
-              opposite: true
+              opposite: false
 
           }, { // Secondary yAxis
-              gridLineWidth: 0,
+              ordinal: false,
+              gridLineWidth: 1,
               title: {
-                  text: 'Capacitance',
+                  text: 'Global PAPR (dB)',
                   style: {
-                      color: Highcharts.getOptions().colors[0]
+                      colour: colour1
                   }
               },
               labels: {
-                  format: '{value} pF',
+                  format: '{value} dB',
                   style: {
-                      color: Highcharts.getOptions().colors[0]
+                      colour: colour1
                   }
               }
 
-          }, { // Tertiary yAxis
-              gridLineWidth: 0,
-              title: {
-                  text: 'Voltage',
-                  style: {
-                      color: Highcharts.getOptions().colors[1]
-                  }
-              },
-              labels: {
-                  format: '{value} kV',
-                  style: {
-                      color: Highcharts.getOptions().colors[1]
-                  }
-              },
-              opposite: true
-          }],
+          },
+          { // Primary yAxis
+            // ordinal: false,
+            top: '110%',
+            height: 60,
+          	id: 'ynav1',
+            visible: false
+          },
+          { // Secondary yAxis
+            top: '110%',
+            height: 60,
+          	id: 'ynav2',
+            right: '-12%',
+            visible: false
+          }
+        ],
           tooltip: {
               shared: true,
               valueDecimals: 2
@@ -396,47 +428,50 @@ $( document ).ready(function() {
           rangeSelector: {
               enabled: false
           },
-          scrollBar: {
-            barBackgroundColor: "#bfc8d1",
-            barBorderColor: "#bfc8d1",
-            barBorderRadius: 0,
-            barBorderWidth: 1,
-            buttonArrowColor: "#666",
-            buttonBackgroundColor: "#ebe7e8",
-            buttonBorderColor: "#bbbbbb",
-            buttonBorderRadius: 0,
-            buttonBorderWidth: 1,
-            enabled: true,
-            minWidth: 6,
-            rifleColor: "#666",
-            showFull: true,
-            trackBackgroundColor: "#eeeeee",
-            trackBorderColor: "#eeeeee",
-            trackBorderRadius: 0,
-            trackBorderWidth: 1
+          scrollbar: {
+              liveRedraw: false  //set to false to improve performance
           },
           navigator: {
               height: 60,
               enabled: true,
-        //       xAxis: {
-        //           categories: dates,
-        //           plotOptions: {
-        //             line : {
-        //               dataLabels : {
-        //                 enabled : true,
-        //                 formatter: function() {
-        //                   var first = this.series.data[0],
-        //                       last  = this.series.data[this.series.data.length - 1];
-        //                   if ((this.point.category === first.category && this.point.y === first.y) ||
-        //                       (this.point.category === last.category  && this.point.y === last.y)) {
-        //                     return this.point.y;
-        //                   }
-        //                   return "";
-        //                 }
-        //               },
-        //             },
-        // }
-        //       }
+               xAxis: {
+                   // minorTickInterval: 'auto', // GRIDLINES
+
+                   // categories: dates,
+                   // startOnTick: false, // only when navigator enabled
+                   // endOnTick: false, // only when navigator enabled
+                   // minPadding: 0,
+                   // maxPadding: 0,
+                   // ordinal: true,
+                   // title: {
+                   //     text: null
+                   // },
+                   // labels: {
+                   //     overflow: 'justify'
+                   // },
+                   // showLastLabel: true,
+                   ordinal: false //multiseries nav - smoothing thing
+                   // labels: {
+                   //     formatter: function () {
+                   //       debugger
+                   //         return this.value + ' units';
+                   //     }
+                   // }
+                   //  // in Highstock only supported type
+               },
+               yAxis: [{ // Primary yAxis
+                   ordinal: false,
+                   opposite: true
+               }],
+
+              series: {
+                visible: false
+              },
+              line: {
+                dataGrouping: {
+                  // smoothed: false
+                }
+              }
           },
           rangeselector: {
               height: 40
@@ -449,38 +484,274 @@ $( document ).ready(function() {
               verticalAlign: 'top',
               y: 55,
               floating: true,
-              backgroundColor: '#FFFFFF'
+              backgroundcolour: '#FFFFFF'
           },
-          series: [{
-              name: 'Capacitance',
+          series: [ {
+              name: 'Global PAPR (dB)',
               type: 'line',
               yAxis: 1,
-              data: data1,
-              tooltip: {
-                  valueSuffix: ' pF'
-              }
-
-          }, {
-              name: 'Voltage',
-              type: 'line',
-              yAxis: 2,
-              data: data2,
+              data: oneMonthData2,
+              colour: colour1,
+              // showInNavigator: true,
               marker: {
                   enabled: false
               },
-              dashStyle: 'shortdot',
               tooltip: {
-                  valueSuffix: ' kV'
+                  valueSuffix: 'dB'
               }
 
           }, {
-              name: 'Temperature',
+              name: 'Global IPWR (dBm)',
               type: 'line',
-              data: data3,
+              data: oneMonthData1,
+              colour: colour4,
+              yaxis: 0,
+              // showInNavigator: true,
               tooltip: {
-                  valueSuffix: ' °C'
+                  valueSuffix: 'dBm'
               }
           }]
+      });
+
+
+
+      window.chart2.addSeries({
+        xAxis: 1,
+        yAxis: 'ynav2',
+        type: "line",
+        enableMouseTracking: false,
+        isInternal: true,
+        colour: colour1,
+        data : oneMonthData2,
+        showInLegend:false,
+        lineWidth: 1
+      });
+
+      window.chart2.addSeries({
+        xAxis: 1,
+        yAxis: 'ynav1',
+        type: "line",
+        enableMouseTracking: false,
+        isInternal: true,
+        colour: colour4,
+        data : oneMonthData1,
+        showInLegend:false,
+        lineWidth: 1
+      });
+
+
+      window.chart3 = new Highcharts.StockChart(  {
+          chart: {
+            panning: true,
+            pinchType: 'x',
+            inverted: false,
+            renderTo : 'container4'
+          },
+          // title: {
+          //     text: 'High Stock Prime Mockup'
+          // },
+          subtitle: {
+              text: 'Three Months of Data'
+          },
+          plotOptions: { //multiseries nav
+            series: {
+              states: {
+                  hover: {
+                      enabled: false
+                  }
+              },
+              // showInNavigator: true
+            }
+          },
+          xAxis: [{
+              // minorTickInterval: 'auto', // GRIDLINES
+
+              // categories: dates,
+              // startOnTick: false, // only when navigator enabled
+              // endOnTick: false, // only when navigator enabled
+              // minPadding: 0,
+              // maxPadding: 0,
+              ordinal: false,
+              // title: {
+              //     text: null
+              // },
+              // labels: {
+              //     overflow: 'justify'
+              // },
+              // showLastLabel: true,
+              type: 'datetime'
+              // labels: {
+              //     formatter: function () {
+              //       debugger
+              //         return this.value + ' units';
+              //     }
+              // }
+              //  // in Highstock only supported type
+          }],
+          yAxis: [{ // Primary yAxis
+              ordinal: false,
+              labels: {
+                  format: '{value} dBm',
+                  style: {
+                      colour: colour5
+                  }
+              },
+              title: {
+                  text: 'Global IPWR (dBm)',
+                  style: {
+                      colour: colour5
+                  }
+              },
+              opposite: false
+
+          }, { // Secondary yAxis
+              ordinal: false,
+              gridLineWidth: 1,
+              title: {
+                  text: 'Global PAPR (dB)',
+                  style: {
+                      colour: colour6
+                  }
+              },
+              labels: {
+                  format: '{value} dB',
+                  style: {
+                      colour: colour6
+                  }
+              }
+
+          },
+          { // Primary yAxis
+            // ordinal: false,
+            top: '110%',
+            height: 60,
+            id: 'ynav1',
+            visible: false
+          },
+          { // Secondary yAxis
+            top: '110%',
+            height: 60,
+            id: 'ynav2',
+            right: '-12%',
+            visible: false
+          }
+        ],
+          tooltip: {
+              shared: true,
+              valueDecimals: 2
+          },
+          rangeSelector: {
+              enabled: false
+          },
+          scrollbar: {
+              liveRedraw: false  //set to false to improve performance
+          },
+          navigator: {
+              height: 60,
+              enabled: true,
+               xAxis: {
+                   // minorTickInterval: 'auto', // GRIDLINES
+
+                   // categories: dates,
+                   // startOnTick: false, // only when navigator enabled
+                   // endOnTick: false, // only when navigator enabled
+                   // minPadding: 0,
+                   // maxPadding: 0,
+                   // ordinal: true,
+                   // title: {
+                   //     text: null
+                   // },
+                   // labels: {
+                   //     overflow: 'justify'
+                   // },
+                   // showLastLabel: true,
+                   ordinal: false //multiseries nav - smoothing thing
+                   // labels: {
+                   //     formatter: function () {
+                   //       debugger
+                   //         return this.value + ' units';
+                   //     }
+                   // }
+                   //  // in Highstock only supported type
+               },
+               yAxis: [{ // Primary yAxis
+                   ordinal: false,
+                   opposite: true
+               }],
+
+              series: {
+                visible: false
+              },
+              line: {
+                dataGrouping: {
+                  // smoothed: false
+                }
+              }
+          },
+          rangeselector: {
+              height: 40
+          },
+          legend: {
+              layout: 'vertical',
+              enabled: true,
+              align: 'left',
+              x: 80,
+              verticalAlign: 'top',
+              y: 55,
+              floating: true,
+              backgroundcolour: '#FFFFFF'
+          },
+          series: [ {
+              name: 'Global PAPR (dB)',
+              type: 'line',
+              yAxis: 1,
+              data: threeMonthData2,
+              colour: colour6,
+              // showInNavigator: true,
+              marker: {
+                  enabled: false
+              },
+              tooltip: {
+                  valueSuffix: 'dB'
+              }
+
+          }, {
+              name: 'Global IPWR (dBm)',
+              type: 'line',
+              data: threeMonthData1,
+              colour: colour5,
+              yaxis: 0,
+              // showInNavigator: true,
+              tooltip: {
+                  valueSuffix: 'dBm'
+              }
+          }]
+      });
+
+
+
+      window.chart3.addSeries({
+        xAxis: 1,
+        yAxis: 'ynav2',
+        type: "line",
+        enableMouseTracking: false,
+        isInternal: true,
+        colour: colour6,
+        data : threeMonthData2,
+        showInLegend:false,
+        lineWidth: 1
+      });
+
+      window.chart3.addSeries({
+        xAxis: 1,
+        yAxis: 'ynav1',
+        type: "line",
+        enableMouseTracking: false,
+        isInternal: true,
+        colour: colour5,
+        data : threeMonthData1,
+        showInLegend:false,
+        lineWidth: 1
       });
   });
 });
@@ -549,6 +820,14 @@ function newDataArray(array1, array2) {
   var result = [];
   for ( var i = 0; i < array1.length; i++ ) {
     result.push( [ array1[i].getTime(), array2[i] ] );
+  }
+  return result
+}
+
+function newDataArray2(array1, array2) {
+  var result = [];
+  for ( var i = 0; i < array1.length; i++ ) {
+    result.push( [ Date.parse(array1[i]), array2[i] ] );
   }
   return result
 }
