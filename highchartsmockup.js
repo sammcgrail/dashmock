@@ -30,7 +30,7 @@ var color2 = "#7cb5ec";
 var color3 = "#E3A869";
 var color4 = "#24CBE5";
 var color5 = "#DDDF00";
-var color6 = "#ED561B";
+var color6 = "#FFF263";
 
 $( document ).ready(function() {
   var oneMonthDates = oneMonth.data.Date;
