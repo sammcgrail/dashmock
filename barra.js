@@ -14,7 +14,7 @@ $(function () {
 
 
         title: {
-            text: 'Bushing 2 April 2013',
+            text: 'Bushing 2 April 2017',
             align: 'left'
         },
 
